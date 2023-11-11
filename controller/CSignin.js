@@ -1,3 +1,3 @@
 exports.signin = (req, res) => {
-    res.render('signin');
+  res.render("signin");
 };
