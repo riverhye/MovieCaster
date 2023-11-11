@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/signup.css" />
+    <title>회원가입</title>
+  </head>
+  <body>
+    <div class="containerMain">
+      <h2>회원가입</h2>
+      <div class="warning">*표시된 항목은 필수로 입력해야 합니다</div>
+      <div class="containerSub">
+        <div class="idBox innerBox">
+          <div class="idBoxL boxL">
+            <div class="star">*</div>
+            아이디
+          </div>
+          <div class="idBoxR boxR">
+            <input type="text" required />
+          </div>
+        </div>
+        <div class="pwBox innerBox">
+          <div class="pwBoxL boxL">
+            <div class="star">*</div>
+            비밀번호
+          </div>
+          <div class="pwBoxR boxR">
+            <input type="password" required />
+          </div>
+        </div>
+        <div class="pwCheckBox innerBox">
+          <div class="pwCheckBoxL boxL">비밀번호 확인</div>
+          <div class="pwCheckBoxR boxR">
+            <input type="password" />
+          </div>
+        </div>
+        <div class="emailBox innerBox">
+          <div class="emailBoxL boxL">
+            <div class="star">*</div>
+            이메일
+          </div>
+          <div class="emailBoxR boxR">
+            <input type="email" required />
+          </div>
+        </div>
+        <div class="nicknameBox innerBox">
+          <div class="nicknameBoxL boxL">
+            <div class="star">*</div>
+            닉네임
+          </div>
+          <div class="nicknameBoxR boxR">
+            <input type="text" required />
+          </div>
+        </div>
+        <div class="profileImgBox innerBox">
+          <div class="profileImgBoxL boxL">프로필 사진</div>
+          <div class="profileImgBoxR boxR">
+            <div class="profileImg"></div>
+            <div class="buttonImg">
+              <input type="file" class="getImage" accept="image/*" />
+              <input type="button" value="삭제" class="delete" onclick="" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <input type="button" value="회원가입" class="buttonSubmit" onclick="" />
+    </div>
+    <script></script>
+  </body>
+</html>
