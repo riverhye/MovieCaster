@@ -1,0 +1,85 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+.containerMain {
+  position: relative;
+  top: 80px;
+  border: 3px solid gray;
+  border-radius: 20px;
+  width: 680px;
+  height: 750px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.containerSub {
+  position: relative;
+  margin-top: 20px;
+}
+.innerBox {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+}
+.innerBox .boxL {
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background-color: lightgrey;
+  width: 200px;
+  height: 80px;
+}
+.innerBox .boxR {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: rgb(228, 226, 226);
+  width: 400px;
+  height: 80px;
+}
+.boxR input {
+  margin-left: 30px;
+}
+
+input[type="text"],
+[type="password"] {
+  height: 30px;
+  width: 180px;
+  font-size: 18px;
+  border: 0;
+  border-radius: 5px;
+  outline: none;
+  padding-inline-start: 10px;
+  box-shadow: 3px 3px 3px lightgrey;
+}
+input[type="button"] {
+  box-shadow: 3px 3px 3px lightgrey;
+  width: 75px;
+}
+
+.buttonLogin {
+  position: relative;
+  top: 250px;
+}
+.buttonSubmit {
+  position: relative;
+  top: 280px;
+}
+.findBox {
+  display: flex;
+  position: relative;
+  top: 260px;
+}
+.findId {
+  color: blue;
+  font-size: 10px;
+  margin-left: 10px;
+}
+.findPw {
+  color: blue;
+  font-size: 10px;
+  margin-left: 10px;
+}
