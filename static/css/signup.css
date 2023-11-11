@@ -1,0 +1,81 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+.containerMain {
+  position: relative;
+  top: 80px;
+  border: 3px solid gray;
+  border-radius: 20px;
+  width: 680px;
+  height: 750px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.innerBox {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+}
+.innerBox .boxL {
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background-color: lightgrey;
+  width: 200px;
+  height: 80px;
+}
+.innerBox .boxR {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: rgb(228, 226, 226);
+  width: 400px;
+  height: 80px;
+}
+.boxR input {
+  margin-left: 30px;
+}
+.star {
+  color: red;
+}
+.buttonImg {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+.profileImg {
+  margin-left: 30px;
+  border: 1px solid black;
+  border-radius: 50px;
+  width: 50px;
+  height: 50px;
+}
+.delete {
+  margin-top: 10px;
+}
+.warning {
+  font-size: 12px;
+  position: relative;
+  left: 190px;
+}
+input[type="text"],
+[type="password"],
+[type="email"] {
+  height: 30px;
+  width: 180px;
+  font-size: 18px;
+  border: 0;
+  border-radius: 5px;
+  outline: none;
+  padding-inline-start: 10px;
+  box-shadow: 3px 3px 3px lightgrey;
+}
+input[type="button"],
+[type="file"] {
+  box-shadow: 3px 3px 3px lightgrey;
+  width: 75px;
+}
