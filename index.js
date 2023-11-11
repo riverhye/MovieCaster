@@ -4,7 +4,7 @@ const PORT = 8000;
 const multer = require("multer");
 
 app.set("view engine", "ejs");
-app.set("views", "./views");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static("static"));
