@@ -1,0 +1,152 @@
+
+.p-3 {
+    background-color: transparent;
+    border: 1px solid black;
+    border-color: #DEE2E6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 15px;
+    font-size: 16px;
+    color: #000000;
+    font-family: Noto Sans KR, 'Source Sans Pro';
+    font-weight: 300;
+}
+.p-4 {
+    background-color: transparent;
+    border: 1px solid black;
+    border-color: #DEE2E6;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}
+#MyPage_Profile{
+    margin-top: 120px;
+    margin-left: 150px;
+}
+
+/* 방문하지 않은 링크 스타일 */
+a:link {
+  color: rgb(0, 0, 0); /* 원하는 색상 설정 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+/* 방문한 링크 스타일 */
+a:visited {
+  color: rgb(0, 0, 0); /* 원하는 색상 설정 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+#cancelBtn{
+    border-color: #DEE2E6;
+    color:rgb(141, 141, 141);
+}
+#saveBtn{
+    background-color: #A7D4F9;
+    color:rgb(104, 104, 104);
+}
+#selectBtn{
+    border-color: #DEE2E6;
+    color:rgb(141, 141, 141);
+    border-radius: 0;
+}
+
+#userImg{
+    border-radius: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+}
+.img{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+}
+
+.profileBtn{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 8px;
+    
+}
+#userInfo {
+    
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+}
+.col {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 100px;
+    
+}
+    #email_placeholder{
+        background-color:transparent;    
+        color: #000000;
+        width: 300px;
+        display: flex;
+        
+    }
+    #email_placeholder::placeholder {
+        color: #FF0000; /* 원하는 색상으로 변경 */
+    }
+    #nickname_placeholder{
+        background-color: lightgrey;    
+        width: 300px;
+        display: flex;
+        
+    }
+    #phone_placeholder{
+        background-color: transparent;    
+        color: #000000;
+        width: 300px;
+        display: flex;
+        margin-left: -15px;
+    }
+
+#profileLeft{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.title{
+    display: flex;
+    align-items: start;
+    font-family: Noto Sans KR, 'Source Sans Pro';
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+.exit{
+    font-size: 15px;
+}
+
+/*wishLisg*/
+.section{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    gap: 7px;
+    margin-left: 11px;
+}
+
+.row-sm-3{
+    font-size: 1px;
+}
+
+img{
+    border-radius: 20px;
+    width: 170px;
+    height: 170px;
+}
+.row-sm-3 .container{
+    padding-left: 30px;
+}
