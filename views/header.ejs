@@ -4,35 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>header</title>
-    <style>
-        .box-office-text {
-            writing-mode: vertical-lr
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="../static/css/header.css" />
 </head>
 <body>
     <header>
         <section class="logo-section">
-            <div>Logo pic</div>
-            <a href=""><span>search icon</span></a>
-            <a href=""><span>user icon</span></a>
+            <div class="logo"><img src="" alt="logo"/></div>
+            <div class="icon-group">
+                <a href="/search"><i class="fa-solid fa-magnifying-glass search-icon"></i></a>
+                <a href="/mypage"><i class="fa-solid fa-user user-icon"></i></a>
+            </div>
         </section>
         <section class="box-office-section">
-            <span class="box-office-text">Box Office</span>
-            <ul class="box-office-slider">
-                <li><img href="" src="" alt="rank1 : box office"></li>
-                <li><img href="" src="" alt="rank2 : box office"></li>
-                <li><img href="" src="" alt="rank3 : box office"></li>
-                <li><img href="" src="" alt="rank4 : box office"></li>
-                <li><img href="" src="" alt="rank5 : box office"></li>
-                <li><img href="" src="" alt="rank6 : box office"></li>
-                <li><img href="" src="" alt="rank7 : box office"></li>
-                <li><img href="" src="" alt="rank8 : box office"></li>
-                <li><img href="" src="" alt="rank9 : box office"></li>
-                <li><img href="" src="" alt="rank10 : box office"></li>
-                <li><img href="" src="" alt="rank11 : box office"></li>
-                <li><img href="" src="" alt="rank12 : box office"></li>
-            </ul>
+            <div class="box-office__film-fill"></div>
+            <div class="box-office__film"><img src="../static/img/film.png" alt="" width="800px" height="250px"/>
+                <span class="box-office-text">Box Office</span>
+                <ul class="box-office-slider">
+                    <li class="box-office-poster"><img href="" src="" /></li>
+                    <li class="box-office-poster"><img href="" src="" /></li>
+                    <li class="box-office-poster"><img href="" src="" /></li>
+                    <li class="box-office-poster"><img href="" src="" /></li>
+                    <li class="box-office-poster"><img href="" src="" /></li>
+                </ul>
+            </div>
         </section>
     </header>
 </body>

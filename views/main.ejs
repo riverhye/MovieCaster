@@ -7,123 +7,254 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="stylesheet" href="../static/css/main.css" />
+    <link rel="stylesheet" href="../static/css/header.css" />
+    <link rel="stylesheet" href="../static/css/footer.css" />
 </head>
 <body>
-    <!-- TODO: header section -->
-
-    <section class="main-best-movies">
-        <div class="section-title">
-            <i class="bi bi-brightness-high sun-icon"></i>
-            <h3>해가 쨍쨍! 평점 높은 영화</h3>
-        </div>
-
-        <div class="movie-with-comment-list">
-            <div class="poster-with-comment">
-                <div class="poster-body">
-                    <ul>
-                        <li><a href="">
-                            <div class="moive-body"><img src="" alt="" /></div>
-                        </a></li>
-                    </ul>
-                </div>
-                <div class="comments-body">
-                    <ul>
-                        <li class="nickname-sm text-sm">
-                            <span>유저닉네임</span>
-                            <!-- heart icon -->
-                        </li>
-                        <li class="movie-title-sm text-sm"><strong><span>헝거게임 : 노래하는 어쩌고와 저쩌고</span></strong></li>
-                        <li class="comment-sm text-sm"><span>개봉을 기다리는 영화인데 내년으로 미뤄진다고...</span></li>
-                    </ul>
-                </div>
+    <header>
+        <section class="logo-section">
+            <div class="logo"><img src="" alt="logo"/></div>
+            <div class="icon-group">
+                <a href="/search"><i class="fa-solid fa-magnifying-glass search-icon"></i></a>
+                <a href="/mypage"><i class="fa-solid fa-user user-icon"></i></a>
             </div>
-
-            <div class="poster-with-comment">
-                <div class="poster-body">
-                    <ul>
-                        <li><a href="">
-                            <div class="moive-body"><img src="" alt="" /></div>
-                        </a></li>
-                    </ul>
-                </div>
-                <div class="comments-body">
-                    <ul>
-                        <li class="nickname-sm text-sm">
-                            <span>유저닉네임</span>
-                            <!-- heart icon -->
-                        </li>
-                        <li class="movie-title-sm text-sm"><strong><span>헝거게임 : 노래하는 어쩌고와 저쩌고</span></strong></li>
-                        <li class="comment-sm text-sm"><span>개봉을 기다리는 영화인데 내년으로 미뤄진다고...</span></li>
-                    </ul>
-                </div>
+        </section>
+        <section class="box-office-section">
+            <div class="box-office__film-fill"></div>
+            <div class="box-office__film"><img src="../static/img/film.png" alt="" width="800px" height="250px"/>
+                <span class="box-office-text">Box Office</span>
+                <ul class="box-office-slider">
+                    <li class="box-office-poster"><img href="" src="" /></li>
+                    <li class="box-office-poster"><img href="" src="" /></li>
+                    <li class="box-office-poster"><img href="" src="" /></li>
+                    <li class="box-office-poster"><img href="" src="" /></li>
+                    <li class="box-office-poster"><img href="" src="" /></li>
+                </ul>
             </div>
+        </section>
+    </header>
 
-            <div class="poster-with-comment">
-                <div class="poster-body">
-                    <ul>
-                        <li><a href="">
-                            <div class="moive-body"><img src="" alt="" /></div>
-                        </a></li>
-                    </ul>
-                </div>
-                <div class="comments-body">
-                    <ul>
-                        <li class="nickname-sm text-sm">
-                            <span>유저닉네임</span>
-                            <!-- heart icon -->
-                        </li>
-                        <li class="movie-title-sm text-sm"><strong><span>헝거게임 : 노래하는 어쩌고와 저쩌고</span></strong></li>
-                        <li class="comment-sm text-sm"><span>개봉을 기다리는 영화인데 내년으로 미뤄진다고...</span></li>
-                    </ul>
-                </div>
+    <div class="main-section">
+        <section class="best-section">
+            <div class="best-section__title section__title">
+                <i class="bi bi-brightness-high sun-icon"></i>
+                <h4>해가 쨍쨍! 평점 높은 영화</h4>
             </div>
-
-            <div class="poster-with-comment">
-                <div class="poster-body">
-                    <ul>
-                        <li><a href="">
-                            <div class="moive-body"><img src="" alt="" /></div>
-                        </a></li>
-                    </ul>
+            <div class="best-movie__list section__list">
+                <div class="best-movie__body section__body">
+                    <div class="best-movie__poster-body section__poster-body">
+                        <ul>
+                            <li><a href="">
+                                <div class="best-movie__poster"><img src="" alt="" /></div>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="best-movie__comment-list">
+                        <ul>
+                            <li class="text-sm">
+                                <span class="nickname-sm">유저닉네임</span>
+                                <i class="fa-solid fa-heart heart-icon" onclick="clickLike(this)"></i>
+                            </li>
+                            <li class="movie-title text-sm"><strong><span>헝거게임 : 노래하는 어쩌고와 저쩌고</span></strong></li>
+                            <li class="comment-sm text-sm"><span>개봉을 기다리는 영화인데 내년으로 미뤄진다고...</span></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="comments-body">
-                    <ul>
-                        <li class="nickname-sm text-sm">
-                            <span>유저닉네임</span>
-                            <!-- heart icon -->
-                        </li>
-                        <li class="movie-title-sm text-sm"><strong><span>헝거게임 : 노래하는 어쩌고와 저쩌고</span></strong></li>
-                        <li class="comment-sm text-sm"><span>개봉을 기다리는 영화인데 내년으로 미뤄진다고...</span></li>
-                    </ul>
+                <div class="best-movie__body section__body">
+                    <div class="best-movie__poster-body section__poster-body">
+                        <ul>
+                            <li><a href="">
+                                <div class="best-movie__poster"><img src="" alt="" /></div>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="best-movie__comment-list">
+                        <ul>
+                            <li class="text-sm">
+                                <span class="nickname-sm">유저닉네임</span>
+                                <i class="fa-solid fa-heart heart-icon" onclick="clickLike(this)"></i>
+                            </li>
+                            <li class="movie-title text-sm"><strong><span>헝거게임 : 노래하는 어쩌고와 저쩌고</span></strong></li>
+                            <li class="comment-sm text-sm"><span>개봉을 기다리는 영화인데 내년으로 미뤄진다고...</span></li>
+                        </ul>
+                    </div>
                 </div>
+                <div class="best-movie__body section__body">
+                    <div class="best-movie__poster-body section__poster-body">
+                        <ul>
+                            <li><a href="">
+                                <div class="best-movie__poster"><img src="" alt="" /></div>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="best-movie__comment-list">
+                        <ul>
+                            <li class="text-sm">
+                                <span class="nickname-sm">유저닉네임</span>
+                                <i class="fa-solid fa-heart heart-icon" onclick="clickLike(this)"></i>
+                            </li>
+                            <li class="movie-title text-sm"><strong><span>헝거게임 : 노래하는 어쩌고와 저쩌고</span></strong></li>
+                            <li class="comment-sm text-sm"><span>개봉을 기다리는 영화인데 내년으로 미뤄진다고...</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="best-movie__body section__body">
+                    <div class="best-movie__poster-body section__poster-body">
+                        <ul>
+                            <li><a href="">
+                                <div class="best-movie__poster"><img src="" alt="" /></div>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="best-movie__comment-list">
+                        <ul>
+                            <li class="text-sm">
+                                <span class="nickname-sm">유저닉네임</span>
+                                <i class="fa-solid fa-heart heart-icon" onclick="clickLike(this)"></i>
+                            </li>
+                            <li class="movie-title text-sm"><strong><span>헝거게임 : 노래하는 어쩌고와 저쩌고</span></strong></li>
+                            <li class="comment-sm text-sm"><span>개봉을 기다리는 영화인데 내년으로 미뤄진다고...</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="best-movie__body section__body">
+                    <div class="best-movie__poster-body section__poster-body">
+                        <ul>
+                            <li><a href="">
+                                <div class="best-movie__poster"><img src="" alt="" /></div>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="best-movie__comment-list">
+                        <ul>
+                            <li class="text-sm">
+                                <span class="nickname-sm">유저닉네임</span>
+                                <i class="fa-solid fa-heart heart-icon" onclick="clickLike(this)"></i>
+                            </li>
+                            <li class="movie-title text-sm"><strong><span>헝거게임 : 노래하는 어쩌고와 저쩌고</span></strong></li>
+                            <li class="comment-sm text-sm"><span>개봉을 기다리는 영화인데 내년으로 미뤄진다고...</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="arrow-box"><i class="fa-solid fa-chevron-left arrow-icon left-arrow arrow"></i></div>
+                <div class="arrow-box"><i class="fa-solid fa-chevron-right arrow-icon right-arrow arrow"></i></div>
             </div>
+        </section>
 
-            <div class="poster-with-comment">
-                <div class="poster-body">
-                    <ul>
-                        <li><a href="">
-                            <div class="moive-body"><img src="" alt="" /></div>
-                        </a></li>
-                    </ul>
-                </div>
-                <div class="comments-body">
-                    <ul>
-                        <li class="nickname-sm text-sm">
-                            <span>유저닉네임</span>
-                            <!-- heart icon -->
-                        </li>
-                        <li class="movie-title-sm text-sm"><strong><span>헝거게임 : 노래하는 어쩌고와 저쩌고</span></strong></li>
-                        <li class="comment-sm text-sm"><span>개봉을 기다리는 영화인데 내년으로 미뤄진다고...</span></li>
-                    </ul>
-                </div>
+        <section class="md-section">
+            <div class="md-section__title section__title">
+                <i class="bi bi-brightness-high sun-icon"></i>
+                <i class="fa-solid fa-cloud cloud-icon"></i>
+                <h4>호불호 극명한 영화</h4>
             </div>
+            <div class="md-movie__list section__list">
+                <div class="md-movie__body section__body">
+                    <div class="md-movie__poster-body section__poster-body">
+                        <ul>
+                            <li><a href="">
+                                <div class="md-movie__poster"><img src="" alt="" /></div>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="md-movie__info">
+                        <ul>
+                            <li class="md-movie__rating">
+                                <i class="bi bi-brightness-high"></i>
+                                <span class="">5.0</span>
+                            </li>
+                            <li><h4 class="movie-title__large">타이틀</h4></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="md-movie__body section__body">
+                    <div class="md-movie__poster-body section__poster-body">
+                        <ul>
+                            <li><a href="">
+                                <div class="md-movie__poster"><img src="" alt="" /></div>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="md-movie__info">
+                        <ul>
+                            <li class="md-movie__rating">
+                                <i class="bi bi-brightness-high"></i>
+                                <span class="">5.0</span>
+                            </li>
+                            <li><h4 class="movie-title__large">타이틀</h4></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="md-movie__body section__body">
+                    <div class="md-movie__poster-body section__poster-body">
+                        <ul>
+                            <li><a href="">
+                                <div class="md-movie__poster"><img src="" alt="" /></div>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="md-movie__info">
+                        <ul>
+                            <li class="md-movie__rating">
+                                <i class="bi bi-brightness-high"></i>
+                                <span class="">5.0</span>
+                            </li>
+                            <li><h4 class="movie-title__large">타이틀</h4></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="md-movie__body section__body">
+                    <div class="md-movie__poster-body section__poster-body">
+                        <ul>
+                            <li><a href="">
+                                <div class="md-movie__poster"><img src="" alt="" /></div>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="md-movie__info">
+                        <ul>
+                            <li class="md-movie__rating">
+                                <i class="bi bi-brightness-high"></i>
+                                <span class="">5.0</span>
+                            </li>
+                            <li><h4 class="movie-title__large">타이틀</h4></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="md-movie__body section__body">
+                    <div class="md-movie__poster-body section__poster-body">
+                        <ul>
+                            <li><a href="">
+                                <div class="md-movie__poster"><img src="" alt="" /></div>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="md-movie__info">
+                        <ul>
+                            <li class="md-movie__rating">
+                                <i class="bi bi-brightness-high"></i>
+                                <span class="">5.0</span>
+                            </li>
+                            <li><h4 class="movie-title__large">타이틀</h4></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="arrow-box"><i class="fa-solid fa-chevron-left arrow-icon left-arrow arrow"></i></div>
+                <div class="arrow-box"><i class="fa-solid fa-chevron-right arrow-icon right-arrow arrow"></i></div>
+            </div>
+        </section>
+    </div>
+    <!-- footer -->
+    <div class="footer">
+        <strong>주식회사</strong> 무비캐스터 <strong>대표</strong> 4FLEX 
+        서울특별시 용산구 청파로 109(나진전자월드상가) 3층 <br />
+        <strong>사업자 등록 번호</strong> 595-95-0099 <br/>
+        © 2023 by MovieCaster, Inc. All rights reserved. <br/>
+    </div>
 
-            <div class="arrow-box"><i class="fa-solid fa-chevron-left arrow-icon left-arrow"></i></div>
-            <div class="arrow-box"><i class="fa-solid fa-chevron-right arrow-icon right-arrow"></i></div>
-        </div>
-    </section>
-
-    <!-- TODO: 호불호 영화 리스트 -->
-    <section></section>
+    <script>
+        function clickLike (heart) {
+            heart.style.color = 'red';
+        }
+    </script>
 </body>
 </html>

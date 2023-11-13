@@ -1,0 +1,96 @@
+/* 전체 */
+body {
+    margin: 0 auto;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+/* 로고 section */
+.logo {
+    margin-left: 300px;
+}
+
+.logo-section {
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 50px 0;
+}
+
+/* 박스오피스 section */
+.box-office-section {
+    position: relative;
+    margin: 0 auto;
+}
+
+.box-office__film-fill {
+    width: 1100px;
+    height: 171px;
+    background-color: #000000;
+    position: absolute;
+    top: 39px;
+}
+
+.box-office__film {
+    position: absolute;
+    left: 300px;
+}
+
+.box-office-text {
+    writing-mode: vertical-lr;
+    padding: 20px;
+    width: 20px;
+    position: absolute;
+    top: 35px;
+    left: -60px;
+    color: white;
+}
+
+.box-office-slider {
+    width: 100%;
+    position: absolute;
+    top: 38px;
+    left: 0px;
+    display: flex;
+}
+
+.box-office-poster {
+    width: 150px;
+    height: 150px;
+    background-color: green;
+    border: 1px solid red;
+    margin-right: 30px;
+}
+
+.icon-group {
+    width: 600px;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+}
+
+/* 아이콘 */
+.search-icon,
+.user-icon {
+    font-size: 30px;
+}
+
+.user-icon {
+    position: absolute;
+    right: 300px;
+}

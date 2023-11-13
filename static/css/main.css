@@ -20,49 +20,68 @@ a {
     color: black;
 }
 
-/* 요소 세팅 */
-.section-title {
+body {
+    width: 100%;
+    margin: 0 auto;
+    
+}
+
+.main-section {
+    padding-top: 300px;
+    width: 70%;
+    margin: auto;
+}
+
+/* section 공통 세팅 */
+.section__title {
     border: 1px solid black;
-    margin: 20px 20px 40px;
+    margin: 30px 0;
     padding: 0 5px;
     border-radius: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 20%;
+    width: 30%;
     box-shadow: 0px 5px 3px rgba(0, 0, 0, 0.5);
 }
 
-.movie-with-comment-list {
-    border: 1px solid black;
+.section__list {
     display: flex;
+    width: 100%;
     height: 500px;
-    
+    position: relative;
 }
 
-.poster-with-comment  {
-    border: 1px solid black;
-    margin: 0 40px;
-    width: 100%;
-    height: 100%;
+.section__body  {
+    width: 20%;
+    height: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.poster-body {
+.section__poster-body {
     border: 1px solid black;
     margin-top: 20px;
     border-radius: 20px;
     width: 80%;
     height: 300px;
+    cursor: pointer;
 }
 
-.comments-body {
+/* section 1 */
+.best-movie__comment-list {
     border: 1px solid black;
     margin: 30px 10px 0;
     border-radius: 20px;
+    width: 90%;
+    height: 130px;
+}
+
+/* section 2 */
+.md-movie__info {
+    margin: 10px 10px 20px;
     width: 90%;
     height: 130px;
 }
@@ -71,19 +90,28 @@ a {
 .text-sm {
     margin-top: 9px;
     font-size: 12px;
+    position: relative;
 }
 
 .nickname-sm {
     color: rgba(0, 0, 0, 0.6);
 }
 
-.movie-title-sm {
+.movie-title {
     height: 30px;
 }
 
+.movie-title__large {
+    margin-top: 10px;
+    height: 50px;
+}
+
 .comment-sm {
-    font-size: 15px;
     height: 60px;
+}
+
+.md-movie__title {
+    margin-top: 10px;
 }
 
 /* 아이콘 */
@@ -93,17 +121,33 @@ a {
     font-size: 20px;
 }
 
+.heart-icon {
+    position: absolute;
+    left: 100px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.heart.active {
+    color: red;
+}
+.cloud-icon {
+    color: darkblue;
+    margin-right: 5px;
+}
 
 .arrow-icon {
-    font-size: 80px;
+    font-size: 50px;
     position: absolute;
-    top: 300px;
 }
 
 .left-arrow {
-    left: 30px;
+    left: 3px;
 }
 
 .right-arrow {
-    right: 30px;
+    right: 3px;
+}
+
+.arrow {
+    top: 110px;
 }
