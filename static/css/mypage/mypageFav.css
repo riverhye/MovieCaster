@@ -1,0 +1,82 @@
+body {
+    font-family: 'Noto Sans KR', 'Source Sans Pro', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.searchBox {
+    margin-top: 20px;
+}
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-control {
+    border-radius: 20px;
+    border: 2px solid #007bff;
+    padding: 10px;
+    width: 70%;
+    outline: none;
+    margin-right: 10px;
+}
+
+#search-icon {
+    background-color: #007bff;
+    border: 2px solid #007bff;
+    color: white;
+    border-radius: 20px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.line {
+    border-bottom: 2px solid #dee2e6;
+    margin: 20px 0;
+}
+
+.favBox1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.moviePic {
+    width: 50px;
+    height: 50px;
+    background-color: #dee2e6;
+    border-radius: 5px;
+}
+
+.movieName, .movieGenre, .movieYear {
+    flex-grow: 1;
+    margin: 0 10px;
+}
+
+.close {
+    color: #ff3838;
+    cursor: pointer;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

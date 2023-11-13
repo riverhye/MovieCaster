@@ -48,8 +48,8 @@
                 </div>
             </div>
             
-            <!-- 위시리스트 영화 정보 부분 -->
-            <div class="col-6">
+            <!-- 위시리스트 코멘트 정보 부분 -->
+            <div class="col-9">
                 <div class="p-4">
                     <div style="display: flex; align-items: flex-start; margin-left: 10px; column-gap: 10px;">
                         <a href="/mypage/mymovielike" style="text-decoration: none;">
@@ -62,11 +62,48 @@
                     <div class="container text-center">
                         <div class="row row-cols-3 row row-gap-3">
                             <!-- 위시리스트 항목을 나타내는 부분 (동적 부분) -->
-                            <i class=""></i>
+                            <!--card1-->
+                            <div class="col" style="width: 900px;">
+                                <div class="card text-center shadow-sm bg-body-tertiary rounded" style="margin-bottom: 20px; width: 100%;">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge bg-secondary">
+                                                <span>작성일</span>
+                                            </span>
+                                            <div>&nbsp;2023-11-11</div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge bg-secondary">
+                                                <span>작성자</span>
+                                            </span>
+                                            <div>&nbsp;구구콘</div>
+                                        </div>
+                                        <div class="close">
+                                            <button style="color: transparent; background-color: transparent; border: none;">
+                                                <i class="fa-solid fa-times" style="color: red;"></i>
+                                            </button>    
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="container text-center">
+                                            <div class="row align-items-center g-1">
+                                                <div class="col-4">
+                                                    <img src="/images/" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
+                                                </div>
+                                                <div class="col-8" style="text-align: left;">
+                                                    <p class="card-text">너무 재밌는 영화였답니다!너무 재밌는 영화였답니다!너무 재밌는 영화였답니다!너무 재밌는 영화였답니다!너무 재밌는 영화였답니다!</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Add more cards as needed -->
                         </div>
                     </div>
                 </div>
             </div>
+            <!--전체 페이지 감싸는 div: 삭제하지 말 것!-->
         </div>
     </div>
 </body>

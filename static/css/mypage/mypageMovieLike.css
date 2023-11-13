@@ -1,3 +1,6 @@
+body {
+    font-size: 18px; /* Set the base font size for the entire page */
+}
 
 .p-3 {
     background-color: transparent;
@@ -13,18 +16,27 @@
     font-family: Noto Sans KR, 'Source Sans Pro';
     font-weight: 300;
 }
+
 .p-4 {
     background-color: transparent;
     border: 1px solid black;
     border-color: #DEE2E6;
     display: flex;
-    flex-direction: column;
-    row-gap: 30px;
+    flex-direction: column; /* Change row to column */
+    justify-content: space-between;
+    row-gap: 50px;
 }
-#MyPage_Profile{
+
+#MyPage_Profile {
     margin-top: 120px;
-    margin-left: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1000px; /* Set a maximum width for better centering on larger screens */
+    padding: 0 20px; /* Add some padding for better spacing */
+    box-sizing: border-box; /* Include padding in the total width */
+    margin-bottom: 30px;
 }
+
 
 /* 방문하지 않은 링크 스타일 */
 a:link {
