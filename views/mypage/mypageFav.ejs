@@ -3,28 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A500%2C700"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A500%2C700"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/mypage/mypageFav.css">
     <title>인생영화 등록</title>
+    
 </head>
 <body>
-    <div class="search">
-        <div>검색하여 인생작품 등록.</div>
-    </div>
-    
-    <div class="line">
-        라인
-    </div>
+    <div class="container">
+        <div style="font-size: 24px; font-weight: bold;">인생영화 등록</div>
 
-    <div>등록된 인생작품</div>
+        <div class="searchBox">
+            <form class="search" action="/searching" method="post">
+                <div class="input-group">
+                    <input class="form-control" type="search" placeholder="영화를 검색해보세요." aria-label="search" name="keyword"/>
+                    <span class="input-group-text" id="search-icon">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                </div>
+            </form>
+        </div>
 
-    <!-- 애를 foreach 돌리면 됨-->
-    <div class="favBox1">
-        <div class="moviePic">picture</div>
-        <div class="movieName">로렌스 애니웨이</div>
-        <div class="movieGenre">멜로/로멘스</div>
-        <div class="movieYear">2012</div>
-        <div class="close">엑스</div>
+        <div class="line"></div>
+
+        <div style="margin-bottom: 20px;">등록된 인생작품</div>
+
+        <!-- 애를 foreach 돌리면 됨-->
+        <div class="favBox1" style="margin-bottom: 20px;">
+            <div class="moviePic">picture</div>
+            <div class="movieName">로렌스 애니웨이</div>
+            <div class="movieGenre">멜로/로멘스</div>
+            <div class="movieYear">2012</div>
+            <div class="close">
+                <i class="fa-solid fa-times"></i>
+            </div>
+        </div>
+
+        <div class="favBox1" style="margin-bottom: 20px;">
+            <div class="moviePic">picture</div>
+            <div class="movieName">로렌스 애니웨이</div>
+            <div class="movieGenre">멜로/로멘스</div>
+            <div class="movieYear">2012</div>
+            <div class="close">
+                <i class="fa-solid fa-times"></i>
+            </div>
+        </div>
+
+        <div class="favBox1" style="margin-bottom: 20px;">
+            <div class="moviePic">picture</div>
+            <div class="movieName">로렌스 애니웨이</div>
+            <div class="movieGenre">멜로/로멘스</div>
+            <div class="movieYear">2012</div>
+            <div class="close">
+                <i class="fa-solid fa-times"></i>
+            </div>
+        </div>
+
+        <div class="favBox1" style="margin-bottom: 20px;">
+            <div class="moviePic">picture</div>
+            <div class="movieName">로렌스 애니웨이</div>
+            <div class="movieGenre">멜로/로멘스</div>
+            <div class="movieYear">2012</div>
+            <div class="close">
+                <i class="fa-solid fa-times"></i>
+            </div>
+        </div>
+
+        <div class="favBox1" style="margin-bottom: 20px;">
+            <div class="moviePic">picture</div>
+            <div class="movieName">로렌스 애니웨이</div>
+            <div class="movieGenre">멜로/로멘스</div>
+            <div class="movieYear">2012</div>
+            <div class="close">
+                <i class="fa-solid fa-times"></i>
+            </div>
+        </div>
+
+        <button>저장</button>
     </div>
-
-    <button>저장</button>
 </body>
 </html>

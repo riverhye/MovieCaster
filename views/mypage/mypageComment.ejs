@@ -11,8 +11,7 @@
     <link rel="stylesheet" href="/static/css/mypage/mypageComment.css">
     <title>마이페이지 내 코멘트 보기</title>
 </head>
-<body>
-    <body>        
+<body>  
         <!-- Mypage_Profile -->
         <div class="container overflow-hidden text-center" id="MyPage_Profile">
             <div class="title">
@@ -23,7 +22,7 @@
                 <div class="col-3">
                     <div class="p-3">
                         <!-- 사용자 이미지 표시 부분 -->
-                        <img src="/images/mypage/user.png" id="userImg" style="border-radius: 5px;"/>
+                        <img src="/images/mypage/" id="userImg" style="border-radius: 5px;"/>
                         
                         <!-- 사용자 이름 표시 부분 -->
                         <h5 id="userName">User Name</h5>
@@ -55,15 +54,12 @@
         <div class="row d-grid gap-3">
             <!-- card2_1 -->
             <div class="col-xl-12" id="cards">
-                <!-- Thymeleaf 데이터 사용 부분 삭제 -->
-
                 <div class="card text-center shadow-sm bg-body-tertiary rounded" style="margin-bottom: 20px;">
                     <div class="card-header" style="display: flex; justify-content: left; align-items: center;">
                         <span class="badge bg-secondary">
                             <span>작성일</span>
-                            <!-- Thymeleaf 데이터 사용 부분 삭제 -->
                         </span>
-                        <div>&nbsp;2023-11-11</div> <!-- 예시로 고정값 사용, 실제로는 동적 데이터 사용이 필요할 수 있습니다. -->
+                        <div>&nbsp;2023-11-11</div>
                     </div>
                     <div class="card-body">
                         <div class="container text-center">
@@ -78,14 +74,11 @@
                                     <div class="d-grip gap2">
                                         <div class="d-grip gap2">	
                                             <div>
-                                                <!-- 리뷰 작성 모달 -->
-                                                <!-- 삭제 -->
+                                                <!-- 코멘트 삭제 모달 -->
+                                                <!-- 정말 삭제하시겠습니까? -->
                                             </div>
 
-                                            <!-- 예약 취소 모달 -->
-                                            <!-- 삭제 -->
-
-                                            <!-- 영수증 확인 모달 -->                                                           
+                                            <!-- 코멘트 수정, 삭제 모달? 페이지? -->                                                           
                                             <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">수정</a>
                                             <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">삭제</a>
                                             <div class="modal" id="exampleReceiptModal">
@@ -99,10 +92,134 @@
                     </div>
                 </div>
             </div>
+
+            <!--card2-->
+            <div class="col-xl-12" id="cards">
+                <div class="card text-center shadow-sm bg-body-tertiary rounded" style="margin-bottom: 20px;">
+                    <div class="card-header" style="display: flex; justify-content: left; align-items: center;">
+                        <span class="badge bg-secondary">
+                            <span>작성일</span>
+                        </span>
+                        <div>&nbsp;2023-11-11</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container text-center">
+                            <div class="row align-items-center g-1">
+                                <div class="col-3">
+                                    <img src="/images/" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
+                                </div>
+                                <div class="col-6" style="text-align: left;">
+                                    <p class="card-text">너무 재밌는 영화였답니다!</p>
+                                </div>
+                                <div class="col-3 d-flex justify-content-end">
+                                    <div class="d-grip gap2">
+                                        <div class="d-grip gap2">	
+                                            <div>
+                                                <!-- 코멘트 삭제 모달 -->
+                                                <!-- 정말 삭제하시겠습니까? -->
+                                            </div>
+
+                                            <!-- 코멘트 수정, 삭제 모달? 페이지? -->                                                           
+                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">수정</a>
+                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">삭제</a>
+                                            <div class="modal" id="exampleReceiptModal">
+                                                <!-- 내용 유지 -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!--card2-->
+             <div class="col-xl-12" id="cards">
+                <div class="card text-center shadow-sm bg-body-tertiary rounded" style="margin-bottom: 20px;">
+                    <div class="card-header" style="display: flex; justify-content: left; align-items: center;">
+                        <span class="badge bg-secondary">
+                            <span>작성일</span>
+                        </span>
+                        <div>&nbsp;2023-11-11</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container text-center">
+                            <div class="row align-items-center g-1">
+                                <div class="col-3">
+                                    <img src="/images/" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
+                                </div>
+                                <div class="col-6" style="text-align: left;">
+                                    <p class="card-text">너무 재밌는 영화였답니다!</p>
+                                </div>
+                                <div class="col-3 d-flex justify-content-end">
+                                    <div class="d-grip gap2">
+                                        <div class="d-grip gap2">	
+                                            <div>
+                                                <!-- 코멘트 삭제 모달 -->
+                                                <!-- 정말 삭제하시겠습니까? -->
+                                            </div>
+
+                                            <!-- 코멘트 수정, 삭제 모달? 페이지? -->                                                           
+                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">수정</a>
+                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">삭제</a>
+                                            <div class="modal" id="exampleReceiptModal">
+                                                <!-- 내용 유지 -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <!--card2-->
+            <div class="col-xl-12" id="cards">
+                <div class="card text-center shadow-sm bg-body-tertiary rounded" style="margin-bottom: 20px;">
+                    <div class="card-header" style="display: flex; justify-content: left; align-items: center;">
+                        <span class="badge bg-secondary">
+                            <span>작성일</span>
+                        </span>
+                        <div>&nbsp;2023-11-11</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container text-center">
+                            <div class="row align-items-center g-1">
+                                <div class="col-3">
+                                    <img src="/images/" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
+                                </div>
+                                <div class="col-6" style="text-align: left;">
+                                    <p class="card-text">너무 재밌는 영화였답니다!</p>
+                                </div>
+                                <div class="col-3 d-flex justify-content-end">
+                                    <div class="d-grip gap2">
+                                        <div class="d-grip gap2">	
+                                            <div>
+                                                <!-- 코멘트 삭제 모달 -->
+                                                <!-- 정말 삭제하시겠습니까? -->
+                                            </div>
+
+                                            <!-- 코멘트 수정, 삭제 모달? 페이지? -->                                                           
+                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">수정</a>
+                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">삭제</a>
+                                            <div class="modal" id="exampleReceiptModal">
+                                                <!-- 내용 유지 -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">더보기</a>
+            <!--삭제하지 말아야 할 div-->
         </div>
     </div>
 </div>
-
-      </body>
 </body>
 </html>
