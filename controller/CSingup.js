@@ -1,15 +1,12 @@
+const {User} = require('../model');
+
 exports.signup = (req, res) => {
     res.render('signup');
 };
 
 exports.user_signup = (req, res) => {
-    console.log('req.body:', req.body);
-    SignUp.signup(req.body, (err)=>{
-        
-        if(err){
-            return
-        }else{
-            res.redirect('/')
-        }
-    })
+    User.create(req.body).then((result) => {
+        res.send(result);
+        console.log("signup result", result);
+    }).catch((err) => {res.status(500).send("오류 발생")});
 }

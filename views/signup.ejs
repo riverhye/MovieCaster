@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="/static/css/signup.css" />
     <title>회원가입</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <div class="body">
@@ -14,7 +15,7 @@
           <h2>회원가입</h2>
           <h4>회원가입을 위해 정보를 입력해 주세요.</h4>
         </div>
-        <form>
+        <form name="register">
           <div class="containerSub">
             <div class="idBox innerBox">
               <div class="idBoxR boxR">
@@ -83,7 +84,7 @@
             </div>
           </div>
           <br />
-          <input type="submit" class="buttonSubmit" value="회원가입" />
+          <input type="button" class="buttonSubmit" onclick="testSignUp()" value="회원가입" />
         </form>
       </div>
       <script>
@@ -98,6 +99,26 @@
         userPwRetype.onfocus = function (e) {};
         userEmail.onfocus = function (e) {};
         userNickname.onfocus = function (e) {};
+
+        function testSignUp() {
+          const form = document.forms["register"]
+          const data = {
+            userid: form.userid.value,
+            email: form.email.value,
+            nickname: form.nickname.value,
+            pw: form.pw.value,
+            img: "hi",
+            del_user_ch: 'n'
+          };
+          axios({
+            method: 'post',
+            url: '/signup',
+            data: data
+          }).then((res) => {
+            const result = res.data
+            console.log("res data result", result);
+          })
+        }
       </script>
     </div>
     <footer>

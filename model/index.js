@@ -1,22 +1,17 @@
-const mysql = require('mysql');
+const Sequelize = require("sequelize");
+const config = require("../config/config.json")["development"];
 
-const conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1234',
-  database: 'mc',
-});
+const db = {};
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config
+);
 
-// 회원가입(유저를 db에 저장)
-exports.user_signup = (data,cb) =>{
-    const sql = `insert into user (userid, pw, email, nickname) values('${data.userid}', '${data.pw}', '${data.email}','${data.nickname}')`
-    conn.query(sql, (err, result) => {
-        // err 변수가 빈 값이 아니라면, err가 발생했다는 것.
-        if (err) {
-          throw err;
-        }
-        console.log('visitor insert', result);
-        cb(result);
-      });
-}
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
+db.User = require("./User")(sequelize, Sequelize);
+
+module.exports = db;

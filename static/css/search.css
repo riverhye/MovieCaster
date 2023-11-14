@@ -1,12 +1,6 @@
-/* 전체 공통 */
-* {
-    box-sizing: border-box;
-}
+@import url('./index.css');
 
-a {
-    color: black;
-    text-decoration: none;
-}
+/* 전체 공통 */
 
 .search-container {
     width: 80%;
