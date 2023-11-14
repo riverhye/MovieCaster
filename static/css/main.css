@@ -118,9 +118,11 @@ body {
     font-size: 16px;
     cursor: pointer;
 }
-.heart.active {
+
+.heart-active {
     color: red;
 }
+
 .cloud-icon {
     color: darkblue;
     margin-right: 5px;
