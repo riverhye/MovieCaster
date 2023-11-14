@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/static/css/signup.css" />
+    <title>회원가입</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div class="body">
+      <div class="containerMain">
+        <div class="logoBox">Movie Caster</div>
+        <div class="signupMsgBox">
+          <h2>회원가입</h2>
+          <h4>회원가입을 위해 정보를 입력해 주세요.</h4>
+        </div>
+        <form name="register">
+          <div class="containerSub">
+            <div class="idBox innerBox">
+              <div class="idBoxR boxR">
+                <!-- 아이디 -->
+                <!-- 숫자+영문 대소문자 최소6/최대15 -->
+                <input
+                  type="text"
+                  name="userid"
+                  id="userid"
+                  required
+                  placeholder="아이디 입력"
+                  pattern="^[a-zA-Z0-9]+$"
+                  minlength="6"
+                  maxlength="15"
+                />
+                <div class="idValidityMsg"></div>
+              </div>
+            </div>
+            <div class="pwBox innerBox">
+              <div class="pwBoxR boxR">
+                <!-- 비밀번호 -->
+                <!-- 최소8/최대16 숫자,영문,특수문자 각 1개 이상 -->
+                <input
+                  type="password"
+                  id="pw"
+                  name="pw"
+                  required
+                  placeholder="비밀번호"
+                  pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$"
+                />
+                <div class="pwValidityMsg"></div>
+              </div>
+            </div>
+            <div class="pwCheckBox innerBox">
+              <div class="pwCheckBoxR boxR">
+                <!-- 비밀번호 확인 -->
+                <!-- 위의 pw와 일치하는지만 -->
+                <input type="password" id="pwRetype" placeholder="비밀번호 확인" />
+                <div class="pwCheckValidityMsg"></div>
+              </div>
+            </div>
+            <div class="emailBox innerBox">
+              <div class="emailBoxR boxR">
+                <!-- 이메일 -->
+                <!-- email 형식 자동포함 -->
+                <input type="email" name="email" id="email" required placeholder="이메일" />
+                <div class="emailValidityMsg"></div>
+              </div>
+            </div>
+            <div class="nicknameBox innerBox">
+              <div class="nicknameBoxR boxR">
+                <!-- 닉네임 -->
+                <!-- 한글 최소3 최대 5 -->
+                <input
+                  type="text"
+                  name="nickname"
+                  id="nickname"
+                  required
+                  placeholder="닉네임"
+                  pattern="^[가-힣]+$"
+                  minlength="3"
+                  maxlength="5"
+                />
+                <div class="nicknameValidityMsg"></div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <input type="button" class="buttonSubmit" onclick="testSignUp()" value="회원가입" />
+        </form>
+      </div>
+      <script>
+        const userId = document.querySelector('#userid').value;
+        const userPw = document.querySelector('#pw').value;
+        const userPwRetype = document.querySelector('#pwRetype').value;
+        const userEmail = document.querySelector('#email').value;
+        const userNickname = document.querySelector('#nickname').value;
+
+        userId.onfocus = function (e) {};
+        userPw.onfocus = function (e) {};
+        userPwRetype.onfocus = function (e) {};
+        userEmail.onfocus = function (e) {};
+        userNickname.onfocus = function (e) {};
+
+        function testSignUp() {
+          const form = document.forms["register"]
+          const data = {
+            userid: form.userid.value,
+            email: form.email.value,
+            nickname: form.nickname.value,
+            pw: form.pw.value,
+            img: "hi",
+            del_user_ch: 'n'
+          };
+          axios({
+            method: 'post',
+            url: '/signup',
+            data: data
+          }).then((res) => {
+            const result = res.data
+            console.log("res data result", result);
+          })
+        }
+      </script>
+    </div>
+    <footer>
+      <div class="footer">
+        <strong>주식회사</strong> 무비캐스터 <strong>대표</strong> 4FLEX 서울특별시 용산구 청파로
+        109(나진전자월드상가) 3층 <br />
+        <strong>사업자 등록 번호</strong> 595-95-0099 <br />
+        © 2023 by MovieCaster, Inc. All rights reserved. <br />
+      </div>
+    </footer>
+  </body>
+</html>
