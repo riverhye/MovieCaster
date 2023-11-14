@@ -1,5 +1,5 @@
 body {
-    font-size: 18px; /* Set the base font size for the entire page */
+    font-size: 18px; 
 }
 
 .p-3 {
@@ -24,7 +24,7 @@ body {
     display: flex;
     flex-direction: column; /* Change row to column */
     justify-content: space-between;
-    row-gap: 50px;
+    row-gap: 50px !important;
 }
 
 #MyPage_Profile {
@@ -41,6 +41,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 20px; /* Adjust the gap between columns */
+    
 }
 
 #userImg {
