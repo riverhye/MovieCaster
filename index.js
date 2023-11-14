@@ -27,9 +27,6 @@ app.use("/signin", signinRouter);
 const signupRouter = require("./routes/signup");
 app.use("/signup", signupRouter);
 
-const signupRouter_db = require("./routes/user_signup");
-app.use("/user_signup", signupRouter_db);
-
 const findidRouter = require("./routes/findid");
 app.use("/findid", findidRouter);
 
