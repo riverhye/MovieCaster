@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/css/detail.css" />
+    <link rel="stylesheet" href="../static/css/footer.css" />
     <title>상세페이지</title>
   </head>
   <body>
@@ -11,40 +12,57 @@
     <header></header>
     <!-- grid row1 -->
     <div class="gridRow1 container">
-      <div id="userRate1" class="userRates">4.5 / 5.0</div>
+      <div class="reviewContainer">
+        <div id="userRate1" class="userRates">4.5</div>
+        /5.0
+      </div>
       <div class="reviewBox1 reviewBoxes">
         <div id="review1" class="reviews">짱구: 재밌어요</div>
       </div>
-      <div id="userRate2" class="userRates">2.7 / 5.0</div>
+      <div class="reviewContainer">
+        <div id="userRate2" class="userRates">2.7</div>
+        /5.0
+      </div>
       <div class="reviewBox2 reviewBoxes">
         <div id="review2" class="reviews">짱아: 재미없어요</div>
       </div>
-      <div id="userRate3" class="userRates">0.0 / 5.0</div>
+      <div class="reviewContainer">
+        <div id="userRate3" class="userRates">0.0</div>
+        /5.0
+      </div>
       <div class="reviewBox3 reviewBoxes">
         <div id="review3" class="reviews">수지: 안봤어요</div>
       </div>
-      <div class="myReview">
+      <form class="myReview">
         <input type="text" class="writeReview" id="userReview" placeholder="리뷰를 작성해보세요" />
-        <div id="myRate" class="myRate">4.5/5.0</div>
+        <input type="text" class="myRating" required />
+        <div id="myRate" class="myRate">/5.0</div>
         <input type="submit" class="submitReview" />
-      </div>
+      </form>
     </div>
 
     <!-- grid row2 -->
     <div class="gridRow2 container">
+      <!-- 포스터 api 받아오기 -->
       <div class="poster"><img />포스터</div>
       <div class="rates">
+        <!-- 평점 api 받아오기 -->
         <div id="boxOfficeRate">평점:</div>
+        <!-- 관객수 api 받아오기 -->
         <div id="viewers">관객수:</div>
+        <!-- 개봉일 api 받아오기 -->
         <div id="madeYear">개봉일:</div>
       </div>
       <div class="directors">
+        <!-- 감독 api 받아오기 -->
         <div id="director">감독:</div>
       </div>
       <div class="actors">
+        <!-- 배우 api 받아오기 -->
         <div id="actor">배우:</div>
       </div>
       <div class="summaries">
+        <!-- 줄거리 api 받아오기 -->
         <div id="summary">영화 줄거리</div>
       </div>
     </div>
@@ -62,5 +80,13 @@
     </div>
 
     <!-- 푸터 삽입 -->
+    <footer>
+      <div class="footer">
+        <strong>주식회사</strong> 무비캐스터 <strong>대표</strong> 4FLEX 서울특별시 용산구 청파로
+        109(나진전자월드상가) 3층 <br />
+        <strong>사업자 등록 번호</strong> 595-95-0099 <br />
+        © 2023 by MovieCaster, Inc. All rights reserved. <br />
+      </div>
+    </footer>
   </body>
 </html>

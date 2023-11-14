@@ -1,17 +1,28 @@
-body {
+.body {
   display: flex;
   justify-content: center;
 }
 .containerMain {
   position: relative;
   top: 80px;
-  border: 3px solid gray;
+  border: 2px solid lightgray;
   border-radius: 20px;
-  width: 680px;
+  width: 580px;
   height: 750px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 100px;
+}
+.logoBox {
+  position: relative;
+  margin-top: 60px;
+  right: 150px;
+}
+.signinMsgBox {
+  margin-top: 20px;
+  width: 400px;
+  position: relative;
 }
 .containerSub {
   position: relative;
@@ -22,7 +33,7 @@ body {
   flex-direction: row;
   margin-top: 5px;
 }
-.innerBox .boxL {
+/* .innerBox .boxL {
   margin-right: 5px;
   display: flex;
   align-items: center;
@@ -31,47 +42,44 @@ body {
   background-color: lightgrey;
   width: 200px;
   height: 80px;
-}
+} */
 .innerBox .boxR {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  background-color: rgb(228, 226, 226);
+  justify-content: center;
+  /* background-color: rgb(228, 226, 226); */
   width: 400px;
   height: 80px;
+  /* right: 25px; */
 }
-.boxR input {
-  margin-left: 30px;
-}
-
-input[type="text"],
-[type="password"] {
-  height: 30px;
-  width: 180px;
+input[type='text'],
+[type='password'] {
+  height: 50px;
+  width: 220px;
   font-size: 18px;
-  border: 0;
+  border: 1px solid lightgray;
   border-radius: 5px;
   outline: none;
   padding-inline-start: 10px;
   box-shadow: 3px 3px 3px lightgrey;
 }
-input[type="button"] {
+input[type='button'] {
   box-shadow: 3px 3px 3px lightgrey;
   width: 75px;
 }
 
 .buttonLogin {
   position: relative;
-  top: 250px;
+  top: 20px;
 }
 .buttonSubmit {
   position: relative;
-  top: 280px;
+  top: 100px;
 }
 .findBox {
   display: flex;
   position: relative;
-  top: 260px;
+  top: 30px;
 }
 .findId {
   color: blue;
@@ -82,4 +90,16 @@ input[type="button"] {
   color: blue;
   font-size: 10px;
   margin-left: 10px;
+}
+.findId:hover {
+  text-decoration: underline;
+}
+.findPw:hover {
+  text-decoration: underline;
+}
+.footer {
+  margin: 40px 0 50px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.7;
 }

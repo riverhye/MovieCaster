@@ -7,35 +7,55 @@
     <title>로그인</title>
   </head>
   <body>
-    <div class="containerMain">
-      <h2>로그인</h2>
-      <div class="containerSub">
-        <div class="idBox innerBox">
-          <div class="idBoxL boxL">
+    <div class="body">
+      <div class="containerMain">
+        <div class="logoBox">Movie Caster</div>
+        <div class="signinMsgBox">
+          <h2>로그인</h2>
+          <h4>로그인을 위해 아이디와 비밀번호를 입력해주세요.</h4>
+        </div>
+        <div class="containerSub">
+          <div class="idBox innerBox">
+            <!-- <div class="idBoxL boxL">
             아이디
+          </div> -->
+            <div class="idBoxR boxR">
+              <input type="text" required placeholder="아이디" />
+            </div>
           </div>
-          <div class="idBoxR boxR">
-            <input type="text" required />
-          </div>
-        </div>
-        <div class="pwBox innerBox">
-          <div class="pwBoxL boxL">
+          <div class="pwBox innerBox">
+            <!-- <div class="pwBoxL boxL">
             비밀번호
-          </div>
-          <div class="pwBoxR boxR">
-            <input type="password" required />
+          </div> -->
+            <div class="pwBoxR boxR">
+              <input type="password" required placeholder="비밀번호" />
+            </div>
           </div>
         </div>
+        <br />
+        <!-- 로그인: button type="submit"으로 변경예정 -->
+        <input type="button" value="로그인" class="buttonLogin" onclick="" />
+        <div class="findBox">
+          <div class="findId" onclick="location.href='/findid'">아이디 찾기</div>
+          <div class="findPw" onclick="location.href='/findPw'">비밀번호 찾기</div>
+        </div>
+        <br />
+        <input
+          type="button"
+          value="회원가입"
+          class="buttonSubmit"
+          onclick="location.href='/signup'"
+        />
       </div>
-      <br />
-      <input type="button" value="로그인" class="buttonLogin" onclick="" />
-      <div class="findBox">
-        <div class="findId" onclick="">아이디 찾기</div>
-        <div class="findPw">비밀번호 찾기</div>
-      </div>
-      <br />
-      <input type="button" value="회원가입" class="buttonSubmit" onclick="" />
+      <script></script>
     </div>
-    <script></script>
+    <footer>
+      <div class="footer">
+        <strong>주식회사</strong> 무비캐스터 <strong>대표</strong> 4FLEX 서울특별시 용산구 청파로
+        109(나진전자월드상가) 3층 <br />
+        <strong>사업자 등록 번호</strong> 595-95-0099 <br />
+        © 2023 by MovieCaster, Inc. All rights reserved. <br />
+      </div>
+    </footer>
   </body>
 </html>

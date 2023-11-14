@@ -1,81 +1,90 @@
-body {
+.body {
   display: flex;
   justify-content: center;
 }
 .containerMain {
   position: relative;
   top: 80px;
-  border: 3px solid gray;
+  border: 2px solid lightgray;
   border-radius: 20px;
-  width: 680px;
+  width: 580px;
   height: 750px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 100px;
+}
+.logoBox {
+  position: relative;
+  margin-top: 60px;
+  right: 150px;
+}
+.signupMsgBox {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  width: 400px;
+  position: relative;
 }
 .innerBox {
   display: flex;
   flex-direction: row;
   margin-top: 5px;
 }
-.innerBox .boxL {
-  margin-right: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  background-color: lightgrey;
-  width: 200px;
-  height: 80px;
-}
+
 .innerBox .boxR {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background-color: rgb(228, 226, 226);
   width: 400px;
   height: 80px;
 }
-.boxR input {
-  margin-left: 30px;
-}
-.star {
-  color: red;
-}
-.buttonImg {
+/* stay hidden/but/ show when input is focused */
+.ValidityMsgErr {
+  width: 150px;
+  height: 30px;
+  font-size: 10px;
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
-}
-.profileImg {
-  margin-left: 30px;
-  border: 1px solid black;
-  border-radius: 50px;
-  width: 50px;
-  height: 50px;
-}
-.delete {
-  margin-top: 10px;
-}
-.warning {
-  font-size: 12px;
+  justify-content: flex-end;
+  margin-left: 5px;
   position: relative;
-  left: 190px;
+  top: 5px;
+  color: red;
 }
-input[type="text"],
-[type="password"],
-[type="email"] {
+/* stay hidden/but/ change (.ValidityMsgErr to this) when validityCheck=true */
+.ValidityMsg {
+  width: 150px;
   height: 30px;
-  width: 180px;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-left: 5px;
+  position: relative;
+  top: 5px;
+  color: blue;
+}
+input[type='text'],
+[type='password'],
+[type='email'] {
+  height: 50px;
+  width: 220px;
   font-size: 18px;
-  border: 0;
+  border: 1px solid lightgray;
   border-radius: 5px;
   outline: none;
   padding-inline-start: 10px;
   box-shadow: 3px 3px 3px lightgrey;
 }
-input[type="button"],
-[type="file"] {
+input[type='submit'] {
   box-shadow: 3px 3px 3px lightgrey;
   width: 75px;
+  position: relative;
+  left: 160px;
+}
+.footer {
+  margin: 40px 0 50px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.7;
 }
