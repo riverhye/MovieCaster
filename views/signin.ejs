@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/css/signin.css" />
     <title>로그인</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <div class="body">
@@ -14,38 +15,35 @@
           <h2>로그인</h2>
           <h4>로그인을 위해 아이디와 비밀번호를 입력해주세요.</h4>
         </div>
-        <div class="containerSub">
-          <div class="idBox innerBox">
-            <!-- <div class="idBoxL boxL">
+        <form name="signin">
+          <div class="containerSub">
+            <div class="idBox innerBox">
+              <!-- <div class="idBoxL boxL">
             아이디
           </div> -->
-            <div class="idBoxR boxR">
-              <input type="text" required placeholder="아이디" />
+              <div class="idBoxR boxR">
+                <input type="text" required placeholder="아이디" id="userid" />
+              </div>
             </div>
-          </div>
-          <div class="pwBox innerBox">
-            <!-- <div class="pwBoxL boxL">
+            <div class="pwBox innerBox">
+              <!-- <div class="pwBoxL boxL">
             비밀번호
           </div> -->
-            <div class="pwBoxR boxR">
-              <input type="password" required placeholder="비밀번호" />
+              <div class="pwBoxR boxR">
+                <input type="password" required placeholder="비밀번호" id="pw" />
+              </div>
             </div>
           </div>
-        </div>
-        <br />
-        <!-- 로그인: button type="submit"으로 변경예정 -->
-        <input type="button" value="로그인" class="buttonLogin" onclick="" />
+          <br />
+          <!-- 로그인: button type="submit"으로 변경예정 -->
+          <input type="button" value="로그인" class="buttonLogin" onclick="SignIn()" />
+        </form>
         <div class="findBox">
           <div class="findId" onclick="location.href='/findid'">아이디 찾기</div>
           <div class="findPw" onclick="location.href='/findPw'">비밀번호 찾기</div>
         </div>
         <br />
-        <input
-          type="button"
-          value="회원가입"
-          class="buttonSubmit"
-          onclick="location.href='/signup'"
-        />
+        <input type="button" value="회원가입" class="buttonSubmit" onclick="location.href='/signup'" />
       </div>
       <script></script>
     </div>
@@ -57,5 +55,30 @@
         © 2023 by MovieCaster, Inc. All rights reserved. <br />
       </div>
     </footer>
+    <script>
+      function SignIn() {
+        const form = document.forms['signin'];
+        const data = {
+          userid: form.userid.value,
+          pw: form.pw.value,
+        };
+        console.log(data.userid);
+        console.log(data.pw);
+        axios({
+          method: 'post',
+          url: '/signin',
+          data: data,
+        }).then((res) => {
+          const result = res.data;
+          console.log('res data: ', result);
+          if (res.data.isSuccess) {
+            console.log('로그인 성공!');
+          } else {
+            console.log('로그인 실패');
+            alert('아이디와 비밀번호를 다시 입력해 주세요');
+          }
+        });
+      }
+    </script>
   </body>
 </html>
