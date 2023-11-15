@@ -49,13 +49,15 @@ body {
 }
 
 .section__poster-body {
-    border: 1px solid black;
     margin-top: 20px;
     border-radius: 20px;
-    width: 80%;
+    width: 70%;
     height: 300px;
     cursor: pointer;
+    text-align: center;
+    overflow: hidden;
 }
+
 
 /* section 1 */
 .best-movie__comment-list {
@@ -76,12 +78,6 @@ body {
 }
 
 /* 텍스트 */
-.text-sm {
-    margin-top: 9px;
-    font-size: 14px;
-    position: relative;
-}
-
 .nickname-sm {
     color: rgba(0, 0, 0, 0.6);
 }
@@ -91,13 +87,22 @@ body {
     font-weight: 600;
 }
 
+.text-sm {
+    margin-top: 9px;
+    font-size: 14px;
+    position: relative;
+}
+
 .movie-title__large {
     margin-top: 10px;
     height: 50px;
+    font-weight: 600;
+    font-size: 20px;
 }
 
 .comment-sm {
     height: 60px;
+    font-size: 15px;
 }
 
 .md-movie__title {
@@ -131,16 +136,13 @@ body {
 .arrow-icon {
     font-size: 50px;
     position: absolute;
+    top: 160px;
 }
 
 .left-arrow {
-    left: 3px;
+    left: 7px;
 }
 
 .right-arrow {
-    right: 3px;
-}
-
-.arrow {
-    top: 110px;
+    right: 7px;
 }
