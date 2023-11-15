@@ -9,7 +9,4 @@ exports.user_signup = (req, res) => {
     res.send({ user: true });
     console.log('signup result', user);
   });
-  // .catch((err) => {
-  //   res.status(500).send('오류 발생');
-  // });
 };

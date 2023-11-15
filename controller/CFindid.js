@@ -4,17 +4,15 @@ exports.findid = (req, res) => {
   res.render('findid');
 };
 
-exports.post_findid = (req, res) => {
+exports.user_findid = (req, res) => {
   User.findOne({
     where: { email: req.body.email },
   }).then((user) => {
-    let data;
-
+    let idFound;
     if (user) {
-      data = { isSuccess: true };
-    } else {
-      data = { isSuccess: false };
+      idFound = user.userid;
+      console.log('userid: ', idFound);
     }
-    res.send(data);
+    res.send(idFound);
   });
 };

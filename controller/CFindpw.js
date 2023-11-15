@@ -4,17 +4,15 @@ exports.findpw = (req, res) => {
   res.render('findpw');
 };
 
-exports.post_findpw = (req, res) => {
+exports.user_findpw = (req, res) => {
   User.findOne({
-    where: { id: req.body.id, email: req.body.email },
+    where: { userid: req.body.userid, email: req.body.email },
   }).then((user) => {
-    let data;
-
+    let pwFound;
     if (user) {
-      data = { isSuccess: true };
-    } else {
-      data = { isSuccess: false };
+      pwFound = user.pw;
+      console.log('pw: ', pwFound);
     }
-    res.send(data);
+    res.send(pwFound);
   });
 };

@@ -27,10 +27,11 @@
                 <input type="password" required placeholder="비밀번호" id="pw" />
               </div>
             </div>
+            <div class="invalidUserData"></div>
           </div>
           <br />
         </form>
-        <button class="buttonLogin" class="button" onclick="LogIn()"></button>
+        <button class="buttonLogin" type="button" onclick="LogIn()">로그인</button>
         <div class="findBox">
           <div class="findId" onclick="location.href='/findid'">아이디 찾기</div>
           <div class="findPw" onclick="location.href='/findPw'">비밀번호 찾기</div>
@@ -70,9 +71,12 @@
           console.log('res data: ', result);
           if (res.data.isSuccess) {
             console.log('로그인 성공!');
+            location.href = '/';
           } else {
             console.log('로그인 실패');
-            alert('아이디와 비밀번호를 다시 입력해 주세요');
+            document.querySelector(
+              '.invalidUserData'
+            ).innerHTML = `아이디와 비밀번호를 확인해 주세요!`;
           }
         });
       }
