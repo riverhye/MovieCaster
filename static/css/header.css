@@ -59,15 +59,13 @@ body {
 .box-office-slider {
     position: absolute;
     top: 25px;
-    left: 0px;
+    left: 20px;
     display: flex;
 }
 
 .box-office-poster {
     width: 200px;
     height: 200px;
-    background-color: green;
-    border: 1px solid red;
     margin: 0 50px;
     cursor: pointer;
 }
