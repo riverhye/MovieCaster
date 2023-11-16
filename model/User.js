@@ -36,6 +36,6 @@ function User (Sequelize, DataTypes) {
         freezeTableName: true,
         timestamps: false
     })
-
+}
 
 module.exports = User;
