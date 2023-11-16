@@ -1,4 +1,7 @@
-function movie_like(Sequelize, DataTypes) {
+const { User } = require('./User');
+const { Movie_info } = require('./MovieInfo');
+
+function Movie_like(Sequelize, DataTypes) {
     return Sequelize.define(
       'movie_like',
       {
@@ -30,4 +33,4 @@ function movie_like(Sequelize, DataTypes) {
     );
   }
   
-  module.exports = movie_like;
+  module.exports = Movie_like;

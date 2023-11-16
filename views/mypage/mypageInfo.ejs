@@ -47,6 +47,7 @@
         <!--right-->
         <div class="col-6">
             <div class="p-4">
+                <% for (let i = 0; i < data.length; i++) { %>
                 <form action="/mypage/mypage/update" method="post"  enctype="multipart/form-data" id="updateUser">
                     <div class="profileBtn" style="margin-bottom: 20px;">
                         <input type="reset" value="취소" class="btn btn-sm" id="cancelBtn">
@@ -62,7 +63,7 @@
                     <div class="row" id="userInfo" style="margin-bottom: 10px;">
                         <div class="col">
                             <span style="font-family: Noto Sans KR, 'Source Sans Pro'; white-space: nowrap;">이메일</span>
-                            <span id="email_placeholder">eunkoo@example.com</span>
+                            <span id="email_placeholder"><%= data.email %></span>
                         </div>
                         <div class="col">
                             <span style="font-family: Noto Sans KR, 'Source Sans Pro'; white-space: nowrap;">닉네임</span>
@@ -80,7 +81,7 @@
                     </div>
                 </form>
             </div>
-
+            <% } %>
             <div class="p-4">
               <form action="/mypage/mypage/update" method="post"  enctype="multipart/form-data" id="updateUser">
                 <span style="font-family: Noto Sans KR, 'Source Sans Pro';;">인생작품</span> 
