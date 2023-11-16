@@ -1,11 +1,10 @@
-const express = require('express');
+const express = require("express");
 const detailRouter = express.Router();
-const controller = require('../controller/CDetail');
+const controller = require("../controller/CDetail");
 
-detailRouter.get('/', controller.detail);
-// 아래로 미완
-detailRouter.get('/', controller.one_line_comment);
-detailRouter.post('/', controller.one_line_comment_new);
-detailRouter.post('/', controller.movie_detail);
+detailRouter.get("/", controller.detail);
+detailRouter.get("/", controller.comment);
+detailRouter.post("/", controller.comment);
+detailRouter.post("/", controller.movie_detail);
 
 module.exports = detailRouter;

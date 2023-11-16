@@ -1,5 +1,6 @@
 const { User } = require('./User');
 
+
 function Comment(Sequelize, DataTypes) {
   return Sequelize.define(
     "comment",
@@ -32,11 +33,11 @@ function Comment(Sequelize, DataTypes) {
       },
       timestamp: {
         type: DataTypes.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
     },
     {
-      tableName: 'comment',
+      tableName: "comment",
       freezeTableName: true,
       timestamps: false,
 

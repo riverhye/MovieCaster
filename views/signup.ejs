@@ -21,14 +21,7 @@
               <div class="idBoxR boxR">
                 <!-- 아이디 -->
                 <!-- 숫자+영문 대소문자 최소6/최대15 -->
-                <input
-                  type="text"
-                  name="userid"
-                  id="userid"
-                  required
-                  placeholder="아이디 입력"
-                  oninput="validCheckId(this)"
-                />
+                <input type="text" name="userid" id="userid" required placeholder="아이디 입력" oninput="validCheckId(this)" />
                 <!-- pattern="^[a-zA-Z0-9]+$"////// -->
                 <!-- minlength="6" maxlength="15"  -->
                 <div class="idValidMsg hide validMsg">사용 가능한 아이디 입니다.</div>
@@ -39,14 +32,7 @@
               <div class="pwBoxR boxR">
                 <!-- 비밀번호 -->
                 <!-- 최소8/최대16 숫자,영문,특수문자 각 1개 이상 -->
-                <input
-                  type="password"
-                  id="pw"
-                  name="pw"
-                  required
-                  placeholder="비밀번호"
-                  oninput="validCheckPw(this)"
-                />
+                <input type="password" id="pw" name="pw" required placeholder="비밀번호" oninput="validCheckPw(this)" />
                 <!-- pattern=" ^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$" -->
                 <div class="pwValidMsg hide validMsg">사용 가능한 비밀번호 입니다.</div>
                 <div class="pwInvalidMsg hide invalidMsg">사용 불가능한 비밀번호 입니다.</div>
@@ -56,12 +42,7 @@
               <div class="pwCheckBoxR boxR">
                 <!-- 비밀번호 확인 -->
                 <!-- 위의 pw와 일치하는지만 -->
-                <input
-                  type="password"
-                  id="pwRetype"
-                  placeholder="비밀번호 확인 "
-                  oninput="validCheckPwRetype(this)"
-                />
+                <input type="password" id="pwRetype" placeholder="비밀번호 확인 " oninput="validCheckPwRetype(this)" />
                 <div class="pwRetypeValidMsg hide validMsg">비밀번호가 일치합니다.</div>
                 <div class="pwRetypeInvalidMsg hide invalidMsg">비밀번호가 일치하지 않습니다.</div>
               </div>
@@ -70,14 +51,7 @@
               <div class="emailBoxR boxR">
                 <!-- 이메일 -->
                 <!-- email 형식 자동포함 -->
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  required
-                  placeholder="이메일"
-                  oninput="validCheckEmail(this)"
-                />
+                <input type="email" name="email" id="email" required placeholder="이메일" oninput="validCheckEmail(this)" />
                 <div class="emailValidMsg hide validMsg">사용 가능한 이메일 입니다.</div>
                 <div class="emailInvalidMsg hide invalidMsg">유효하지 않은 이메일 입니다.</div>
               </div>
@@ -86,14 +60,7 @@
               <div class="nicknameBoxR boxR">
                 <!-- 닉네임 -->
                 <!-- 한글 최소2 최대 5 -->
-                <input
-                  type="text"
-                  name="nickname"
-                  id="nickname"
-                  required
-                  placeholder="닉네임"
-                  oninput="validCheckNickname(this)"
-                />
+                <input type="text" name="nickname" id="nickname" required placeholder="닉네임" oninput="validCheckNickname(this)" />
                 <!-- pattern="^[가-힣]+$" minlength="3" maxlength="5"  -->
                 <div class="nicknameValidMsg hide validMsg">사용 가능한 닉네임 입니다.</div>
                 <div class="nicknameInvalidMsg hide invalidMsg">사용 불가능한 닉네임 입니다.</div>
@@ -186,6 +153,7 @@
           document.querySelector('.nicknameValidMsg').classList.add('hide');
         }
       }
+
       function userSignUp() {
         const form = document.forms['register'];
         const data = {
