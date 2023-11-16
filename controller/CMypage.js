@@ -1,4 +1,4 @@
-const { User, Comment, Movie_like, Movie_info } = require('../model'); 
+const { User, Comment, Movie_like, Movie_info, Fav_movie, Comment_like } = require('../model'); 
 
 //마이페이지 메인 이동
 exports.mypage = (req, res) => {
@@ -73,10 +73,6 @@ exports.mycomment = async (req, res) => {
   }
 };
 
-//내 프로필 가져오기
-exports.get_profile = (req, res) => {
-};
-
 //내 프로필 수정하기
 exports.update_profile = (req, res) => {
 };
@@ -98,9 +94,38 @@ exports.delete_comment_like = (req, res) => {
 };
 
 //내가 작성한 코멘트 수정하기
-exports.write_rate_comment = (req, res) => {
+exports.update_comment = (req, res) => {
 };
 
-//내가 작성한 코멘트 삭제하기
-exports.delete_comment = (req, res) => {
+
+//내가 작성한 코멘트 삭제하기 /mypage/mycomment/:id 
+exports.delete_comment = async (req, res) => {
+  try {
+    const targetUserIdx = 1;
+    const commentId = req.params.id;
+
+    // 먼저 Comment_like 테이블에서 해당 commentId에 대한 레코드를 삭제합니다.
+    await Comment_like.destroy({
+      where: {
+        commentid: commentId,
+      },
+    });
+
+    // 그 후 Comment 테이블에서 해당 commentId에 대한 레코드를 삭제합니다.
+    const result = await Comment.destroy({
+      where: {
+        useridx: targetUserIdx,
+        commentid: commentId,
+      },
+    });
+
+    if (result === 0) {
+      return res.status(404).send({ error: 'Comment not found' });
+    }
+
+    res.send({ result: true });
+  } catch (error) {
+    console.error('Error deleting comment:', error);
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
 };
