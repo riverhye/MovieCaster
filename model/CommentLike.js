@@ -27,5 +27,10 @@ function Comment_like(Sequelize, DataTypes) {
       }
     );
   }
-  
+  Comment_like.associate = (model) => {
+    Comment_like.belongsTo(model.Comment, {
+      foreignKey: 'commentidx',
+      onDelete: 'CASCADE', // cascade deletion을 위해 중요한 부분입니다
+    });
+  };
   module.exports = Comment_like;

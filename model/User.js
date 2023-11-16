@@ -34,7 +34,8 @@ function User (Sequelize, DataTypes) {
     {
         tableName: "user",
         freezeTableName: true,
-        timestamps: false
+        timestamps: false,
+        onDelete: "cascade",
     })
 }
 

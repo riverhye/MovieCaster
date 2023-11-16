@@ -17,5 +17,6 @@ db.Comment = require("./Comment")(sequelize, Sequelize);
 db.Movie_info = require("./MovieInfo")(sequelize, Sequelize);
 db.Movie_like = require("./MovieLike")(sequelize, Sequelize);
 db.Comment_like = require("./CommentLike")(sequelize, Sequelize);
+db.Fav_movie = require("./FavMovie")(sequelize, Sequelize);
 
 module.exports = db;
