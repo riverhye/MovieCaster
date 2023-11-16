@@ -24,12 +24,11 @@ function User(Sequelize, DataTypes) {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
-      del_user_ch: {
-        type: DataTypes.STRING(1),
-        default: "n",
-      },
       img: {
         type: DataTypes.STRING(255),
+      },
+      del_user_ch: {
+        type: DataTypes.STRING(1),
       },
     },
     {

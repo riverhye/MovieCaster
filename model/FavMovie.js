@@ -30,4 +30,4 @@ function fav_movie(Sequelize, DataTypes) {
     );
   }
   
-  module.exports = fav_movie;
+  module.exports = Fav_movie;

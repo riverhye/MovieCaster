@@ -1,6 +1,9 @@
-function comment(Sequelize, DataTypes) {
+const { User } = require("./User");
+
+function Comment(Sequelize, DataTypes) {
   return Sequelize.define(
     "comment",
+
     {
       commentid: {
         type: DataTypes.INTEGER,
@@ -40,4 +43,4 @@ function comment(Sequelize, DataTypes) {
   );
 }
 
-module.exports = comment;
+module.exports = Comment;
