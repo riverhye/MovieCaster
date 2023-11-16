@@ -1,4 +1,5 @@
-const { User } = require("./User");
+const { User } = require('./User');
+
 
 function Comment(Sequelize, DataTypes) {
   return Sequelize.define(
@@ -39,8 +40,8 @@ function Comment(Sequelize, DataTypes) {
       tableName: "comment",
       freezeTableName: true,
       timestamps: false,
-    }
-  );
+
+    });
 }
 
 module.exports = Comment;
