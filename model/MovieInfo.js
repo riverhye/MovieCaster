@@ -12,38 +12,19 @@ function Movie_info(Sequelize, DataTypes) {
           type: DataTypes.STRING(100),
           allowNull: false,
         },
-        description: {
+        overview: {
           type: DataTypes.STRING(4000),
           allowNull: false,
+          defaultValue: '정보 없음'
         },
-        director: {
-          type: DataTypes.STRING(100),
-          allowNull: false,
+        release_date: {
+          type: DataTypes.STRING(50),
+          allowNull: false
         },
-        date: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
-        },
-        age: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        pic1: {
-            type: DataTypes.STRING(255),
-            allowNull: false,
-        },
-        pic2: {
-            type: DataTypes.STRING(255),
-            allowNull: false,
-        },
-        pic3: {
-            type: DataTypes.STRING(255),
-            allowNull: false,
-        },
-        genre: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
-        },
+        poster_path: {
+          type: DataTypes.STRING(50),
+          allowNull: false
+        }
       },
       {
         tableName: 'movie_info',
