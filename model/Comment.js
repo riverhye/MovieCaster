@@ -1,6 +1,6 @@
 function comment(Sequelize, DataTypes) {
   return Sequelize.define(
-    'comment',
+    "comment",
     {
       commentid: {
         type: DataTypes.INTEGER,
@@ -29,11 +29,11 @@ function comment(Sequelize, DataTypes) {
       },
       timestamp: {
         type: DataTypes.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
     },
     {
-      tableName: 'comment',
+      tableName: "comment",
       freezeTableName: true,
       timestamps: false,
     }

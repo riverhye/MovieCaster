@@ -35,9 +35,17 @@
       </div>
       <form class="myReview">
         <input type="text" class="writeReview" id="userReview" placeholder="리뷰를 작성해보세요" />
-        <input type="text" class="myRating" required />
-        <div id="myRate" class="myRate">/5.0</div>
         <input type="submit" class="submitReview" />
+      </form>
+      <form class="mb-3" name="myform" id="myform" method="post">
+        <fieldset>
+          <span class="text-bold">별점을 선택해주세요</span>
+          <input type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1" onclick="userRate1()">★</label>
+          <input type="radio" name="reviewStar" value="4" id="rate2"><label for="rate2" onclick="userRate2()">★</label>
+          <input type="radio" name="reviewStar" value="3" id="rate3"><label for="rate3" onclick="userRate3()">★</label>
+          <input type="radio" name="reviewStar" value="2" id="rate4"><label for="rate4" onclick="userRate4()">★</label>
+          <input type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5" onclick="userRate5()">★</label>
+        </fieldset>
       </form>
     </div>
 
@@ -87,5 +95,30 @@
         © 2023 by MovieCaster, Inc. All rights reserved. <br />
       </div>
     </footer>
+    <script>
+      function moviePoster() {
+
+      }
+
+      function movieDescription() {
+
+      }
+
+      function movieDirector() {
+
+      }
+
+      function movieActor() {
+
+      }
+
+      function movieRate() {
+
+      }
+
+      function movieDate() {
+
+      }
+    </script>
   </body>
 </html>
