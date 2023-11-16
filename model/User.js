@@ -1,6 +1,6 @@
 function User (Sequelize, DataTypes) {
     return Sequelize.define(
-        "test_user",
+        "user",
         {
             useridx: {
             type: DataTypes.INTEGER,
@@ -32,7 +32,7 @@ function User (Sequelize, DataTypes) {
         }
     },
     {
-        tableName: "test_user",
+        tableName: "user",
         freezeTableName: true,
         timestamps: false
     })

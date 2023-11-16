@@ -1,4 +1,4 @@
-function movie_info(Sequelize, DataTypes) {
+function Movie_info(Sequelize, DataTypes) {
     return Sequelize.define(
       'movie_info',
       {
@@ -53,4 +53,4 @@ function movie_info(Sequelize, DataTypes) {
     )
   }
   
-  module.exports = movie_info
+  module.exports = Movie_info
