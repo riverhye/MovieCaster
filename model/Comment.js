@@ -1,6 +1,9 @@
-function comment(Sequelize, DataTypes) {
+const { User } = require('./User');
+
+function Comment(Sequelize, DataTypes) {
   return Sequelize.define(
-    'comment',
+    "comment",
+
     {
       commentid: {
         type: DataTypes.INTEGER,
@@ -36,8 +39,8 @@ function comment(Sequelize, DataTypes) {
       tableName: 'comment',
       freezeTableName: true,
       timestamps: false,
-    }
-  );
+
+    });
 }
 
-module.exports = comment;
+module.exports = Comment;

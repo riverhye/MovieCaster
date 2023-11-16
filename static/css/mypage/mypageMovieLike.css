@@ -162,3 +162,43 @@ img{
 .row-sm-3 .container{
     padding-left: 30px;
 }
+
+/* section 2 */
+.md-movie__info {
+    margin: 10px 10px 20px;
+    padding: 10px 30px;
+    width: 90%;
+    height: 130px;
+}
+
+/* 텍스트 */
+.nickname-sm {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.movie-title {
+    height: 30px;
+    font-weight: 600;
+}
+
+.text-sm {
+    margin-top: 9px;
+    font-size: 14px;
+    position: relative;
+}
+
+.movie-title__large {
+    margin-top: 10px;
+    height: 50px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.comment-sm {
+    height: 60px;
+    font-size: 15px;
+}
+
+.md-movie__title {
+    margin-top: 10px;
+}

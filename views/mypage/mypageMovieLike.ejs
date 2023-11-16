@@ -62,10 +62,27 @@
                         </a>
                     </div> 
                     <div class="container text-center">
-                        <div class="row row-cols-3 row row-gap-3">
-                            <img src="/images/movie1.jpg" class="img-thumbnail rounded" style="max-width: 120px; max-height: 240px"/>
-                            <img src="/images/movie2.jpg" class="img-thumbnail rounded" style="max-width: 120px; max-height: 240px"/>
-                            <img src="/images/movie3.jpg" class="img-thumbnail rounded" style="max-width: 120px; max-height: 240px"/>
+                        <div class="md-movie__list section__list">
+                            <% for (let i = 0; i < data.length; i++) { %>
+                            <div class="md-movie__body section__body">
+                                <div class="md-movie__poster-body section__poster-body">
+                                    <ul>
+                                        <li><a href="">
+                                            <div class="md-movie__poster"><img src="" alt="" /></div>
+                                        </a></li>
+                                    </ul>
+                                </div>
+                                <div class="md-movie__info">
+                                    <ul>
+                                        <li class="md-movie__rating">
+                                            <i class="bi bi-brightness-high"></i>
+                                            <span class="">5.0</span>
+                                        </li>
+                                        <li><h4 class="movie-title__large"><%= data[i].movieidx %></h4></li>
+                                    </ul>
+                                </div>
+                            </div>
+                                 <% } %>
                         </div>
                     </div>
                 </div>
@@ -81,6 +98,9 @@
             </div>
         </footer>
 
+        <script>
+            
+        </script>
     </div>
 </body>
 </html>

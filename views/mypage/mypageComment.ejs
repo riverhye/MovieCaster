@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/static/css/footer.css" />   
     <link rel="stylesheet" href="/static/css/mypage/mypageComment.css">
     <title>마이페이지 내 코멘트 보기</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>  
         <!-- Mypage_Profile -->
@@ -51,40 +53,47 @@
                 </div>
     
                 <!-- right -->
-<div class="col-6">
-    <div class="p-1">
-        <div class="row d-grid gap-3">
-            <!-- card2_1 -->
-            <div class="col-xl-12" id="cards">
-                <div class="card text-center shadow-sm bg-body-tertiary rounded" style="margin-bottom: 20px;">
-                    <div class="card-header" style="display: flex; justify-content: left; align-items: center;">
-                        <span class="badge bg-secondary">
-                            <span>작성일</span>
-                        </span>
-                        <div>&nbsp;2023-11-11</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="container text-center">
-                            <div class="row align-items-center g-1">
-                                <div class="col-3">
-                                    <img src="/images/" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
-                                </div>
-                                <div class="col-6" style="text-align: left;">
-                                    <p class="card-text">너무 재밌는 영화였답니다!</p>
-                                </div>
-                                <div class="col-3 d-flex justify-content-end">
-                                    <div class="d-grip gap2">
-                                        <div class="d-grip gap2">	
-                                            <div>
-                                                <!-- 코멘트 삭제 모달 -->
-                                                <!-- 정말 삭제하시겠습니까? -->
-                                            </div>
+    <!-- right -->
+    <div class="col-6">
+        
+        <div class="p-1">
+            <% for (let i = 0; i < data.length; i++) { %>
+            <div class="row d-grid gap-3">
+                <!-- card2_1 -->
+                <div class="col-xl-12" id="cards">
+                    <div class="card text-center shadow-sm bg-body-tertiary rounded" style="margin-bottom: 20px;">
+                        <div class="card-header" style="display: flex; justify-content: left; align-items: center;">
+                            <span class="badge bg-secondary">
+                                <% 
+                                    const timestampDate = new Date(data[i].timestamp);
+                                    const formattedTimestamp = `${timestampDate.getFullYear()}년 ${timestampDate.getMonth() + 1}월 ${timestampDate.getDate()}일`;
+                                %>
+                                <span><%= formattedTimestamp %></span>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <div class="container text-center">
+                                <div class="row align-items-center g-1">
+                                    <div class="col-3">
+                                        <img src="/images/" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
+                                    </div>
+                                    <div class="col-6" style="text-align: left;">
+                                        <p class="card-text"><%= data[i].description %></p>
+                                    </div>
+                                    <div class="col-3 d-flex justify-content-end">
+                                        <div class="d-grip gap2">
+                                            <div class="d-grip gap2">
+                                                <div>
+                                                    <!-- 코멘트 삭제 모달 -->
+                                                    <!-- 정말 삭제하시겠습니까? -->
+                                                </div>
 
-                                            <!-- 코멘트 수정, 삭제 모달? 페이지? -->                                                           
-                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">수정</a>
-                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">삭제</a>
-                                            <div class="modal" id="exampleReceiptModal">
-                                                <!-- 내용 유지 -->
+                                                <!-- 코멘트 수정, 삭제 모달? 페이지? -->
+                                                <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">수정</a>
+                                                <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">삭제</a>
+                                                <div class="modal" id="exampleReceiptModal">
+                                                    <!-- 내용 유지 -->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -92,137 +101,12 @@
                             </div>
                         </div>
                     </div>
+                    <% } %>
                 </div>
+                <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">더보기</a>
             </div>
-
-            <!--card2-->
-            <div class="col-xl-12" id="cards">
-                <div class="card text-center shadow-sm bg-body-tertiary rounded" style="margin-bottom: 20px;">
-                    <div class="card-header" style="display: flex; justify-content: left; align-items: center;">
-                        <span class="badge bg-secondary">
-                            <span>작성일</span>
-                        </span>
-                        <div>&nbsp;2023-11-11</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="container text-center">
-                            <div class="row align-items-center g-1">
-                                <div class="col-3">
-                                    <img src="/images/" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
-                                </div>
-                                <div class="col-6" style="text-align: left;">
-                                    <p class="card-text">너무 재밌는 영화였답니다!</p>
-                                </div>
-                                <div class="col-3 d-flex justify-content-end">
-                                    <div class="d-grip gap2">
-                                        <div class="d-grip gap2">	
-                                            <div>
-                                                <!-- 코멘트 삭제 모달 -->
-                                                <!-- 정말 삭제하시겠습니까? -->
-                                            </div>
-
-                                            <!-- 코멘트 수정, 삭제 모달? 페이지? -->                                                           
-                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">수정</a>
-                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">삭제</a>
-                                            <div class="modal" id="exampleReceiptModal">
-                                                <!-- 내용 유지 -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-             <!--card2-->
-             <div class="col-xl-12" id="cards">
-                <div class="card text-center shadow-sm bg-body-tertiary rounded" style="margin-bottom: 20px;">
-                    <div class="card-header" style="display: flex; justify-content: left; align-items: center;">
-                        <span class="badge bg-secondary">
-                            <span>작성일</span>
-                        </span>
-                        <div>&nbsp;2023-11-11</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="container text-center">
-                            <div class="row align-items-center g-1">
-                                <div class="col-3">
-                                    <img src="/images/" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
-                                </div>
-                                <div class="col-6" style="text-align: left;">
-                                    <p class="card-text">너무 재밌는 영화였답니다!</p>
-                                </div>
-                                <div class="col-3 d-flex justify-content-end">
-                                    <div class="d-grip gap2">
-                                        <div class="d-grip gap2">	
-                                            <div>
-                                                <!-- 코멘트 삭제 모달 -->
-                                                <!-- 정말 삭제하시겠습니까? -->
-                                            </div>
-
-                                            <!-- 코멘트 수정, 삭제 모달? 페이지? -->                                                           
-                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">수정</a>
-                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">삭제</a>
-                                            <div class="modal" id="exampleReceiptModal">
-                                                <!-- 내용 유지 -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-                <!--card2-->
-            <div class="col-xl-12" id="cards">
-                <div class="card text-center shadow-sm bg-body-tertiary rounded" style="margin-bottom: 20px;">
-                    <div class="card-header" style="display: flex; justify-content: left; align-items: center;">
-                        <span class="badge bg-secondary">
-                            <span>작성일</span>
-                        </span>
-                        <div>&nbsp;2023-11-11</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="container text-center">
-                            <div class="row align-items-center g-1">
-                                <div class="col-3">
-                                    <img src="/images/" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
-                                </div>
-                                <div class="col-6" style="text-align: left;">
-                                    <p class="card-text">너무 재밌는 영화였답니다!</p>
-                                </div>
-                                <div class="col-3 d-flex justify-content-end">
-                                    <div class="d-grip gap2">
-                                        <div class="d-grip gap2">	
-                                            <div>
-                                                <!-- 코멘트 삭제 모달 -->
-                                                <!-- 정말 삭제하시겠습니까? -->
-                                            </div>
-
-                                            <!-- 코멘트 수정, 삭제 모달? 페이지? -->                                                           
-                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">수정</a>
-                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">삭제</a>
-                                            <div class="modal" id="exampleReceiptModal">
-                                                <!-- 내용 유지 -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-
-            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" data-bs-toggle="modal" data-bs-target="#exampleReceiptModal">더보기</a>
-            <!--삭제하지 말아야 할 div-->
         </div>
-    </div>
-
+       
     <!-- footer.html -->
         <footer>
             <div class="footer">
@@ -232,7 +116,40 @@
                 © 2023 by MovieCaster, Inc. All rights reserved. <br/>
             </div>
         </footer>
+    
+    <!-- <script>
+        function addVisitor() {
+        // 서버에 보낼 데이터를 만들어야 함.
+        const form = document.forms["form-visitor"]
+        const data = {
+          username: form.username.value,
+          comment: form.comment.value
+        }
 
+        // axios를 이용해 데이터를 서버로 전송.
+        axios({
+          method: 'post',
+          url: '/visitor',
+          data: data
+        }).then((res) => {
+          // axios 응답을 받으면, table에 행 추가 (동적으로)
+          const {
+            id,
+            username,
+            comment
+          } = res.data
+
+          $("tbody").append(`<tr id="tr_${id}">
+            <td>${id}</td>
+            <td>${username}</td>
+            <td>${comment}</td>
+            <td><button type="button" onclick="updateVisitor(${id})">수정</button></td>
+            <td><button type="button" onclick="deleteVisitor(${id})">삭제</button></td>
+          </tr>`)
+        })
+
+      }
+    </script> -->
 </div>
 </body>
 </html>

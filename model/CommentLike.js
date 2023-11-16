@@ -1,4 +1,7 @@
-function comment_like(Sequelize, DataTypes) {
+const { User } = require('./User');
+const { Movie_info } = require('./MovieInfo');
+
+function Comment_like(Sequelize, DataTypes) {
     return Sequelize.define(
       'comment_like',
       {
@@ -25,4 +28,4 @@ function comment_like(Sequelize, DataTypes) {
     );
   }
   
-  module.exports = comment_like;
+  module.exports = Comment_like;
