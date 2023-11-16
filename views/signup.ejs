@@ -21,203 +21,89 @@
               <div class="idBoxR boxR">
                 <!-- 아이디 -->
                 <!-- 숫자+영문 대소문자 최소6/최대15 -->
-                <input type="text" name="userid" id="userid" required placeholder="아이디 입력" oninput="validCheckId(this)" />
+                <input
+                  type="text"
+                  name="userid"
+                  id="userid"
+                  required
+                  placeholder="아이디 입력"
+                  oninput="validCheckId(this)"
+                />
                 <!-- pattern="^[a-zA-Z0-9]+$"////// -->
                 <!-- minlength="6" maxlength="15"  -->
-                <div class="idValidMsg hide validityMsg">사용 가능한 아이디 입니다.</div>
-                <div class="idInvalidMsg hide validityMsg">사용 불가능한 아이디 입니다.</div>
+                <div class="idValidMsg hide validMsg">사용 가능한 아이디 입니다.</div>
+                <div class="idInvalidMsg hide invalidMsg">사용 불가능한 아이디 입니다.</div>
               </div>
             </div>
             <div class="pwBox innerBox">
               <div class="pwBoxR boxR">
                 <!-- 비밀번호 -->
                 <!-- 최소8/최대16 숫자,영문,특수문자 각 1개 이상 -->
-                <input type="password" id="pw" name="pw" required placeholder="비밀번호" oninput="validCheckPw(this)" />
+                <input
+                  type="password"
+                  id="pw"
+                  name="pw"
+                  required
+                  placeholder="비밀번호"
+                  oninput="validCheckPw(this)"
+                />
                 <!-- pattern=" ^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$" -->
-                <div class="pwValidMsg hide validityMsg">사용 가능한 비밀번호 입니다.</div>
-                <div class="pwInvalidMsg hide validityMsg">사용 불가능한 비밀번호 입니다.</div>
+                <div class="pwValidMsg hide validMsg">사용 가능한 비밀번호 입니다.</div>
+                <div class="pwInvalidMsg hide invalidMsg">사용 불가능한 비밀번호 입니다.</div>
               </div>
             </div>
             <div class="pwCheckBox innerBox">
               <div class="pwCheckBoxR boxR">
                 <!-- 비밀번호 확인 -->
                 <!-- 위의 pw와 일치하는지만 -->
-                <input type="password" id="pwRetype" placeholder="비밀번호 확인 " oninput="validCheckPwRetype(this)" />
-                <div class="pwRetypeValidMsg hide validityMsg">비밀번호가 일치합니다.</div>
-                <div class="pwRetypeValidMsg hide validityMsg">비밀번호가 일치하지 않습니다.</div>
+                <input
+                  type="password"
+                  id="pwRetype"
+                  placeholder="비밀번호 확인 "
+                  oninput="validCheckPwRetype(this)"
+                />
+                <div class="pwRetypeValidMsg hide validMsg">비밀번호가 일치합니다.</div>
+                <div class="pwRetypeInvalidMsg hide invalidMsg">비밀번호가 일치하지 않습니다.</div>
               </div>
             </div>
             <div class="emailBox innerBox">
               <div class="emailBoxR boxR">
                 <!-- 이메일 -->
                 <!-- email 형식 자동포함 -->
-                <input type="email" name="email" id="email" required placeholder="이메일" oninput="validCheckEmail(this)" />
-                <div class="emailValidMsg hide validityMsg">이메일 형식이 일치합니다.</div>
-                <div class="emailInvalidMsg hide validityMsg">이메일 형식이 일치하지 않습니다.</div>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  required
+                  placeholder="이메일"
+                  oninput="validCheckEmail(this)"
+                />
+                <div class="emailValidMsg hide validMsg">사용 가능한 이메일 입니다.</div>
+                <div class="emailInvalidMsg hide invalidMsg">유효하지 않은 이메일 입니다.</div>
               </div>
             </div>
             <div class="nicknameBox innerBox">
               <div class="nicknameBoxR boxR">
                 <!-- 닉네임 -->
                 <!-- 한글 최소2 최대 5 -->
-                <input type="text" name="nickname" id="nickname" required placeholder="닉네임" oninput="validCheckNickname(this)" />
+                <input
+                  type="text"
+                  name="nickname"
+                  id="nickname"
+                  required
+                  placeholder="닉네임"
+                  oninput="validCheckNickname(this)"
+                />
                 <!-- pattern="^[가-힣]+$" minlength="3" maxlength="5"  -->
-                <div class="nicknameValidMsg hide validityMsg">사용 가능한 닉네임 입니다.</div>
-                <div class="nicknameInvalidMsg hide validityMsg">사용 불가능한 닉네임 입니다.</div>
+                <div class="nicknameValidMsg hide validMsg">사용 가능한 닉네임 입니다.</div>
+                <div class="nicknameInvalidMsg hide invalidMsg">사용 불가능한 닉네임 입니다.</div>
               </div>
             </div>
           </div>
           <br />
-          <input type="submit" class="buttonSubmit" value="회원가입" onclick="testSignUp()" />
+          <button class="buttonSubmit" type="button" onclick="userSignUp()">회원가입</button>
         </form>
       </div>
-      <script>
-        function validCheckId(el) {
-          const regexId = /^[a-zA-Z0-9]{5,10}$/;
-          const value = el.value
-          const error = document.getElementById('idInvalidMsg');
-          if (regexId.test(value)) {
-            console.log('true')
-          } else {
-            console.log('false')
-          }
-        }
-
-        function validCheckPw(el) {
-          const regexId = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
-          const value = el.value
-          const error = document.getElementById('pwInvalidMsg');
-          if (regexId.test(value)) {
-            console.log('true')
-          } else {
-            console.log('false')
-          }
-        }
-
-        function validCheckPwRetype(el) {
-          const regexId = /^[a-zA-Z0-9]{5,10}$/;
-          const value = el.value
-          const error = document.getElementById('pwRetypeInvalidMsg');
-          if (regexId.test(value)) {
-            console.log('true')
-          } else {
-            console.log('false')
-          }
-        }
-
-        function validCheckEmail(el) {
-          const regexId = /^[a-zA-Z0-9]{5,10}$/;
-          const value = el.value
-          const error = document.getElementById('emailInvalidMsg');
-          if (regexId.test(value)) {
-            console.log('true')
-          } else {
-            console.log('false')
-          }
-        }
-
-        function validCheckNickname(el) {
-          const regexId = /^[가-힣]{2,5}$/;
-          const value = el.value
-          const error = document.getElementById('nicknameInvalidMsg');
-          if (regexId.test(value)) {
-            console.log('true')
-          } else {
-            console.log('false')
-          }
-        }
-
-
-
-
-        // const form = document.querySelector('.userForm')
-
-        // const userId = document.querySelector('#userid');
-        // const userPw = document.querySelector('#pw')
-        // const userPwRetype = document.querySelector('#pwRetype')
-        // const userEmail = document.querySelector('#email')
-        // const userNickname = document.querySelector('#nickname')
-
-        // const userIdV = document.querySelector('#userid').value
-        // const userPwV = document.querySelector('#pw').value
-        // const userPwRepeatV = document.querySelector('#pwRetype').value
-        // const userEmailV = document.querySelector('#email').value
-        // const userNicknameV = document.querySelector('#nickname').value
-
-        // const checkIdValidity = form.checkValidity(userId)
-        // const checkPwValidity = form.checkValidity(userPw)
-        // const checkEmailValidity = form.checkValidity(userEmail)
-        // const checkNicknameValidity = form.checkValidity(userNickname)
-
-        userId.onkeydown = function(e) {
-          if (checkIdValidity == true) {
-            document.querySelector('.idValidMsg').classList.remove('hide')
-            document.querySelector('.idValidMsg').classList.add('validMsg')
-            return
-          } else {
-            document.querySelector('.idInvalidMsg').classList.remove('hide')
-            document.querySelector('.idInvalidMsg').classList.add('invalidMsg')
-            console.log('a')
-            return
-          }
-        }
-        userPw.onkeydown = function(e) {
-          if (checkPwValidity == true) {
-            document.querySelector('.pwValidMsg').classList.remove('hide')
-            document.querySelector('.pwValidMsg').classList.add('validMsg')
-          } else {
-            document.querySelector('.pwInvalidMsg').classList.remove('hide')
-            document.querySelector('.pwInvalidMsg').classList.add('invalidMsg')
-          }
-        }
-        userPwRetype.onkeydown = function(e) {
-          if (userPwV == userPwRepeatV) {
-            document.querySelector('.idInvalidMsg').classList.remove('hide')
-            document.querySelector('.idInvalidMsg').classList.add('validMsg')
-          } else {
-            document.querySelector('.idInvalidMsg').classList.remove('hide')
-            document.querySelector('.idInvalidMsg').classList.add('invalidMsg')
-          }
-        }
-        userEmail.onkeydown = function(e) {
-          if (checkEmailValidity == true) {
-            document.querySelector('.emailValidMsg').classList.remove('hide')
-            document.querySelector('.emailValidMsg').classList.add('validMsg')
-          } else {
-            document.querySelector('.emailInvalidMsg').classList.remove('hide')
-            document.querySelector('.emailInvalidMsg').classList.add('invalidMsg')
-          }
-        }
-        userNickname.onkeydown = function(e) {
-          if (checkNicknameValidity == true) {
-            document.querySelector('.nicknameValidMsg').classList.remove('hide')
-            document.querySelector('.nicknameValidMsg').classList.add('validMsg')
-          } else {
-            document.querySelector('.nicknameInvalidMsg').classList.remove('hide')
-            document.querySelector('.nicknameInvalidMsg').classList.add('invalidMsg')
-          }
-        }
-
-        function testSignUp() {
-          const form = document.forms["register"]
-          const data = {
-            userid: form.userid.value,
-            email: form.email.value,
-            nickname: form.nickname.value,
-            pw: form.pw.value,
-            img: "hi",
-            del_user_ch: 'n'
-          };
-          axios({
-            method: 'post',
-            url: '/signup',
-            data: data
-          }).then((res) => {
-            const result = res.data
-            console.log("res data result", result);
-          })
-        }
-      </script>
     </div>
     <footer>
       <div class="footer">
@@ -227,5 +113,98 @@
         © 2023 by MovieCaster, Inc. All rights reserved. <br />
       </div>
     </footer>
+    <script>
+      const form = document.querySelector('.userForm');
+
+      const userId = document.querySelector('#userid');
+      const userPw = document.querySelector('#pw');
+      const userPwRetype = document.querySelector('#pwRetype');
+      const userEmail = document.querySelector('#email');
+      const userNickname = document.querySelector('#nickname');
+
+      const checkIdValidity = form.checkValidity(userId);
+      const checkPwValidity = form.checkValidity(userPw);
+      const checkEmailValidity = form.checkValidity(userEmail);
+      const checkNicknameValidity = form.checkValidity(userNickname);
+
+      function validCheckId(e) {
+        const regexId = /^[a-zA-Z0-9]{5,10}$/;
+        const valueId = e.value;
+        if (regexId.test(valueId)) {
+          document.querySelector('.idValidMsg').classList.remove('hide');
+          document.querySelector('.idInvalidMsg').classList.add('hide');
+        } else {
+          document.querySelector('.idInvalidMsg').classList.remove('hide');
+          document.querySelector('.idValidMsg').classList.add('hide');
+        }
+      }
+
+      function validCheckPw(e) {
+        const regexPw = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
+        const valuePw = e.value;
+        if (regexPw.test(valuePw)) {
+          document.querySelector('.pwValidMsg').classList.remove('hide');
+          document.querySelector('.pwInvalidMsg').classList.add('hide');
+        } else {
+          document.querySelector('.pwInvalidMsg').classList.remove('hide');
+          document.querySelector('.pwValidMsg').classList.add('hide');
+        }
+      }
+
+      function validCheckPwRetype(e) {
+        const valuePwRetype = e.value;
+        const valuePw = document.getElementById('pw').value;
+        if (valuePwRetype == valuePw) {
+          document.querySelector('.pwRetypeValidMsg').classList.remove('hide');
+          document.querySelector('.pwRetypeInvalidMsg').classList.add('hide');
+        } else {
+          document.querySelector('.pwRetypeInvalidMsg').classList.remove('hide');
+          document.querySelector('.pwRetypeValidMsg').classList.add('hide');
+        }
+      }
+
+      function validCheckEmail(e) {
+        const regexEmail = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+        const valueEmail = e.value;
+        if (regexEmail.test(valueEmail)) {
+          document.querySelector('.emailValidMsg').classList.remove('hide');
+          document.querySelector('.emailInvalidMsg').classList.add('hide');
+        } else {
+          document.querySelector('.emailInvalidMsg').classList.remove('hide');
+          document.querySelector('.emailValidMsg').classList.add('hide');
+        }
+      }
+
+      function validCheckNickname(e) {
+        const regexNickname = /^[가-힣]{2,5}$/;
+        const valueNickname = e.value;
+        if (regexNickname.test(valueNickname)) {
+          document.querySelector('.nicknameValidMsg').classList.remove('hide');
+          document.querySelector('.nicknameInvalidMsg').classList.add('hide');
+        } else {
+          document.querySelector('.nicknameInvalidMsg').classList.remove('hide');
+          document.querySelector('.nicknameValidMsg').classList.add('hide');
+        }
+      }
+      function userSignUp() {
+        const form = document.forms['register'];
+        const data = {
+          userid: form.userid.value,
+          pw: form.pw.value,
+          email: form.email.value,
+          nickname: form.nickname.value,
+        };
+        axios({
+          method: 'post',
+          url: '/signup',
+          data: data,
+        }).then((res) => {
+          const result = res.data;
+          alert('회원가입 성공');
+          document.location.href = '/signin';
+          console.log('res data result', result);
+        });
+      }
+    </script>
   </body>
 </html>

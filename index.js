@@ -1,37 +1,50 @@
-const express = require("express");
+const express = require('express');
 const app = express();
 const PORT = 8000;
-const multer = require("multer");
+const multer = require('multer');
+const session = require('express-session');
 
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/static", express.static("static"));
+app.use('/static', express.static('static'));
 
-const router = require("./routes");
-app.use("/", router);
+app.use(
+  session({
+    secret: 'secretKey', // envs에 세션키가 환경변수로 존재한다고 가정
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+    },
+  })
+);
 
-const detailRouter = require("./routes/detail");
-app.use("/detail", detailRouter);
+const router = require('./routes');
+app.use('/', router);
 
-const mypageRouter = require("./routes/mypage");
-app.use("/mypage", mypageRouter);
+const detailRouter = require('./routes/detail');
+app.use('/detail', detailRouter);
 
-const searchRouter = require("./routes/search");
-app.use("/search", searchRouter);
+const mypageRouter = require('./routes/mypage');
+app.use('/mypage', mypageRouter);
 
-const signinRouter = require("./routes/signin");
-app.use("/signin", signinRouter);
+const searchRouter = require('./routes/search');
+app.use('/search', searchRouter);
 
-const signupRouter = require("./routes/signup");
-app.use("/signup", signupRouter);
+const signinRouter = require('./routes/signin');
+app.use('/signin', signinRouter);
 
-const findidRouter = require("./routes/findid");
-app.use("/findid", findidRouter);
+const signupRouter = require('./routes/signup');
+app.use('/signup', signupRouter);
 
-const findpwRouter = require("./routes/findpw");
-app.use("/findpw", findpwRouter);
+const findidRouter = require('./routes/findid');
+app.use('/findid', findidRouter);
+
+const findpwRouter = require('./routes/findpw');
+app.use('/findpw', findpwRouter);
 
 /*
 app.get("*", function(req, res){

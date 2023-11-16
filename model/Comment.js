@@ -3,6 +3,7 @@ const { User } = require('./User');
 function Comment(Sequelize, DataTypes) {
   return Sequelize.define(
     "comment",
+
     {
       commentid: {
         type: DataTypes.INTEGER,
@@ -38,6 +39,7 @@ function Comment(Sequelize, DataTypes) {
       tableName: 'comment',
       freezeTableName: true,
       timestamps: false,
+
     });
 }
 

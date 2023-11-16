@@ -68,7 +68,7 @@ input[type='button'] {
   box-shadow: 3px 3px 3px lightgrey;
   width: 75px;
 }
-input[type='button'].buttonFindPw {
+button[type='button'].buttonFindPw {
   box-shadow: 3px 3px 3px lightgrey;
   width: 100px;
   position: relative;

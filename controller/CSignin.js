@@ -1,7 +1,14 @@
 const { User } = require('../model');
 
 exports.signin = (req, res) => {
-  res.render('signin');
+  const user = req.session.user;
+  if (user) {
+    res.render('main');
+    console.log('sessionUser:', user);
+  } else {
+    console.log('sessionUser:', user);
+    res.render('signin');
+  }
 };
 
 exports.user_signin = (req, res) => {
@@ -9,6 +16,8 @@ exports.user_signin = (req, res) => {
     let data;
 
     if (user) {
+      req.session.user = user.dataValues.nickname; // 세션에 유저닉네임 저장
+      console.log('sessionUser: ', user.dataValues.nickname);
       data = { isSuccess: true };
     } else {
       data = { isSuccess: false };
