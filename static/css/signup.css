@@ -74,9 +74,9 @@
   top: 5px;
   color: blue;
 }
-input[type="text"],
-[type="password"],
-[type="email"] {
+input[type='text'],
+[type='password'],
+[type='email'] {
   height: 50px;
   width: 220px;
   font-size: 18px;
@@ -86,7 +86,7 @@ input[type="text"],
   padding-inline-start: 10px;
   box-shadow: 3px 3px 3px lightgrey;
 }
-input[type="submit"] {
+button[type='button'] {
   box-shadow: 3px 3px 3px lightgrey;
   width: 75px;
   position: relative;

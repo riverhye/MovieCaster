@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/css/findpw.css" />
     <title>비밀번호 찾기</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <div class="body">
@@ -16,25 +17,23 @@
         </div>
         <div class="containerSub">
           <div class="idBox innerBox">
-            <!-- <div class="idBoxL boxL">
-            아이디
-          </div> -->
+          <form name="form_findPw">
             <div class="idBoxR boxR">
-              <input type="text" required placeholder="아이디 입력" />
+              <input type="text" id="userid" required placeholder="아이디 입력" />
             </div>
           </div>
           <div class="emailBox innerBox">
-            <!-- <div class="emailBoxL boxL">
-            이메일
-          </div> -->
             <div class="emailBoxR boxR">
-              <input type="email" required placeholder="이메일 입력" />
+              <input type="email" id="email" required placeholder="이메일 입력" />
             </div>
+          </form>
           </div>
         </div>
+        <div class="foundPw"></div>
         <br />
-        <!-- 비밀번호 찾기: button type="submit"으로 변경 예정 -->
-        <input type="button" value="비밀번호 찾기" class="buttonFindPw" onclick="" />
+        <button type="button" name="findPw" class="buttonFindPw" onclick="FindPw()">
+          비밀번호 찾기
+        </button>
         <div class="findId" onclick="location.href='/findid'">아이디 찾기</div>
         <div class="logInBox">
           <input
@@ -51,7 +50,6 @@
           />
         </div>
       </div>
-      <script></script>
     </div>
     <footer>
       <div class="footer">
@@ -61,5 +59,31 @@
         © 2023 by MovieCaster, Inc. All rights reserved. <br />
       </div>
     </footer>
+    <script>
+      function FindPw(){
+        const form = document.forms['form_findPw'];
+        const data = {
+          userid: form.userid.value,
+          email: form.email.value,
+        }
+        console.log(data.id)
+        console.log(data.email)
+        axios({
+          method: 'post',
+          url: '/findpw',
+          data: data,
+        }).then((res) => {
+          const pwFound = res.data;
+          console.log('res data: ', pwFound);
+          if (res.data){
+            console.log('비밀번호 찾기 성공')
+            document.querySelector('.foundPw').innerHTML = `회원님의 비밀번호는 ${pwFound} 입니다.`;
+          } else {
+            console.log('등록되지않은 회원정보 입니다.')
+            document.querySelector('.foundPw').innerHTML = `등록되지 않은 회원정보 입니다.`;
+          }
+        })
+      }
+    </script>
   </body>
 </html>

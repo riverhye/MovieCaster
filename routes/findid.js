@@ -1,7 +1,8 @@
-const express = require("express");
+const express = require('express');
 const findidRouter = express.Router();
-const controller = require("../controller/CFindid");
+const controller = require('../controller/CFindid');
 
-findidRouter.get("/", controller.findid);
+findidRouter.get('/', controller.findid);
+findidRouter.post('/', controller.user_findid);
 
 module.exports = findidRouter;

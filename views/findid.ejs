@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/css/findid.css" />
     <title>아이디 찾기</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <div class="body">
@@ -16,17 +17,19 @@
         </div>
         <div class="containerSub">
           <div class="emailBox innerBox">
-            <!-- <div class="emailBoxL boxL">
-            이메일
-          </div> -->
             <div class="emailBoxR boxR">
-              <input type="email" required placeholder="이메일 입력" />
+              <!-- form -->
+              <form name="form_findId">
+                <input type="email" id="email" placeholder="이메일 입력" />
+              </form>
             </div>
           </div>
         </div>
+        <div class="foundId"></div>
         <br />
-        <!-- 아이디 찾기: button type="submit"으로 변경 예정 -->
-        <input type="button" value="아이디 찾기" class="buttonFindId" onclick="" />
+        <button type="button" name="findId" class="buttonFindId" onclick="FindId()">
+          아이디 찾기
+        </button>
         <div class="findPw" onclick="location.href='/findPw'">비밀번호 찾기</div>
         <div class="logInBox">
           <input
@@ -43,7 +46,6 @@
           />
         </div>
       </div>
-      <script></script>
     </div>
     <footer>
       <div class="footer">
@@ -53,5 +55,29 @@
         © 2023 by MovieCaster, Inc. All rights reserved. <br />
       </div>
     </footer>
+    <script>
+      function FindId() {
+        const form = document.forms['form_findId'];
+        const data = {
+          email: form.email.value,
+        };
+        console.log(data.email);
+        axios({
+          method: 'post',
+          url: '/findid',
+          data: data,
+        }).then((res) => {
+          const idFound = res.data;
+          console.log('res data:', idFound);
+          if (res.data) {
+            console.log('아이디 찾기 성공');
+            document.querySelector('.foundId').innerHTML = `회원님의 아이디는 ${idFound} 입니다.`;
+          } else {
+            console.log('등록되지 않은 이메일 입니다.');
+            document.querySelector('.foundId').innerHTML = `등록되지 않은 이메일 입니다.`;
+          }
+        });
+      }
+    </script>
   </body>
 </html>
