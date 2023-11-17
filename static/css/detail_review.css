@@ -5,26 +5,26 @@
 }
 
 .article {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
   text-align: center;
+  margin-top: 20px;
 }
 
 .content {
   display: flex;
-  padding: 0.3em 0;
+  padding-top: 40px;
+  /* margin-bottom: 20px; */
   list-style: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.08); */
 }
 
-.content__id,
-.content__author,
-.content__date {
-  flex-basis: 15%;
+.contentId,
+.contentNickname,
+.contentRate {
+  flex-basis: 10%;
 }
 
-.content__title {
+.contentReview {
   flex: 1;
   text-align: left;
   overflow: hidden;
@@ -34,9 +34,10 @@
 
 .buttons {
   position: relative;
-  padding: 1rem 0;
   display: flex;
   justify-content: center;
+  position: relative;
+  top: 20px;
 }
 
 .button {

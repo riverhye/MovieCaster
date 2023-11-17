@@ -51,7 +51,7 @@ body {
 .box-office__film {
   position: absolute;
   z-index: 0;
-  left: 400px;
+  left: 230px;
 }
 
 .box-office-text {
