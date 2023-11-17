@@ -22,6 +22,29 @@ async function apiMovies () {
     return results
 };
 
+// try : 장르명 api 따로 받아서 해볼까 하고..
+// {
+//     // const axios = require('axios');
+//     // async function apiMovies () {
+//     //     for (let i=1; i<200; i++) {
+//     //         const movieResults = [];
+//     //         const url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=ko-KR&page=${i}`;
+//     //         const genreResults = [];
+//     //         const genreUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=ko-KR`
+//     //         try {
+//     //             const response = await axios.get(url);
+//     //             movieResults.push(...response.data.results);
+//     //             const genreResponse = await axios.get(genreUrl);
+//     //             genreResults.push(...genreResponse.data.genres);
+//     //         } catch (err) {
+//     //             throw err;
+//     //         };
+//     //     }
+        
+//     //     return movieResults, genreResults
+//     // };
+// }
+
 // upcoming : `https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=ko-KR&page=${i}`
 // top rated : `https://api.themoviedb.org/3/movie/top_rated?api_key=${key}&language=ko-KR&page=${i}`
 // popular : `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=ko-KR&page=${i}`
