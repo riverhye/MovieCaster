@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/css/detail.css" />
     <link rel="stylesheet" href="../static/css/footer.css" />
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <title>상세페이지</title>
   </head>
   <body>
@@ -12,6 +17,7 @@
     <header></header>
     <!-- grid row1 -->
     <div class="gridRow1 container">
+      <!-- 리뷰 콘테이너 -->
       <div class="reviewContainer">
         <div id="userRate1" class="userRates">4.5</div>
         /5.0
@@ -33,18 +39,42 @@
       <div class="reviewBox3 reviewBoxes">
         <div id="review3" class="reviews">수지: 안봤어요</div>
       </div>
+      <!-- 리뷰 페이지 네이션 연습 -->
+
+      <!-- 리뷰 작성 폼 -->
       <form class="myReview">
         <input type="text" class="writeReview" id="userReview" placeholder="리뷰를 작성해보세요" />
         <input type="submit" class="submitReview" />
       </form>
       <form class="mb-3" name="myform" id="myform" method="post">
+        <!-- 별점 남기기 -->
         <fieldset>
           <span class="text-bold">별점을 선택해주세요</span>
-          <input type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1" onclick="userRate1()">★</label>
-          <input type="radio" name="reviewStar" value="4" id="rate2"><label for="rate2" onclick="userRate2()">★</label>
-          <input type="radio" name="reviewStar" value="3" id="rate3"><label for="rate3" onclick="userRate3()">★</label>
-          <input type="radio" name="reviewStar" value="2" id="rate4"><label for="rate4" onclick="userRate4()">★</label>
-          <input type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5" onclick="userRate5()">★</label>
+          <input type="radio" name="reviewStar" value="5" id="rate1" /><label
+            for="rate1"
+            onclick="userRate1()"
+            >★</label
+          >
+          <input type="radio" name="reviewStar" value="4" id="rate2" /><label
+            for="rate2"
+            onclick="userRate2()"
+            >★</label
+          >
+          <input type="radio" name="reviewStar" value="3" id="rate3" /><label
+            for="rate3"
+            onclick="userRate3()"
+            >★</label
+          >
+          <input type="radio" name="reviewStar" value="2" id="rate4" /><label
+            for="rate4"
+            onclick="userRate4()"
+            >★</label
+          >
+          <input type="radio" name="reviewStar" value="1" id="rate5" /><label
+            for="rate5"
+            onclick="userRate5()"
+            >★</label
+          >
         </fieldset>
       </form>
     </div>
@@ -96,29 +126,17 @@
       </div>
     </footer>
     <script>
-      function moviePoster() {
+      function moviePoster() {}
 
-      }
+      function movieDescription() {}
 
-      function movieDescription() {
+      function movieDirector() {}
 
-      }
+      function movieActor() {}
 
-      function movieDirector() {
+      function movieRate() {}
 
-      }
-
-      function movieActor() {
-
-      }
-
-      function movieRate() {
-
-      }
-
-      function movieDate() {
-
-      }
+      function movieDate() {}
     </script>
   </body>
 </html>
