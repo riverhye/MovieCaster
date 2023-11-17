@@ -5,23 +5,23 @@ exports.search_movie = (req, res) => {
 };
 
 exports.search_movie_result = (req, res) => {
-    console.log(req.query.input)
-    // if (!req.query.input) {
-    //     res.render('search', {data: null});
-    // } else {
-        // Movie_info.findOne({
-        //     where: {
-        //         title: req.query.input
-        //     }
-        // }).then((movie) => {
-        //     // null값이면 예외처리
-        //     const data = {
-        //         title: movie.title,
-        //         poster: movie.poster_path,
-        //         count: movie.count
-        //     }
-        //     res.render('search', {data: data});
-        // })
+    if (!req.query.input) {
+        res.json({data: null});
+    } else {
+        Movie_info.findAll({
+            where: {
+                title: req.query.input
+            }
+        }).then((result) => {
+            // null값이면 예외처리
+            const movieInfo = result.map(movie => ({
+                title: movie.title,
+                poster: movie.poster_path,
+                count: result.length
+            }))
+            
+            res.json({movie: movieInfo, searchInput: req.query.input});
+        })
 
-    // }
+    }
 }

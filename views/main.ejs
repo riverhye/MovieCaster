@@ -26,11 +26,11 @@
             <div class="box-office__film">
                 <img src="../static/img/filmroll.jpg" alt="" width="1500px" height="280px"/>
                 <span class="box-office-text">Box Office</span>
-                <div class="swiper mySwiper box-office-swiper">
-                        <ul class="swiper-wrapper box-office-slider">
+                <div class="box-office-swiper">
+                        <ul class=" box-office-slider">
                             <% for (let i = 0; i<5; i++) { %>
                                 <div class="box-office-rank"></div>
-                                <li class="swiper-slide box-office-poster"><img href="" src="" /></li>
+                                <li class="box-office-poster"><img href="" src="" /></li>
                             <% } %>
                         </ul>
                 </div>
@@ -127,7 +127,6 @@
                 url: '/'
             }).then((res) => {
                 const key = res.data.key
-                // const krkey = res.data.krKey
     
                 const endpoint = 'https://api.themoviedb.org/3/movie';
 
@@ -164,10 +163,7 @@
                 .get(`${endpoint}/top_rated?api_key=${key}&language=ko-KR`)
                 .then((res) => {
                     const movieData = res.data.results.slice(3,);
-                    let posterPath = [];
-                    movieData.map(movie => {
-                        posterPath.push(movie.poster_path);
-                    })
+                    const posterPath = movieData.map(movie => movie.poster_path);
         
                     const bestMoviePosters = document.querySelectorAll('.best-movie__poster img')
                     bestMoviePosters.forEach((poster, index) => {
@@ -181,15 +177,10 @@
                 .get(`${endpoint}/upcoming?api_key=${key}&language=ko-KR`)
                 .then((res) => {
                     const movieData = res.data.results
-                    let posterPath = [];
-                    let posterTitle = [];
-                    movieData.map(movie => {
-                        posterPath.push(movie.poster_path);
-                        posterTitle.push(movie.title);
-                    });
+                    const posterPath = movieData.map(movie => movie.poster_path);
+                    const posterTitle = movieData.map(movie => movie.title);
     
                     const mdMoivePosters = document.querySelectorAll('.md-movie__poster img')
-    
                     mdMoivePosters.forEach((poster, index) => {
                         poster.src = `https://image.tmdb.org/t/p/w200/${posterPath[index]}`
                     });

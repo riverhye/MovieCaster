@@ -76,9 +76,9 @@
     overflow: hidden;
 }
 
-.search-result__input {
+.search-result__count {
     margin-bottom: 30px;
-    color: var(--blue-point-color);
+    opacity: 0.7;
 }
 
 .search-result__title {
