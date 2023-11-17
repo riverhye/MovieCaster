@@ -5,10 +5,9 @@ dotenv.config();
 dotenv.config({path: path.join(__dirname, '../config/envs/key.env')});
 
 const key = process.env.API_KEY;
-const krKey = process.env.KR_API_KEY;
 
 exports.key = (req, res) => {
-    res.send({key, krKey})
+    res.send(key)
 }
 
 // api DB 저장

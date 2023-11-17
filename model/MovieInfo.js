@@ -14,7 +14,6 @@ function Movie_info(Sequelize, DataTypes) {
         },
         overview: {
           type: DataTypes.STRING(4000),
-          allowNull: false,
           defaultValue: '정보 없음'
         },
         release_date: {
