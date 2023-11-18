@@ -30,6 +30,7 @@ app.use('/detail', detailRouter);
 
 const mypageRouter = require('./routes/mypage');
 app.use('/mypage', mypageRouter);
+app.use('/delete_user', mypageRouter); // index.js에 해당 코드 추가
 
 const searchRouter = require('./routes/search');
 app.use('/search', searchRouter);

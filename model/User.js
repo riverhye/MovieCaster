@@ -32,7 +32,7 @@ function User(Sequelize, DataTypes) {
       },
     },
     {
-      tableName: "user",
+      tableName: 'user',
       freezeTableName: true,
       timestamps: false,
     }
