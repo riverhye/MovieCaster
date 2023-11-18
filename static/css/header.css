@@ -2,85 +2,85 @@
 
 /* 전체 */
 body {
-    margin: 0 auto;
-    width: 100vw;
+  margin: 0 auto;
+  width: 100vw;
 }
 
 /* 로고 section */
 .logo {
-    margin-left: 300px;
-    padding-top: 20px;
-    cursor: pointer;
+  margin-left: 300px;
+  padding-top: 20px;
+  cursor: pointer;
 }
 
 .logo-section {
-    width: 100%;
-    height: 130px;
-    padding-left: 200px;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    position: fixed;
-    z-index: 9;
+  width: 100%;
+  height: 130px;
+  padding-left: 200px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 9;
 }
 
 .icon-group {
-    display: flex;
-    margin-right: 700px;
-    padding: 50px 50px 0;
-    justify-content: space-around;
-    position: relative;
+  display: flex;
+  margin-right: 700px;
+  padding: 50px 50px 0;
+  justify-content: space-around;
+  position: relative;
 }
 
 /* 아이콘 */
 .search-icon,
 .user-icon {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .user-status {
-    margin: 0 40px;
-    font-size: 23px;
+  margin: 0 40px;
+  font-size: 23px;
 }
 
 /* 박스오피스 section */
 .box-office-section {
-    padding-top: 150px;
+  padding-top: 150px;
 }
 
 .box-office__film {
-    position: absolute;
-    z-index: 0;
-    left: 400px;
+  position: absolute;
+  z-index: 0;
+  left: 230px;
 }
 
 .box-office-text {
-    writing-mode: vertical-lr;
-    padding: 20px;
-    width: 20px;
-    position: absolute;
-    top: 65px;
-    left: -50px;
-    font-size: 18px;
+  writing-mode: vertical-lr;
+  padding: 20px;
+  width: 20px;
+  position: absolute;
+  top: 65px;
+  left: -50px;
+  font-size: 18px;
 }
 
 .box-office-slider {
-    position: absolute;
-    width: 100%;
-    top: 25px;
-    left: 20px;
-    display: flex;
-    z-index: 9;
+  position: absolute;
+  width: 100%;
+  top: 25px;
+  left: 20px;
+  display: flex;
+  z-index: 9;
 }
 
 .box-office-poster {
-    width: 200px;
-    height: 200px;
-    margin: 0 45px;
+  width: 200px;
+  height: 200px;
+  margin: 0 45px;
 }
 
 .box-office-rank {
-    font-size: 30px;
-    color: white;
-    font-style: italic;
+  font-size: 30px;
+  color: white;
+  font-style: italic;
 }

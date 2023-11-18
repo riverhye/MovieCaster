@@ -4,170 +4,170 @@
 
 /* section 공통 세팅 */
 ul {
-    margin: 10px 15px;
+  margin: 10px 15px;
 }
 
 body {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 .main-section {
-    padding-top: 300px;
-    margin: 0 230px;
+  padding-top: 300px;
+  margin: 0 230px;
 }
 
 .best-section,
 .md-section {
-    position: relative;
-    width: 1450px;
-    overflow: hidden;
+  position: relative;
+  width: 1450px;
+  overflow: hidden;
 }
 
 .section__title {
-    background-color: var(--blue-point-color);
-    color: white;
-    font-weight: 600;
-    font-size: 19px;
-    margin: 30px 0;
-    padding: 0 5px;
-    border-radius: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 300px;
-    height: 50px;
-    box-shadow: 0px 5px 3px rgba(0, 0, 0, 0.5);
+  background-color: var(--blue-point-color);
+  color: white;
+  font-weight: 600;
+  font-size: 19px;
+  margin: 30px 0;
+  padding: 0 5px;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 50px;
+  box-shadow: 0px 5px 3px rgba(0, 0, 0, 0.5);
 }
 
 .section__list {
-    display: flex;
-    height: 650px;
-    position: relative;
+  display: flex;
+  height: 650px;
+  position: relative;
 }
 
-.section__body  {
-    /* width: 20%; */
-    height: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.section__body {
+  /* width: 20%; */
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .section__poster-body {
-    margin-top: 20px;
-    border-radius: 20px;
-    height: 280px;
-    cursor: pointer;
-    text-align: center;
-    overflow: hidden;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+  margin-top: 20px;
+  border-radius: 20px;
+  height: 280px;
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
 }
 
 .section__poster-body > img,
 .md-movie__poster > img {
-    display: block;
-    object-fit: cover;
+  display: block;
+  object-fit: cover;
 }
 
 /* swiper btn 고정*/
 .best-section-swiper {
-    position: relative;
+  position: relative;
 }
 
 .md-section-swiper {
-    position: relative;
+  position: relative;
 }
 
 /* section 1 */
 .best-movie__comment {
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
-    margin: 30px 10px 0;
-    padding: 5px 10px;
-    width: 240px;
-    height: 130px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  margin: 30px 10px 0;
+  padding: 5px 10px;
+  width: 240px;
+  height: 130px;
 }
 
 /* section 2 */
 .md-movie__info {
-    margin: 30px 10px 0;
-    padding: 5px 10px;
-    width: 240px;
-    height: 130px;
+  margin: 30px 10px 0;
+  padding: 5px 10px;
+  width: 240px;
+  height: 130px;
 }
 
 /* 텍스트 */
 .nickname-sm {
-    color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .movie-title {
-    height: 30px;
-    font-weight: 600;
+  height: 30px;
+  font-weight: 600;
 }
 
 .text-sm {
-    margin-top: 9px;
-    font-size: 14px;
-    position: relative;
+  margin-top: 9px;
+  font-size: 14px;
+  position: relative;
 }
 
 .movie-title__large {
-    margin-top: 10px;
-    height: 50px;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 1.5;
+  margin-top: 10px;
+  height: 50px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.5;
 }
 
 .comment-sm {
-    height: 60px;
-    font-size: 15px;
+  height: 60px;
+  font-size: 15px;
 }
 
 .md-movie__title {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 /* 아이콘 */
 .sun-icon {
-    margin-right: 5px;
-    color: #FFC73C;
-    font-size: 20px;
+  margin-right: 5px;
+  color: #ffc73c;
+  font-size: 20px;
 }
 
 .heart-icon {
-    position: absolute;
-    top: -5px;
-    right: 20px;
-    font-size: 16px;
-    cursor: pointer;
+  position: absolute;
+  top: -5px;
+  right: 20px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .heart-active {
-    color: red;
+  color: red;
 }
 
 .cloud-icon {
-    color: darkblue;
-    margin-right: 5px;
+  color: darkblue;
+  margin-right: 5px;
 }
 
 .arrow-icon {
-    border-radius: 50%;
-    font-size: 35px;
-    position: absolute;
-    top: 280px;
-    width: 50px;
-    height: 50px;
+  border-radius: 50%;
+  font-size: 35px;
+  position: absolute;
+  top: 280px;
+  width: 50px;
+  height: 50px;
 }
 
 .left-arrow {
-    left: 0px;
+  left: 0px;
 }
 
 /* 밖으로 화살표 빼려면? */
 .right-arrow {
-    right: 0px;
+  right: 0px;
 }
