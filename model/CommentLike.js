@@ -1,5 +1,6 @@
 const { User } = require('./User');
 const { Movie_info } = require('./MovieInfo');
+const { Comment } = require('./Comment');
 
 function Comment_like(Sequelize, DataTypes) {
     return Sequelize.define(
@@ -29,7 +30,7 @@ function Comment_like(Sequelize, DataTypes) {
   }
   Comment_like.associate = (model) => {
     Comment_like.belongsTo(model.Comment, {
-      foreignKey: 'commentidx',
+      foreignKey: 'commentid',
       onDelete: 'CASCADE', // cascade deletion을 위해 중요한 부분입니다
     });
   };
