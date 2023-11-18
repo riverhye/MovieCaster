@@ -10,6 +10,9 @@ const { MovieInfo } = require("../model");
 const { User } = require("../model");
 const { Comment } = require("../model");
 const { error } = require("console");
+
+// const apiMovies = require("../model.getMovies");
+
 exports.detail = (req, res) => {
   res.render("detail");
 };
