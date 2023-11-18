@@ -29,3 +29,15 @@ exports.user_signin = (req, res) => {
     res.send(data);
   });
 };
+
+exports.session_check = function (req, res) {
+  const isLoggedIn = req.session.userIndex ? true : false;
+  if (isLoggedIn) {
+    // 로그인된 유저가 있으면 세션정보 삭제
+    req.session.destroy(function (err) {
+      if (err) console.log(err);
+    });
+  }
+  console.log('userLoggedIn?: ', isLoggedIn); // 유저의 로그인 상태(true / false)
+  res.json({ isLoggedIn }); // 클라이언트에게 세션 상태를 JSON 형태로 응답
+};
