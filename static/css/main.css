@@ -8,18 +8,18 @@ ul {
 }
 
 body {
-    margin: 0 auto; 
+    margin: 0 auto;
 }
 
 .main-section {
     padding-top: 300px;
-    margin-left: 400px;
+    margin: 0 230px;
 }
 
 .best-section,
 .md-section {
     position: relative;
-    width: 1500px;
+    width: 1450px;
     overflow: hidden;
 }
 

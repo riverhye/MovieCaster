@@ -42,5 +42,11 @@ function Comment(Sequelize, DataTypes) {
     }
   );
 }
+Comment.associate = (model) => {
+  Comment.hasMany(model.Comment_like, {
+    foreignKey: "commentidx",
+    onDelete: "CASCADE", // 이 부분이 cascade deletion을 활성화합니다
+  });
+};
 
 module.exports = Comment;

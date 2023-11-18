@@ -1,4 +1,7 @@
-function fav_movie(Sequelize, DataTypes) {
+const { User } = require('./User');
+const { Movie_info } = require('./MovieInfo');
+
+function Fav_movie(Sequelize, DataTypes) {
     return Sequelize.define(
       'fav_movie',
       {
