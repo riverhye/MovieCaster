@@ -1,4 +1,4 @@
-const { User } = require("./User");
+const { User } = require('./User');
 
 
 function Comment(Sequelize, DataTypes) {
@@ -45,7 +45,6 @@ function Comment(Sequelize, DataTypes) {
 }
 Comment.associate = (model) => {
   Comment.hasMany(model.Comment_like, {
-
     foreignKey: 'commentid',
     onDelete: 'CASCADE', // 이 부분이 cascade deletion을 활성화합니다
 
