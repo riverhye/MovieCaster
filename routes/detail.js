@@ -3,7 +3,7 @@ const detailRouter = express.Router();
 const controller = require("../controller/CDetail");
 detailRouter.get("/", controller.detail);
 // row1: 리뷰 불러오기
-detailRouter.get("/getReview", controller.getReviews);
+detailRouter.get("/getReviews", controller.getReviews);
 // row1: 리뷰 저장하기
 detailRouter.post("/saveReview", controller.saveReview);
 // detailRouter.post('/', controller.saveRating);
