@@ -26,39 +26,46 @@ exports.myinfo = async (req, res) => {
 //좋아요 누른 영화 이동
 exports.mymovielike = async (req, res) => {
   try {
-    const targetUserIdx = 1;
-    const likedMovies = await Movie_like.findAll({
-      where: { useridx: targetUserIdx },
-    });
-    const movieIndices = likedMovies.map((like) => like.movieidx);
-    const userLikedMovies = await Movie_info.findAll({
-      // Update MovieInfo to Movie_info
-      where: { movieidx: movieIndices },
-    });
+      const targetUserIdx = 1; // 원하는 사용자의 ID로 수정
+      const likedMovies = await Movie_like.findAll({
+          where: { useridx: targetUserIdx },
+      });
 
-    res.render('mypage/mypageMovieLike', { root: 'views', data: userLikedMovies });
+      const movieIndices = likedMovies.map((like) => like.movieidx);
+
+      // Movie_info와의 관계를 활용하여 poster_path를 가져옴
+      const userLikedMovies = await Movie_info.findAll({
+          where: { movieidx: movieIndices },
+      });
+
+      res.render('mypage/mypageMovieLike', { root: 'views', data: userLikedMovies });
   } catch (error) {
-    res.status(500).send('서버 에러');
+      console.error('Error fetching liked movies:', error);
+      res.status(500).send('Internal Server Error');
   }
 };
 
 //좋아요 누른 코멘트 이동
 exports.mycommentlike = async (req, res) => {
   try {
-    const targetUserIdx = 1;
-    const likedMovies = await Movie_like.findAll({
+    const targetUserIdx = 1; 
+    const likedComments = await Comment_like.findAll({
       where: { useridx: targetUserIdx },
     });
-    const movieIndices = likedMovies.map((like) => like.movieidx);
-    const userLikedComments = await Movie_info.findAll({
-      where: { movieidx: movieIndices },
+
+    const commentIndices = likedComments.map((like) => like.commentid);
+    
+    const userLikedComments = await Comment.findAll({
+      where: { commentid: commentIndices },
     });
 
     res.render('mypage/mypageCommentLike', { root: 'views', data: userLikedComments });
   } catch (error) {
-    res.status(500).send('서버 에러');
+    console.error('Error fetching liked comments:', error);
+    res.status(500).send('Internal Server Error');
   }
 };
+
 
 //내가 작성한 코멘트 이동
 exports.mycomment = async (req, res) => {
@@ -97,11 +104,57 @@ exports.delete_user = async (req, res) => {
 //내 인생영화 수정하기
 exports.manage_fav_movie = (req, res) => {};
 
-//내가 좋아요 누른 영화 삭제하기
-exports.delete_movie_like = (req, res) => {};
+//내가 좋아요 누른 영화 삭제하기 
+exports.delete_movie_like = async (req, res) => {
+  try {
+      const targetUserIdx = 1; // 원하는 사용자의 ID로 수정
+      const movieLikeId = req.params.id; // 사용자가 좋아요 누른 영화의 ID
+
+      // 먼저 Movie_like 테이블에서 해당 movieLikeId에 대한 레코드를 삭제합니다.
+      await Movie_like.destroy({
+          where: {
+              movieLikeIdx: movieLikeId,
+              useridx: targetUserIdx,
+          },
+      });
+
+      res.send({ result: true });
+  } catch (error) {
+      console.error('Error deleting movie like:', error);
+      res.status(500).send({ error: 'Internal Server Error' });
+  }
+};
 
 //내가 좋아요 누른 코멘트 삭제하기
-exports.delete_comment_like = (req, res) => {};
+exports.delete_comment_like = async (req, res) => {
+  try {
+    const targetUserIdx = 1;
+    const commentId = req.params.id;
+
+    // 먼저 Comment_like 테이블에서 해당 commentId에 대한 레코드를 삭제합니다.
+    await Comment_like.destroy({
+      where: {
+        commentid: commentId,
+      },
+    });
+
+    // 그 후 Comment 테이블에서 해당 commentId에 대한 레코드를 삭제합니다.
+    const result = await Comment.destroy({
+      where: {
+        useridx: targetUserIdx,
+        commentid: commentId,
+      },
+    });
+
+    if (result === 0) {
+      return res.status(404).send({ error: 'Comment not found' });
+    }
+
+    res.send({ result: true });
+  } catch (error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+};
 
 //내가 작성한 코멘트 수정하기
 exports.update_comment = (req, res) => {};
