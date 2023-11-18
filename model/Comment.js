@@ -1,5 +1,4 @@
-const { User } = require('./User');
-
+const { User } = require("./User");
 
 function Comment(Sequelize, DataTypes) {
   return Sequelize.define(
@@ -40,12 +39,13 @@ function Comment(Sequelize, DataTypes) {
       tableName: "comment",
       freezeTableName: true,
       timestamps: false,
-    });
+    }
+  );
 }
 Comment.associate = (model) => {
   Comment.hasMany(model.Comment_like, {
-    foreignKey: 'commentidx',
-    onDelete: 'CASCADE', // 이 부분이 cascade deletion을 활성화합니다
+    foreignKey: "commentidx",
+    onDelete: "CASCADE", // 이 부분이 cascade deletion을 활성화합니다
   });
 };
 
