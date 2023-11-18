@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/static/css/index.css" />
     <link rel="stylesheet" href="/static/css/footer.css" />   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>마이페이지 좋아요 누른 영화 보기</title>
 </head>
 <body>
@@ -64,6 +65,7 @@
                     <div class="container text-center">
                         <div class="row row-cols-3 row row-gap-3">
                             <!-- 위시리스트 항목을 나타내는 부분 (동적 부분) -->
+                            <% for (let i = 0; i < data.length; i++) { %>
                             <!--card1-->
                             <div class="col" style="width: 900px;">
                                 <div class="card text-center shadow-sm bg-body-tertiary rounded" style="margin-bottom: 20px; width: 100%;">
@@ -72,18 +74,28 @@
                                             <span class="badge bg-secondary">
                                                 <span>작성일</span>
                                             </span>
-                                            <div>&nbsp;2023-11-11</div>
+                                            <div>&nbsp;<%= new Date(data[i].timestamp).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }) %></div>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="badge bg-secondary">
                                                 <span>작성자</span>
                                             </span>
-                                            <div>&nbsp;구구콘</div>
+                                            <div>
+                                                <% 
+                                                // 사용자가 좋아요 누른 코멘트의 작성자 가져오기
+                                                const userInfo = data[i].CommentUser; 
+                                                        if (userInfo) { %>
+                                                            <%= userInfo.nickname %>
+                                                    <% } else { %>
+                                                        <!-- 영화 정보가 없을 경우 처리 -->
+                                                        &nbsp; 작성자 정보 없음
+                                                    <% } %>
+                                                    </div>
                                         </div>
                                         <div class="close">
-                                            <button style="color: transparent; background-color: transparent; border: none;">
+                                            <button onclick="deleteComment('<%= data[i].commentid %>')" style="color: transparent; background-color: transparent; border: none;">
                                                 <i class="fa-solid fa-times" style="color: red;"></i>
-                                            </button>    
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="card-body">
@@ -93,13 +105,18 @@
                                                     <img src="/images/" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
                                                 </div>
                                                 <div class="col-8" style="text-align: left;">
-                                                    <p class="card-text">너무 재밌는 영화였답니다!너무 재밌는 영화였답니다!너무 재밌는 영화였답니다!너무 재밌는 영화였답니다!너무 재밌는 영화였답니다!</p>
-                                                </div>
+                                                    <% if (data[i] && data[i].description) { %>
+                                                        <p class="card-text"><%= data[i].description %></p>
+                                                    <% } else { %>
+                                                        <p class="card-text">좋아요 누른 코멘트가 없습니다.</p>
+                                                    <% } %>
+                                                  </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <% } %>
                             <!-- Add more cards as needed -->
                         </div>
                     </div>
@@ -108,16 +125,30 @@
             <!--전체 페이지 감싸는 div: 삭제하지 말 것!-->
         </div>
 
-          <!-- footer.html -->
-          <footer>
-            <div class="footer">
-                <strong>주식회사</strong> 무비캐스터 <strong>대표</strong> 4FLEX 
-                서울특별시 용산구 청파로 109(나진전자월드상가) 3층 <br />
-                <strong>사업자 등록 번호</strong> 595-95-0099 <br/>
-                © 2023 by MovieCaster, Inc. All rights reserved. <br/>
-            </div>
-        </footer>
+        <!-- footer.html -->
+        <div class="footer">
+            <strong>주식회사</strong> 무비캐스터 <strong>대표</strong> 4FLEX 
+            서울특별시 용산구 청파로 109(나진전자월드상가) 3층 <br />
+            <strong>사업자 등록 번호</strong> 595-95-0099 <br/>
+            © 2023 by MovieCaster, Inc. All rights reserved. <br/>
+        </div>
+        
+        <script>
+            // 삭제하기 버튼 클릭 이벤트 핸들러
+            function deleteComment(commentId) {
+                console.log('Deleting comment with ID:', commentId);
 
+                // Axios를 사용하여 서버에 DELETE 요청을 보냅니다.
+                axios.delete(`/mypage/mycommentlike/${commentId}`)
+                    .then(response => {
+                        console.log(response.data);
+                        location.reload(); // 삭제 후 페이지 새로고침
+                    })
+                    .catch(error => {
+                        console.error('Error deleting comment:', error.response);
+                    });
+            }
+        </script>
 
     </div>
 </body>
