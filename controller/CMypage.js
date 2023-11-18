@@ -1,25 +1,25 @@
-const { User, Comment, Movie_like, Movie_info, Fav_movie, Comment_like } = require('../model'); 
+const { User, Comment, Movie_like, Movie_info, Fav_movie, Comment_like } = require('../model');
 
 //마이페이지 메인 이동
 exports.mypage = (req, res) => {
-    res.render('mypage/mypage', { root: 'views' });
+  res.render('mypage/mypage', { root: 'views' });
 };
 
 //인생영화 설정 페이지 이동
 exports.myfav = (req, res) => {
-    res.render('mypage/mypageFav', { root: 'views' });
+  res.render('mypage/mypageFav', { root: 'views' });
 };
 
 //내 정보 수정,삭제 이동
 exports.myinfo = async (req, res) => {
-  try{
+  try {
     const targetUserIdx = 1;
     const user = await User.findAll({
       where: { useridx: targetUserIdx },
     });
     res.render('mypage/mypageInfo', { root: 'views', data: user });
-  } catch(error) {
-    res.status(500).send('서버 에러')
+  } catch (error) {
+    res.status(500).send('서버 에러');
   }
 };
 
@@ -31,7 +31,8 @@ exports.mymovielike = async (req, res) => {
       where: { useridx: targetUserIdx },
     });
     const movieIndices = likedMovies.map((like) => like.movieidx);
-    const userLikedMovies = await Movie_info.findAll({ // Update MovieInfo to Movie_info
+    const userLikedMovies = await Movie_info.findAll({
+      // Update MovieInfo to Movie_info
       where: { movieidx: movieIndices },
     });
 
@@ -49,7 +50,7 @@ exports.mycommentlike = async (req, res) => {
       where: { useridx: targetUserIdx },
     });
     const movieIndices = likedMovies.map((like) => like.movieidx);
-    const userLikedComments = await Movie_info.findAll({ 
+    const userLikedComments = await Movie_info.findAll({
       where: { movieidx: movieIndices },
     });
 
@@ -74,31 +75,38 @@ exports.mycomment = async (req, res) => {
 };
 
 //내 프로필 수정하기
-exports.update_profile = (req, res) => {
-};
+exports.update_profile = (req, res) => {};
 
 //내 계정 삭제하기(update문으로 작성할 것!)
-exports.delete_user = (req, res) => {
+exports.delete_user = async (req, res) => {
+  try {
+    const result = await User.update(
+      { del_user_ch: 'y' }, // 업데이트할 필드와 값
+      { where: { useridx: req.session.userIndex } }
+    );
+    req.session.destroy(function (err) {
+      // 탈퇴한 회원의 session 삭제
+      if (err) console.log(err);
+    });
+    res.status(200).send('회원탈퇴성공!');
+  } catch (error) {
+    res.status(500).send('서버 에러');
+  }
 };
 
 //내 인생영화 수정하기
-exports.manage_fav_movie = (req, res) => {
-};
+exports.manage_fav_movie = (req, res) => {};
 
-//내가 좋아요 누른 영화 삭제하기 
-exports.delete_movie_like= (req, res) => {
-};
+//내가 좋아요 누른 영화 삭제하기
+exports.delete_movie_like = (req, res) => {};
 
 //내가 좋아요 누른 코멘트 삭제하기
-exports.delete_comment_like = (req, res) => {
-};
+exports.delete_comment_like = (req, res) => {};
 
 //내가 작성한 코멘트 수정하기
-exports.update_comment = (req, res) => {
-};
+exports.update_comment = (req, res) => {};
 
-
-//내가 작성한 코멘트 삭제하기 /mypage/mycomment/:id 
+//내가 작성한 코멘트 삭제하기 /mypage/mycomment/:id
 exports.delete_comment = async (req, res) => {
   try {
     const targetUserIdx = 1;
