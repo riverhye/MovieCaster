@@ -10,7 +10,6 @@ mypageRouter.get('/mycommentlike', controller.mycommentlike);
 mypageRouter.get('/mycomment', controller.mycomment);
 //코멘트 삭제하기 위한 라루터
 mypageRouter.delete('/mycomment/:id', controller.delete_comment);
-
 //코멘트 수정하기 위한 루터
 mypageRouter.put('/mycomment/:id', controller.update_comment);
 //내가 좋아요 누른 코멘트 삭제하기 위한 루터
