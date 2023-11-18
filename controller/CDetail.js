@@ -1,51 +1,39 @@
+const dotenv = require("dotenv");
+const path = require("path");
+dotenv.config();
+dotenv.config({ path: path.join(__dirname, "../config/envs/key.env") });
+const key = process.env.API_KEY;
+exports.key = (req, res) => {
+  res.send(key);
+};
 const { MovieInfo } = require("../model");
 const { User } = require("../model");
 const { Comment } = require("../model");
-
+const { error } = require("console");
 exports.detail = (req, res) => {
   res.render("detail");
 };
-
-exports.comment = (req, res) => {
-  Comment.findOne({
-    where: {
-      movieidx: req.body.movieidx,
-      useridx: req.body.useridx,
-      rate: req.body.rate,
-      description: req.body.description,
-    },
-  }).then((result) => {});
+// model/comment에 저장된 리뷰 받기
+exports.getReviews = async (req, res) => {
+  try {
+    const reviews = await Comment.findAll();
+    res.json({ reviews: "review data" });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Error" });
+  }
 };
-
-exports.comment = (req, res) => {
-  Comment.create(req.body).then((user) => {
-    res.send({ user });
-  });
-};
-
-exports.movie_detail = (req, res) => {
-  MovieInfo.findOne({
-    where: {
-      movieidx: req.body.movieidx,
-      title: req.body.title,
-      description: req.body.description,
-      date: req.body.date,
-      pic: req.body.pic1,
-      genre: req.body.genre,
-    },
-  }).then((result) => {
-    let data = movieTitle,
-      movieDescription,
-      movieDate,
-      moviePic,
-      movieGenre;
-    if (result) {
-      movieTitle = result.title;
-      movieDescription = result.description;
-      movieDate = result.date;
-      moviePic = result.pic;
-      movieGenre = result.genre;
-    }
-    res.send(data);
-  });
+// 작성한 리뷰 저장하기
+exports.saveReview = async (req, res) => {
+  try {
+    const { description, rate } = req.body;
+    const savedReview = await Comment.create({
+      description: description,
+      rate: rate,
+    });
+    res.status(201).json({ message: "Review saved successfully", review: savedReview });
+  } catch (error) {
+    console.error("Error saving review:", error);
+    res.status(500).json({ error: "Failed to save review" });
+  }
 };
