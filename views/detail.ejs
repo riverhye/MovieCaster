@@ -4,14 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/css/detail.css" />
-    <link rel="stylesheet" href="../static/css/detail_review.css" />
     <link rel="stylesheet" href="../static/css/footer.css" />
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>상세페이지</title>
   </head>
   <body>
@@ -19,135 +12,40 @@
     <header></header>
     <!-- grid row1 -->
     <div class="gridRow1 container">
-      <!-- 리뷰 페이지 네이션 테스트 -->
-      <article class="article">
-        <ul class="contents"></ul>
-        <div class="buttons"></div>
-      </article>
-      <section class="reviewPagination">
-        <script>
-          const contents = document.querySelector('.contents');
-          const buttons = document.querySelector('.buttons');
-          const numOfContent = 30;
-          const maxContent = 3;
-          const maxButton = 5;
-          const maxPage = Math.ceil(numOfContent / maxContent);
-          let page = 1;
-          let prev, next;
-
-          // 리뷰 목록
-          // db랑 연동해야함
-          const makeContent = (id) => {
-            const content = document.createElement('li');
-            content.classList.add('content');
-            content.innerHTML = `
-              <span class="contentId">${id}</span>
-              <span class="contentNickname">닉네임</span>
-              <span class="contentReview">리뷰 내용</span>
-              <span class="contentRate">4/5</span>
-            `;
-            return content;
-          };
-
-          const makeButton = (id) => {
-            const button = document.createElement('button');
-            button.classList.add('button');
-            button.dataset.num = id;
-            button.innerText = id;
-            button.addEventListener('click', (e) => {
-              Array.prototype.forEach.call(buttons.children, (button) => {
-                if (button.dataset.num) button.classList.remove('active');
-              });
-              e.target.classList.add('active');
-              renderContent(parseInt(e.target.dataset.num));
-            });
-            return button;
-          };
-
-          const goPrevPage = () => {
-            page = Math.max(page - 1, 1);
-            render(page);
-          };
-
-          const goNextPage = () => {
-            page = Math.min(page + 1, maxPage);
-            render(page);
-          };
-
-          // 렌더링
-          const renderContent = (page) => {
-            while (contents.hasChildNodes()) {
-              contents.removeChild(contents.lastChild);
-            }
-            for (
-              let id = (page - 1) * maxContent + 1;
-              id <= page * maxContent && id <= numOfContent;
-              id++
-            ) {
-              contents.appendChild(makeContent(id));
-            }
-          };
-
-          const renderButton = (page) => {
-            if (prev && buttons.contains(prev)) {
-              buttons.removeChild(prev);
-            } else if (next && buttons.contains(next)) {
-              buttons.removeChild(next);
-            }
-            while (buttons.hasChildNodes()) {
-              buttons.removeChild(buttons.lastChild);
-            }
-            for (let id = page; id < page + maxButton && id <= maxPage; id++) {
-              buttons.appendChild(makeButton(id));
-            }
-            buttons.children[0].classList.add('active');
-          };
-
-          const render = (page) => {
-            renderButton(page);
-            renderContent(page);
-          };
-
-          render(page);
-        </script>
-      </section>
-      <!-- 리뷰 작성 폼 -->
-      <div class="starRate">
-        <form class="mb-3" name="myform" id="myform" method="post">
-          <!-- 별점 남기기 -->
-          <fieldset>
-            <span class="text-bold">별점을 선택해주세요</span>
-            <input type="radio" name="reviewStar" value="5" id="rate1" /><label
-              for="rate1"
-              onclick="saveRating(5)"
-              >★</label
-            >
-            <input type="radio" name="reviewStar" value="4" id="rate2" /><label
-              for="rate2"
-              onclick="saveRating(4)"
-              >★</label
-            >
-            <input type="radio" name="reviewStar" value="3" id="rate3" /><label
-              for="rate3"
-              onclick="saveRating(3)"
-              >★</label
-            >
-            <input type="radio" name="reviewStar" value="2" id="rate4" /><label
-              for="rate4"
-              onclick="saveRating(2)"
-              >★</label
-            >
-            <input type="radio" name="reviewStar" value="1" id="rate5" /><label
-              for="rate5"
-              onclick="saveRating(1)"
-              >★</label
-            >
-          </fieldset>
-        </form>
+      <div class="reviewContainer">
+        <div id="userRate1" class="userRates">4.5</div>
+        /5.0
       </div>
-      <form class="myReview" action="/saveReview" method="post">
+      <div class="reviewBox1 reviewBoxes">
+        <div id="review1" class="reviews">짱구: 재밌어요</div>
+      </div>
+      <div class="reviewContainer">
+        <div id="userRate2" class="userRates">2.7</div>
+        /5.0
+      </div>
+      <div class="reviewBox2 reviewBoxes">
+        <div id="review2" class="reviews">짱아: 재미없어요</div>
+      </div>
+      <div class="reviewContainer">
+        <div id="userRate3" class="userRates">0.0</div>
+        /5.0
+      </div>
+      <div class="reviewBox3 reviewBoxes">
+        <div id="review3" class="reviews">수지: 안봤어요</div>
+      </div>
+      <form class="myReview">
         <input type="text" class="writeReview" id="userReview" placeholder="리뷰를 작성해보세요" />
-        <button type="button" class="submitReview" onclick="submitReview()">리뷰작성</button>
+        <input type="submit" class="submitReview" />
+      </form>
+      <form class="mb-3" name="myform" id="myform" method="post">
+        <fieldset>
+          <span class="text-bold">별점을 선택해주세요</span>
+          <input type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1" onclick="userRate1()">★</label>
+          <input type="radio" name="reviewStar" value="4" id="rate2"><label for="rate2" onclick="userRate2()">★</label>
+          <input type="radio" name="reviewStar" value="3" id="rate3"><label for="rate3" onclick="userRate3()">★</label>
+          <input type="radio" name="reviewStar" value="2" id="rate4"><label for="rate4" onclick="userRate4()">★</label>
+          <input type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5" onclick="userRate5()">★</label>
+        </fieldset>
       </form>
     </div>
 
@@ -198,41 +96,29 @@
       </div>
     </footer>
     <script>
-      // 별점 선택
-      let selectedRating = 0;
+      function moviePoster() {
 
-      function saveRating(value) {
-        selectedRating = value;
-        const data = {
-          rate: selectedRating,
-        };
-        console.log('data_userRate: ', data);
       }
 
-      function submitReview() {
-        const description = document.getElementById('userReview').value;
-        const rate = selectedRating;
+      function movieDescription() {
 
-        const data = {
-          description: description,
-          rate: rate,
-        };
-
-        axios({
-          method: 'post',
-          url: '/',
-          data: data,
-        })
-          .then((response) => {
-            console.log('Review Submitted: ', response.data);
-            console.log('Review Sending: ', data);
-          })
-          .catch((error) => {
-            console.error('Error submitting:', error);
-          });
       }
 
-      // 영화 상세정보 api 불러오기
+      function movieDirector() {
+
+      }
+
+      function movieActor() {
+
+      }
+
+      function movieRate() {
+
+      }
+
+      function movieDate() {
+
+      }
     </script>
   </body>
 </html>
