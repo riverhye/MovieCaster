@@ -30,12 +30,14 @@ app.use('/detail', detailRouter);
 
 const mypageRouter = require('./routes/mypage');
 app.use('/mypage', mypageRouter);
+app.use('/delete_user', mypageRouter);
 
 const searchRouter = require('./routes/search');
 app.use('/search', searchRouter);
 
 const signinRouter = require('./routes/signin');
 app.use('/signin', signinRouter);
+app.get('/check-session', signinRouter); // session check for managing login and logout status
 
 const signupRouter = require('./routes/signup');
 app.use('/signup', signupRouter);

@@ -1,5 +1,6 @@
 const { User } = require("./User");
 
+
 function Comment(Sequelize, DataTypes) {
   return Sequelize.define(
     "comment",
@@ -44,9 +45,17 @@ function Comment(Sequelize, DataTypes) {
 }
 Comment.associate = (model) => {
   Comment.hasMany(model.Comment_like, {
-    foreignKey: "commentidx",
-    onDelete: "CASCADE", // 이 부분이 cascade deletion을 활성화합니다
+
+    foreignKey: 'commentid',
+    onDelete: 'CASCADE', // 이 부분이 cascade deletion을 활성화합니다
+
   });
 };
 
+Comment.associate = (model) => {
+  Comment.belongsTo(model.User, {
+    foreignKey: 'useridx',
+    as: 'CommentUser',
+  });
+};
 module.exports = Comment;
