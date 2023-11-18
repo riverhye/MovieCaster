@@ -19,11 +19,11 @@
             </div>
                 <a href="/"><i class="fa-solid fa-xmark regular-icon close-icon"></i></a>
             <div class="search__tag-group">
-                <button type="button" class="search__tag-btn"># 태그 내용입닌다</button>
-                <button type="button" class="search__tag-btn"># 태그 내용입닌다</button>
-                <button type="button" class="search__tag-btn"># 태그 내용입닌다</button>
-                <button type="button" class="search__tag-btn"># 태그 내용입닌다</button>
-                <button type="button" class="search__tag-btn"># 태그 내용입닌다</button>
+                <button type="button" class="search__tag-btn" onclick="tag2000()"># 2000년대 대표 영화</button>
+                <button type="button" class="search__tag-btn" onclick="tagComedy()"># 배꼽 빠지게 웃긴 </button>
+                <button type="button" class="search__tag-btn" onclick="tagHorror()"># 카페인보다 강력한 </button>
+                <button type="button" class="search__tag-btn" onclick="tagDrama()"># 나만 아는 영화 </button>
+                <button type="button" class="search__tag-btn" onclick="tagThriller()"># 몰입 100% 스릴러!</button>
             </div>
         </section>
     
@@ -31,7 +31,8 @@
             <h2 class="search-result__count"></h2>
 
             <div class="search-result__list">
-            <% for (let i=0; i<5; i++) { %>
+                <div class="search-result"></div>
+            <% for (let i=0; i<10; i++) { %>
                 <div class="search-result__body">
                     <div class="search-result__info">
                         <div class="search-result__poster">
@@ -53,33 +54,166 @@
     </footer>
 
     <script>
+        const posterUrl = `https://image.tmdb.org/t/p/w200`;
         
+        const searchInput = document.querySelector('.search-body__input').value;
+        const searchCount = document.querySelector('.search-result__count');
+        const resultTitle = document.querySelector('.search-result__title');
+        const resultPoster = document.querySelector('.search-result__poster img');
+
+        // // 초기화
+        // searchCount.innerHTML = '';
+        // title.innerHTML = '';
+        // for (const poster of resultPoster) {
+        //     poster.src = '';
+        // }
+
         function searchResult() {
             document.querySelector('.search-result__section').classList.remove('hidden');
             
-            const posterUrl = `https://image.tmdb.org/t/p/w200`
-            const searchInput = document.querySelector('.search-body__input').value;
-
             axios({
                 method: 'get',
                 url: '/search/result',
                 params: {input: searchInput} // 객체 형태로 보내야 접근 용이
             }).then((result) => {
+                console.log('result', result.data)
                 if (result.data.movie && result.data.movie.length > 0) {
                     for(let i=0; i<result.data.movie.length; i++) {
-
+                        // 결과 개수
                         const movie = result.data.movie[i]
-                        const searchCount = document.querySelector('.search-result__count');
                         searchCount.innerHTML = `검색 결과 <span "color: var(--blue-point-color);">${movie.count}</span>개`
+
+                        // 결과 title
                         const title = document.querySelector('.search-result__title');
                         title.textContent = `${movie.title}`
+
+                        // 결과 img(poster)
                         const url = movie.poster
-                        const resultPoster = document.querySelector('.search-result__poster img');
                         resultPoster.src = `${posterUrl}${url}`
                     }
                 } else {
-                    const title = document.querySelector('.search-result__title');
-                    title.textContent = `검색 결과가 없습니다.`
+                    const failResult = document.querySelector('.search-result');
+                    failResult.textContent = `검색 결과가 없습니다.`
+                }
+            })
+        }
+
+        function tag2000() {
+            document.querySelector('.search-result__section').classList.remove('hidden');
+
+            axios({
+                method: 'get',
+                url: '/search/tag2000',
+            }).then(result => {
+                const res = result.data;
+                
+                if (res.data) {
+                    for (let i=0; i<res.data.length; i++) {
+                        // 결과 title
+                        const title = document.querySelectorAll('.search-result__title');
+                        title[i].textContent = res.data[i].title
+
+                        // 결과 img(poster)
+                        const url = res.data[i].poster_path
+                        const resultPoster = document.querySelectorAll('.search-result__poster img');
+                        resultPoster[i].src = `${posterUrl}${url}`
+                    }
+                }
+            })
+        }
+
+        function tagComedy() {
+            document.querySelector('.search-result__section').classList.remove('hidden');
+
+            axios({
+                method: 'get',
+                url: '/search/tagcomedy',
+            }).then(result => {
+                const res = result.data;
+
+                if (res.data) {
+                    for (let i=0; i<res.data.length; i++) {
+                        // 결과 title
+                        const title = document.querySelectorAll('.search-result__title');
+                        title[i].textContent = res.data[i].title
+
+                        // 결과 img(poster)
+                        const url = res.data[i].poster_path
+                        const resultPoster = document.querySelectorAll('.search-result__poster img');
+                        resultPoster[i].src = `${posterUrl}${url}`
+                    }
+                }
+            })
+        }
+
+        function tagHorror() {
+            document.querySelector('.search-result__section').classList.remove('hidden');
+
+            axios({
+                method: 'get',
+                url: '/search/taghorror',
+            }).then(result => {
+                const res = result.data;
+
+                if (res.data) {
+                    for (let i=0; i<res.data.length; i++) {
+                        // 결과 title
+                        const title = document.querySelectorAll('.search-result__title');
+                        title[i].textContent = res.data[i].title
+
+                        // 결과 img(poster)
+                        const url = res.data[i].poster_path
+                        const resultPoster = document.querySelectorAll('.search-result__poster img');
+                        resultPoster[i].src = `${posterUrl}${url}`
+                    }
+                }
+            })
+        }
+
+        function tagDrama() {
+            document.querySelector('.search-result__section').classList.remove('hidden');
+
+            axios({
+                method: 'get',
+                url: '/search/tagdrama',
+            }).then(result => {
+                const res = result.data;
+
+                if (res.data) {
+                    for (let i=0; i<res.data.length; i++) {
+                        // 결과 title
+                        const title = document.querySelectorAll('.search-result__title');
+                        title[i].textContent = res.data[i].title
+
+                        // 결과 img(poster)
+                        const url = res.data[i].poster_path
+                        const resultPoster = document.querySelectorAll('.search-result__poster img');
+                        resultPoster[i].src = `${posterUrl}${url}`
+                    }
+                }
+            })
+        }
+
+        function tagThriller() {
+            document.querySelector('.search-result__section').classList.remove('hidden');
+
+            axios({
+                method: 'get',
+                url: '/search/tagthriller',
+            }).then(result => {
+                const res = result.data;
+
+                if (res.data) {
+                    for (let i=0; i<res.data.length; i++) {
+                        // 결과 title
+                        const title = document.querySelectorAll('.search-result__title');
+                        title[i].textContent = res.data[i].title
+
+                        // 결과 img(poster)
+                        const url = res.data[i].poster_path
+                        const resultPoster = document.querySelectorAll('.search-result__poster img');
+                        resultPoster[i].src = `${posterUrl}${url}`
+                    }
                 }
             })
         }
