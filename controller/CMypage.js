@@ -2,7 +2,12 @@ const { User, Comment, Movie_like, Movie_info, Fav_movie, Comment_like } = requi
 
 //마이페이지 메인 이동
 exports.mypage = (req, res) => {
-  res.render('mypage/mypage', { root: 'views' });
+  if (req.session.useridx) {
+    res.render('mypage/mypage', { root: 'views', nickname: req.session.nickname, email: req.session.email });
+  } else {
+    // 세션에 유저가 없으면 로그인 화면으로
+    res.redirect('/signin');
+  }
 };
 
 //인생영화 설정 페이지 이동
@@ -13,11 +18,17 @@ exports.myfav = (req, res) => {
 //내 정보 수정,삭제 이동
 exports.myinfo = async (req, res) => {
   try {
-    const targetUserIdx = 1;
+    // const targetUserIdx = 1;
+    const targetUserIdx = req.session.useridx;
     const user = await User.findAll({
       where: { useridx: targetUserIdx },
     });
-    res.render('mypage/mypageInfo', { root: 'views', data: user });
+    res.render('mypage/mypageInfo', {
+      root: 'views',
+      data: user,
+      nickname: req.session.nickname,
+      email: req.session.email,
+    });
   } catch (error) {
     res.status(500).send('서버 에러');
   }
@@ -26,7 +37,8 @@ exports.myinfo = async (req, res) => {
 //좋아요 누른 영화 이동
 exports.mymovielike = async (req, res) => {
   try {
-    const targetUserIdx = 1; // 원하는 사용자의 ID로 수정
+    // const targetUserIdx = 1; // 원하는 사용자의 ID로 수정
+    const targetUserIdx = req.session.useridx;
     const likedMovies = await Movie_like.findAll({
       where: { useridx: targetUserIdx },
     });
@@ -48,7 +60,8 @@ exports.mymovielike = async (req, res) => {
 //좋아요 누른 코멘트 이동
 exports.mycommentlike = async (req, res) => {
   try {
-    const targetUserIdx = 1;
+    // const targetUserIdx = 1;
+    const targetUserIdx = req.session.useridx;
     const likedComments = await Comment_like.findAll({
       where: { useridx: targetUserIdx },
     });
@@ -69,26 +82,39 @@ exports.mycommentlike = async (req, res) => {
 //내가 작성한 코멘트 이동
 exports.mycomment = async (req, res) => {
   try {
-    const targetUserIdx = 1;
+    // const targetUserIdx = 1;
+    const targetUserIdx = req.session.useridx;
     const userComments = await Comment.findAll({
       where: { useridx: targetUserIdx },
     });
 
-    res.render('mypage/mypageComment', { root: 'views', data: userComments });
+    res.render('mypage/mypageComment', { root: 'views', data: userComments, nickname: req.session.nickname });
   } catch (error) {
     res.status(500).send('서버 에러');
   }
 };
 
 //내 프로필 수정하기
-exports.update_profile = (req, res) => {};
+exports.update_profile = async (req, res) => {
+  try {
+    await User.update(
+      { nickname: req.body.usersNickname, pw: req.body.usersPw },
+      { where: { useridx: req.session.useridx } }
+    );
+    req.session.nickname = req.body.usersNickname;
+    res.send('프로필 수정 성공!');
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('서버 에러');
+  }
+};
 
 //내 계정 삭제하기(update문으로 작성할 것!)
 exports.delete_user = async (req, res) => {
   try {
     const result = await User.update(
       { del_user_ch: 'y' }, // deleted user check(yes / no)
-      { where: { useridx: req.session.userIndex } }
+      { where: { useridx: req.session.useridx } }
     );
     req.session.destroy(function (err) {
       // 탈퇴한 회원의 session 삭제
@@ -106,7 +132,8 @@ exports.manage_fav_movie = (req, res) => {};
 //내가 좋아요 누른 영화 삭제하기
 exports.delete_movie_like = async (req, res) => {
   try {
-    const targetUserIdx = 1; // 원하는 사용자의 ID로 수정
+    // const targetUserIdx = 1; // 원하는 사용자의 ID로 수정
+    const targetUserIdx = req.session.useridx;
     const movieLikeId = req.params.id; // 사용자가 좋아요 누른 영화의 ID
 
     // 먼저 Movie_like 테이블에서 해당 movieLikeId에 대한 레코드를 삭제합니다.
@@ -127,7 +154,8 @@ exports.delete_movie_like = async (req, res) => {
 //내가 좋아요 누른 코멘트 삭제하기
 exports.delete_comment_like = async (req, res) => {
   try {
-    const targetUserIdx = 1;
+    // const targetUserIdx = 1;
+    const targetUserIdx = req.session.useridx;
     const commentId = req.params.id;
 
     // 먼저 Comment_like 테이블에서 해당 commentId에 대한 레코드를 삭제합니다.
@@ -161,7 +189,8 @@ exports.update_comment = (req, res) => {};
 //내가 작성한 코멘트 삭제하기 /mypage/mycomment/:id
 exports.delete_comment = async (req, res) => {
   try {
-    const targetUserIdx = 1;
+    // const targetUserIdx = 1;
+    const targetUserIdx = req.session.useridx;
     const commentId = req.params.id;
 
     // 먼저 Comment_like 테이블에서 해당 commentId에 대한 레코드를 삭제합니다.

@@ -27,7 +27,7 @@
         <div class="col-3">
           <div class="p-3">
             <img src="/images/mypage/user.png" id="userImg" style="border-radius: 5px" />
-            <h5 id="userName">User Name</h5>
+            <h5 id="userName"><%= nickname %> 님</h5>
             <div class="row" id="profileLeft">
               <div class="col mb-2">
                 <a href="/mypage/myinfo">
@@ -76,7 +76,7 @@
                   <span style="font-family: Noto Sans KR, 'Source Sans Pro'; white-space: nowrap"
                     >이메일</span
                   >
-                  <span id="email_placeholder"><%= data.email %></span>
+                  <span id="email_placeholder"><%= email %></span>
                 </div>
                 <div class="col">
                   <span style="font-family: Noto Sans KR, 'Source Sans Pro'; white-space: nowrap"
@@ -84,9 +84,8 @@
                   >
                   <input
                     type="text"
-                    id="nicknameInput"
-                    name="usersName"
-                    value="은구"
+                    id="usersNickname"
+                    name="usersNickname"
                     style="
                       border-color: transparent;
                       background-color: rgb(233, 233, 233);
@@ -101,9 +100,9 @@
                     >비밀번호</span
                   >
                   <input
-                    type="text"
-                    id="phoneInput"
-                    name="usersPhone"
+                    type="password"
+                    id="usersPw"
+                    name="usersPw"
                     style="
                       border-color: transparent;
                       background-color: rgb(233, 233, 233);
@@ -151,6 +150,7 @@
         document.getElementById('cancelBtn').addEventListener('click', function () {
           window.location.href = '/mypage';
         });
+        // 회원탈퇴 기능
         document.getElementById('deleteUser').addEventListener('click', function () {
           axios({
             method: 'post',
@@ -163,6 +163,26 @@
             })
             .catch((error) => {
               console.error('Error deleting user:', error.response);
+            });
+        });
+        // 회원정보 수정 기능
+        document.getElementById('updateUser').addEventListener('submit', function (event) {
+          event.preventDefault();
+
+          const usersNickname = document.getElementById('usersNickname').value;
+          const usersPw = document.getElementById('usersPw').value;
+
+          axios({
+            method: 'post',
+            url: '/mypage/mypage/update',
+            data: { usersNickname, usersPw },
+          })
+            .then((res) => {
+              alert('회원정보 수정 완료');
+              window.location.href = '/mypage';
+            })
+            .catch((error) => {
+              console.error('에러:', error);
             });
         });
       </script>

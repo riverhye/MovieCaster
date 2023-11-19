@@ -1,14 +1,14 @@
 const { User } = require('../model');
 
 exports.signin = (req, res) => {
-  const user = req.session.user;
-  const userIndex = req.session.userIndex;
-  if (user) {
+  const userIndex = req.session.useridx;
+  const userName = req.session.userIndex;
+  if (userIndex) {
     res.render('main');
-    console.log(`{sessionUser: ${user}, userIndex: ${userIndex}}`);
+    console.log(`{sessionUser: ${userName}, userIndex: ${userIndex}}`);
   } else {
     res.render('signin');
-    console.log(`{sessionUser: ${user}, userIndex: ${userIndex}}`);
+    console.log(`{sessionUser: ${userName}, userIndex: ${userIndex}}`);
   }
 };
 
@@ -18,7 +18,7 @@ exports.signout = (req, res) => {
       console.error('세션 삭제 중 에러:', err);
       res.status(500).send('세션 삭제 중 에러 발생');
     } else {
-      res.redirect('/'); // 로그아웃 후 로그인 페이지로 리다이렉트
+      res.redirect('/'); // 로그아웃 후 메인 페이지로 리다이렉트
     }
   });
 };
@@ -29,14 +29,17 @@ exports.user_signin = (req, res) => {
     let data;
 
     if (user) {
-      req.session.user = user.dataValues.nickname; // 세션에 유저닉네임 저장
-      req.session.userIndex = user.dataValues.useridx; // 세션에 유저인덱스 저장
+      req.session.nickname = user.dataValues.nickname; // 세션에 유저닉네임 저장
+      req.session.useridx = user.dataValues.useridx; // 세션에 유저인덱스 저장
+      req.session.userid = user.dataValues.userid; // 세션에 유저인덱스 저장
+      req.session.email = user.dataValues.email; // 세션에 유저인덱스 저장
+
       console.log('로그인 성공!');
-      console.log(`{sessionUser: ${req.session.user}, userIndex: ${req.session.userIndex}}`);
+      console.log(`{sessionUser: ${req.session.nickname}, userIndex: ${req.session.useridx}}`);
       data = { isSuccess: true };
     } else {
       console.log('로그인 실패');
-      console.log(`{sessionUser: ${req.session.user}, userIndex: ${req.session.userIndex}}`);
+      console.log(`{sessionUser: ${req.session.nickname}, userIndex: ${req.session.useridx}}`);
       data = { isSuccess: false };
     }
     res.send(data);
