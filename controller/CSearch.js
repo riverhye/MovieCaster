@@ -1,7 +1,8 @@
-// 태그 검색
 const Sequelize = require('sequelize');
 const { Op } = require('sequelize');
+const {Movie_info} = require('../model');
 
+// 태그 검색
 exports.tag_2000 = async (req, res) => {
     try {
         const search2000 = await Movie_info.findAll({
@@ -114,8 +115,6 @@ exports.tag_thriller = async (req, res) => {
 }
 
 // 검색 결과
-const {Movie_info} = require('../model')
-
 exports.search_movie = (req, res) => {
     res.render('search', {data: null});
 };
@@ -126,19 +125,23 @@ exports.search_movie_result = (req, res) => {
     } else {
         Movie_info.findAll({
             where: {
-                title: req.query.input
+                title: {[Op.like]: `%${req.query.input}%`}
             }
         }).then((result) => {
-            // null값이면 예외처리
-            console.log("search re", result);
-            const movieInfo = result.map(movie => ({
-                title: movie.title,
-                poster: movie.poster_path,
-                count: result.length
-            }))
-            
-            res.json({movie: movieInfo, searchInput: req.query.input});
-        })
+            let movieInfo;
 
+            if (result && result.length > 0) {
+                movieInfo = result.map(movie => ({
+                    title: movie.title,
+                    poster: movie.poster_path,
+                    count: result.length
+                }));
+            } else {
+                movieInfo = [{ msg: '검색 결과가 없습니다.' }];
+            }
+
+            res.json({movie: movieInfo, searchInput: req.query.input});
+        
+        })
     }
 }
