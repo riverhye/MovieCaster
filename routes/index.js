@@ -5,6 +5,7 @@ const controller = require("../controller/CMain");
 router.get("/", controller.main);
 
 router.post("/", controller.key);
+
 router.get("/header", controller.header);
 router.get("/footer", controller.footer);
 
