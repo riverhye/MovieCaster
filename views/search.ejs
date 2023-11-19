@@ -14,15 +14,15 @@
     <div class="search-container">
         <section class="search__section">
             <div class="search__body">
-                <input type="text" name="search" class="search-body__input" id="search" />
+                <input type="text" name="search" class="search-body__input" id="search" placeholder="검색할 영화를 입력하세요." />
                 <i class="fa-solid fa-magnifying-glass regular-icon search-icon" onclick="searchResult()"></i>
             </div>
                 <a href="/"><i class="fa-solid fa-xmark regular-icon close-icon"></i></a>
             <div class="search__tag-group">
                 <button type="button" class="search__tag-btn" onclick="tag2000()"># 2000년대 대표 영화</button>
                 <button type="button" class="search__tag-btn" onclick="tagComedy()"># 배꼽 빠지게 웃긴 </button>
-                <button type="button" class="search__tag-btn" onclick="tagHorror()"># 카페인보다 강력한 </button>
-                <button type="button" class="search__tag-btn" onclick="tagDrama()"># 나만 아는 영화 </button>
+                <button type="button" class="search__tag-btn" onclick="tagHorror()"># 카페인급 각성효과 </button>
+                <button type="button" class="search__tag-btn" onclick="tagDrama()"># 나만 아는 숨겨진 영화 </button>
                 <button type="button" class="search__tag-btn" onclick="tagThriller()"># 몰입 100% 스릴러!</button>
             </div>
         </section>
@@ -32,16 +32,16 @@
 
             <div class="search-result__list">
                 <div class="search-result"></div>
-            <% for (let i=0; i<10; i++) { %>
-                <div class="search-result__body">
-                    <div class="search-result__info">
-                        <div class="search-result__poster">
-                            <img src="" alt="" />
+                <% for (let i = 0; i < 10; i++) { %>
+                    <div class="search-result__body">
+                        <div class="search-result__info">
+                            <div class="search-result__poster">
+                                <img src="" alt="" />
+                            </div>
+                            <h3 class="search-result__title"></h3>
                         </div>
-                        <h3 class="search-result__title"></h3>
                     </div>
-                </div>
-            <% } %>
+                <% } %>
         </section>
     </div>
     <footer>
@@ -56,167 +56,134 @@
     <script>
         const posterUrl = `https://image.tmdb.org/t/p/w200`;
         
-        const searchInput = document.querySelector('.search-body__input').value;
+        const searchInput = document.querySelector('.search-body__input');
         const searchCount = document.querySelector('.search-result__count');
-        const resultTitle = document.querySelector('.search-result__title');
-        const resultPoster = document.querySelector('.search-result__poster img');
+        const resultTitle = document.querySelectorAll('.search-result__title');
+        const resultPosterBody = document.querySelectorAll('.search-result__poster');
+        const resultPoster = document.querySelectorAll('.search-result__poster img');
+        const failResult = document.querySelector('.search-result');
 
-        // // 초기화
-        // searchCount.innerHTML = '';
-        // title.innerHTML = '';
-        // for (const poster of resultPoster) {
-        //     poster.src = '';
-        // }
+        // 초기화 설정
+        function onSearch() {
+            // 카운트 초기화
+            searchCount.innerHTML = '';
 
+            // 타이틀 초기화
+            const resultTitleArr = Array.from(resultTitle);
+            for (const title of resultTitleArr) {
+                title.innerHTML = '';
+            }
+
+            // 포스터 초기화
+            for (const poster of resultPoster) {
+                poster.src = '';
+        }}
+
+        // 검색 결과
         function searchResult() {
+            // 결과 초기화
+            onSearch();
+
             document.querySelector('.search-result__section').classList.remove('hidden');
-            
+
             axios({
                 method: 'get',
                 url: '/search/result',
-                params: {input: searchInput} // 객체 형태로 보내야 접근 용이
-            }).then((result) => {
-                console.log('result', result.data)
-                if (result.data.movie && result.data.movie.length > 0) {
-                    for(let i=0; i<result.data.movie.length; i++) {
+                params: {input: searchInput.value}
+            }).then((res) => {
+                const result = res.data;
+                console.log(result);
+
+                for(let i=0; i<result.movie.length; i++) {
+                    if (result.movie.length > 0 && result.movie[i].count) {
+                        // 결과 초기화
+                        failResult.textContent = '';
+
                         // 결과 개수
-                        const movie = result.data.movie[i]
-                        searchCount.innerHTML = `검색 결과 <span "color: var(--blue-point-color);">${movie.count}</span>개`
+                        const movie = result.movie[i];
+                        searchCount.innerHTML = 
+                            `<span style="color: var(--blue-point-color);">검색 결과</span>
+                            ${movie.count}<span style="color: var(--blue-point-color);">개</span>`;
 
                         // 결과 title
-                        const title = document.querySelector('.search-result__title');
-                        title.textContent = `${movie.title}`
+                        resultTitle[i].textContent = `${movie.title}`;
 
                         // 결과 img(poster)
-                        const url = movie.poster
-                        resultPoster.src = `${posterUrl}${url}`
+                        const url = movie.poster;
+                        if (url) {
+                            resultPoster[i].src = `${posterUrl}${url}`;
+                        } else {
+                            // resultPosterBody[i].textContent = '정보 없음';
+                            resultPosterBody[i].style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                        }
+                        
+                    } else {
+                        failResult.textContent = result.movie[i].msg;
                     }
-                } else {
-                    const failResult = document.querySelector('.search-result');
-                    failResult.textContent = `검색 결과가 없습니다.`
                 }
             })
         }
 
+
+        // 태그별 영화
         function tag2000() {
-            document.querySelector('.search-result__section').classList.remove('hidden');
-
-            axios({
-                method: 'get',
-                url: '/search/tag2000',
-            }).then(result => {
-                const res = result.data;
-                
-                if (res.data) {
-                    for (let i=0; i<res.data.length; i++) {
-                        // 결과 title
-                        const title = document.querySelectorAll('.search-result__title');
-                        title[i].textContent = res.data[i].title
-
-                        // 결과 img(poster)
-                        const url = res.data[i].poster_path
-                        const resultPoster = document.querySelectorAll('.search-result__poster img');
-                        resultPoster[i].src = `${posterUrl}${url}`
-                    }
-                }
-            })
+            handleTagSearch('/search/tag2000');
         }
 
         function tagComedy() {
-            document.querySelector('.search-result__section').classList.remove('hidden');
-
-            axios({
-                method: 'get',
-                url: '/search/tagcomedy',
-            }).then(result => {
-                const res = result.data;
-
-                if (res.data) {
-                    for (let i=0; i<res.data.length; i++) {
-                        // 결과 title
-                        const title = document.querySelectorAll('.search-result__title');
-                        title[i].textContent = res.data[i].title
-
-                        // 결과 img(poster)
-                        const url = res.data[i].poster_path
-                        const resultPoster = document.querySelectorAll('.search-result__poster img');
-                        resultPoster[i].src = `${posterUrl}${url}`
-                    }
-                }
-            })
+            handleTagSearch('/search/tagcomedy');
         }
 
         function tagHorror() {
-            document.querySelector('.search-result__section').classList.remove('hidden');
-
-            axios({
-                method: 'get',
-                url: '/search/taghorror',
-            }).then(result => {
-                const res = result.data;
-
-                if (res.data) {
-                    for (let i=0; i<res.data.length; i++) {
-                        // 결과 title
-                        const title = document.querySelectorAll('.search-result__title');
-                        title[i].textContent = res.data[i].title
-
-                        // 결과 img(poster)
-                        const url = res.data[i].poster_path
-                        const resultPoster = document.querySelectorAll('.search-result__poster img');
-                        resultPoster[i].src = `${posterUrl}${url}`
-                    }
-                }
-            })
+            handleTagSearch('/search/taghorror');
         }
 
         function tagDrama() {
-            document.querySelector('.search-result__section').classList.remove('hidden');
-
-            axios({
-                method: 'get',
-                url: '/search/tagdrama',
-            }).then(result => {
-                const res = result.data;
-
-                if (res.data) {
-                    for (let i=0; i<res.data.length; i++) {
-                        // 결과 title
-                        const title = document.querySelectorAll('.search-result__title');
-                        title[i].textContent = res.data[i].title
-
-                        // 결과 img(poster)
-                        const url = res.data[i].poster_path
-                        const resultPoster = document.querySelectorAll('.search-result__poster img');
-                        resultPoster[i].src = `${posterUrl}${url}`
-                    }
-                }
-            })
+            handleTagSearch('/search/tagdrama');
         }
 
         function tagThriller() {
+            handleTagSearch('/search/tagthriller');
+        }
+
+        // 태그 공통 부분
+        function handleTagSearch(url) {
+            // 결과 초기화
+            onSearch();
+            failResult.textContent = '';
+
             document.querySelector('.search-result__section').classList.remove('hidden');
+
+            // 배경색 초기화
+            resetBgColor();
 
             axios({
                 method: 'get',
-                url: '/search/tagthriller',
+                url: url,
             }).then(result => {
                 const res = result.data;
 
                 if (res.data) {
-                    for (let i=0; i<res.data.length; i++) {
+                    for (let i = 0; i < res.data.length; i++) {
                         // 결과 title
-                        const title = document.querySelectorAll('.search-result__title');
-                        title[i].textContent = res.data[i].title
+                        resultTitle[i].textContent = res.data[i].title;
 
                         // 결과 img(poster)
                         const url = res.data[i].poster_path
                         const resultPoster = document.querySelectorAll('.search-result__poster img');
-                        resultPoster[i].src = `${posterUrl}${url}`
+                        resultPoster[i].src = `${posterUrl}${url}`;
                     }
                 }
-            })
+            });
         }
+
+        // 배경색 초기화 : 검색 결과 있음 -> 태그 클릭 영향 상쇄
+        function resetBgColor() {
+            for (const poster of resultPosterBody) {
+                poster.style.backgroundColor = '';
+            }
+        }
+
     </script>
 </body>
 </html>
