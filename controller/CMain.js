@@ -57,7 +57,7 @@ exports.get_api_movies = async (req, res) => {
 
 // main
 exports.main = (req, res) => {
-  res.render("main");
+  res.render("main", { user: req.session.userIndex }); // main 로드시 유저의 세션정보를 함께 전송
 };
 
 // header, footer
