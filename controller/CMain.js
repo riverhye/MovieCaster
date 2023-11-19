@@ -31,18 +31,17 @@ exports.main = async (req, res) => {
     //   ],
     // });
 
-    res.render("main", { data: { sec1: latestMovies} });
+    res.render('main', { data: { sec1: latestMovies }, user: req.session.useridx });
   } catch (err) {
     console.error('section err: ', err);
   }
 };
 
-
 // header, footer
 exports.header = (req, res) => {
-  res.render("header");
+  res.render('header');
 };
 
 exports.footer = (req, res) => {
-  res.render("footer");
+  res.render('footer');
 };

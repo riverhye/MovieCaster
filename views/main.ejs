@@ -25,16 +25,18 @@
         </div>
         <div class="icon-group">
           <a href="/search"><i class="fa-solid fa-magnifying-glass search-icon"></i></a>
+          <% if ( user ) { %>
+          <a id="logoutButton" href="/signout">
+            <div class="user-status">LOGOUT</div>
+          </a>
+          <% } else { %>
           <a id="loginButton" href="/signin">
             <div class="user-status">LOGIN</div>
           </a>
-          <a id="logoutButton" href="" style="display: none">
-            <div class="user-status">LOGOUT</div>
-          </a>
+          <% } %>
           <a href="/mypage"><i class="fa-solid fa-user user-icon"></i></a>
         </div>
       </section>
-
       <section class="box-office-section">
         <div class="box-office__film">
           <img src="../static/img/filmroll.jpg" alt="" width="1500px" height="280px" />
@@ -261,43 +263,6 @@
         // spaceBetween: 40
         // }
         // }
-      });
-    </script>
-
-    <!-- Showing LogIn or LogOut button -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        // 세션 상태를 확인하고 버튼을 업데이트하는 함수
-        function updateButtons() {
-          axios
-            .get('/check-session') // 서버에 세션 상태를 확인하는 요청
-            .then((response) => {
-              const isLoggedIn = response.data.isLoggedIn;
-
-              const loginButton = document.getElementById('loginButton');
-              const logoutButton = document.getElementById('logoutButton');
-
-              if (isLoggedIn) {
-                loginButton.style.display = 'none'; // 로그인 버튼을 숨김
-                logoutButton.style.display = 'block'; // 로그아웃 버튼을 보임
-              } else {
-                loginButton.style.display = 'block'; // 로그인 버튼을 보임
-                logoutButton.style.display = 'none'; // 로그아웃 버튼을 숨김
-              }
-            })
-            .catch((error) => {
-              console.error('세션 상태 확인에 실패했습니다.', error);
-            });
-        }
-
-        // 페이지 로드 시 세션 상태 확인 및 버튼 업데이트
-        updateButtons();
-
-        // 로그아웃 버튼 클릭 시 세션 상태 업데이트
-        document.getElementById('logoutButton').addEventListener('click', function (event) {
-          alert('로그아웃 되었습니다');
-          updateButtons();
-        });
       });
     </script>
   </body>

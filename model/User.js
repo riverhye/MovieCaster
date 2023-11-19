@@ -1,6 +1,6 @@
 function User(Sequelize, DataTypes) {
   return Sequelize.define(
-    "user",
+    'user',
     {
       useridx: {
         type: DataTypes.INTEGER,
@@ -29,6 +29,7 @@ function User(Sequelize, DataTypes) {
       },
       del_user_ch: {
         type: DataTypes.STRING(1),
+        defaultValue: 'n',
       },
     },
     {
