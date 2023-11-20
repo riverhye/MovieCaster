@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/static/css/index.css" />
     <link rel="stylesheet" href="/static/css/mypage/mypageFav.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>인생영화 등록</title>
     
 </head>
@@ -17,7 +18,7 @@
         <div class="searchBox">
             <form class="search" action="/searching" method="post">
                 <div class="input-group">
-                    <input class="form-control" type="search" placeholder="영화를 검색해보세요." aria-label="search" name="keyword"/>
+                    <input type="text" name="search" class="form-control" id="search" placeholder="검색할 영화를 입력하세요." />
                     <span class="input-group-text" id="search-icon">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
@@ -29,58 +30,26 @@
 
         <div style="margin-bottom: 20px;">등록된 인생작품</div>
 
-        <!-- 애를 foreach 돌리면 됨-->
-        <div class="favBox1" style="margin-bottom: 20px;">
-            <div class="moviePic">picture</div>
-            <div class="movieName">로렌스 애니웨이</div>
-            <div class="movieGenre">멜로/로멘스</div>
-            <div class="movieYear">2012</div>
-            <div class="close">
-                <i class="fa-solid fa-times" onclick="removeFavBox(this)"></i>
-            </div>
-        </div>
+        <!-- 검색 결과 나타나기 -->
+        <section class="search-result__section hidden">
+            <h2 class="search-result__count"></h2>
 
-        <div class="favBox1" style="margin-bottom: 20px;">
-            <div class="moviePic">picture</div>
-            <div class="movieName">로렌스 애니웨이</div>
-            <div class="movieGenre">멜로/로멘스</div>
-            <div class="movieYear">2012</div>
-            <div class="close">
-                <i class="fa-solid fa-times" onclick="removeFavBox(this)"></i>
-            </div>
-        </div>
+            <div class="search-result__list">
+                <div class="search-result"></div>
+                <% for (let i = 0; i < 10; i++) { %>
+                    <div class="search-result__body">
+                        <div class="search-result__info">
+                            <div class="search-result__poster">
+                                <img src="" alt="" />
+                            </div>
+                            <h3 class="search-result__title"></h3>
+                        </div>
+                    </div>
+                <% } %>
+        </section>
 
-        <div class="favBox1" style="margin-bottom: 20px;">
-            <div class="moviePic">picture</div>
-            <div class="movieName">로렌스 애니웨이</div>
-            <div class="movieGenre">멜로/로멘스</div>
-            <div class="movieYear">2012</div>
-            <div class="close">
-                <i class="fa-solid fa-times" onclick="removeFavBox(this)"></i>
-            </div>
-        </div>
 
-        <div class="favBox1" style="margin-bottom: 20px;">
-            <div class="moviePic">picture</div>
-            <div class="movieName">로렌스 애니웨이</div>
-            <div class="movieGenre">멜로/로멘스</div>
-            <div class="movieYear">2012</div>
-            <div class="close">
-                <i class="fa-solid fa-times" onclick="removeFavBox(this)"></i>
-            </div>
-        </div>
-
-        <div class="favBox1" style="margin-bottom: 20px;">
-            <div class="moviePic">picture</div>
-            <div class="movieName">로렌스 애니웨이</div>
-            <div class="movieGenre">멜로/로멘스</div>
-            <div class="movieYear">2012</div>
-            <div class="close">
-                <i class="fa-solid fa-times" onclick="removeFavBox(this)"></i>
-            </div>
-        </div>
-
-        <button>저장</button>
+        <button onclick="saveFavMovie()">저장</button>
         <button id="cancelBtn">취소</button>
 
         <script>
@@ -89,11 +58,96 @@
             window.location.href = "/mypage"; 
             });
 
-            // x를 누르면 해당 favBox1를 숨기는 기능
-            function removeFavBox(icon) {
-                var favBox = icon.closest(".favBox1");
-                favBox.style.display = "none";
+            const posterUrl = `https://image.tmdb.org/t/p/w200`;
+        
+        const searchInput = document.querySelector('.search-body__input');
+        const searchCount = document.querySelector('.search-result__count');
+        const resultTitle = document.querySelectorAll('.search-result__title');
+        const resultPosterBody = document.querySelectorAll('.search-result__poster');
+        const resultPoster = document.querySelectorAll('.search-result__poster img');
+        const failResult = document.querySelector('.search-result');
+
+        // 초기화 설정
+        function onSearch() {
+            // 카운트 초기화
+            searchCount.innerHTML = '';
+
+            // 타이틀 초기화
+            const resultTitleArr = Array.from(resultTitle);
+            for (const title of resultTitleArr) {
+                title.innerHTML = '';
             }
+
+            // 포스터 초기화
+            for (const poster of resultPoster) {
+                poster.src = '';
+        }}
+
+        // 검색 결과
+        function searchResult() {
+            // 결과 초기화
+            onSearch();
+
+            document.querySelector('.search-result__section').classList.remove('hidden');
+
+            axios({
+                method: 'get',
+                url: '/search/result',
+                params: {input: searchInput.value}
+            }).then((res) => {
+                const result = res.data;
+                console.log(result);
+
+                for(let i=0; i<result.movie.length; i++) {
+                    if (result.movie.length > 0 && result.movie[i].count) {
+                        // 결과 초기화
+                        failResult.textContent = '';
+
+                        // 결과 개수
+                        const movie = result.movie[i];
+                        searchCount.innerHTML = 
+                            `<span style="color: var(--blue-point-color);">검색 결과</span>
+                            ${movie.count}<span style="color: var(--blue-point-color);">개</span>`;
+
+                        // 결과 title
+                        resultTitle[i].textContent = `${movie.title}`;
+
+                        // 결과 img(poster)
+                        const url = movie.poster;
+                        if (url) {
+                            resultPoster[i].src = `${posterUrl}${url}`;
+                        } else {
+                            // resultPosterBody[i].textContent = '정보 없음';
+                            resultPosterBody[i].style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                        }
+                        
+                    } else {
+                        failResult.textContent = result.movie[i].msg;
+                    }
+                }
+            })
+        }
+
+        //저장 버튼 클릭 시 호출되는 함수
+        function saveFavMovie() {
+        // 검색 결과 중에서 등록하려는 영화의 정보를 가져오는 코드
+        const selectedMovie = {
+            title: '선택한 영화의 제목',
+            poster_path: '선택한 영화의 포스터 URL',
+            // 다른 필요한 정보들도 추가
+        };
+
+        // 서버로 선택한 영화의 정보 전송
+        axios.post('/mypage/myfav/add', selectedMovie)
+            .then(response => {
+            console.log(response.data);
+            // 성공적으로 등록되었을 때의 로직 추가
+            })
+            .catch(error => {
+            console.error('Error adding fav movie:', error.response);
+            // 등록에 실패했을 때의 로직 추가
+            });
+        }
         </script>
     </div>
 </body>
