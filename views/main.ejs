@@ -62,13 +62,13 @@
         <div class="swiper best-section-swiper">
           <div class="swiper-wrapper best-movie__list section__list">
             <!-- length -->
-            <% for (let i = 0; i<10; i++) { %>
+            <% for (let i = 0; i<data.sec2.length; i++) { %>
             <div class="swiper-slide best-movie__body section__body">
               <div class="best-movie__poster-body section__poster-body">
                 <ul>
                   <li>
                     <a href="">
-                      <div class="best-movie__poster"><img src="" alt="" /></div>
+                      <div class="best-movie__poster"><img src="<%= `https://image.tmdb.org/t/p/w200${data.sec2[i]['CommentMovie.poster_path']}` %>" alt="" /></div>
                     </a>
                   </li>
                 </ul>
@@ -76,14 +76,15 @@
               <div class="best-movie__comment">
                 <ul>
                   <li class="text-sm">
-                    <span class="nickname-sm">유저닉네임</span>
+
+                    <span class="nickname-sm"><%= data.sec2[i].CommentUser.nickname %></span>
                     <i class="fa-solid fa-heart heart-icon" onclick="clickLike(this)"></i>
                   </li>
                   <li class="movie-title text-sm">
-                    <strong><span>헝거게임 : 노래하는 어쩌고와 저쩌고</span></strong>
+                    <strong><span><%= data.sec2[i]['CommentMovie.title'] %></span></strong>
                   </li>
                   <li class="comment-sm text-sm">
-                    <span>개봉을 기다리는 영화인데 내년으로 미뤄진다고...</span>
+                    <span><%= data.sec2[i].description %></span>
                   </li>
                 </ul>
               </div>
@@ -103,7 +104,7 @@
         <div class="md-section__title section__title">
           <i class="bi bi-brightness-high sun-icon"></i>
           <i class="fa-solid fa-cloud cloud-icon"></i>
-          <h4>개봉 예정 영화</h4>
+          <h4>호불호 확실한 영화</h4>
         </div>
         <div class="swiper md-section-swiper">
           <div class="swiper-wrapper md-movie__list section__list">
@@ -114,7 +115,7 @@
                 <ul>
                   <li>
                     <a href="">
-                      <div class="md-movie__poster"><img src="" alt="" /></div>
+                      <div class="md-movie__poster"><img src="<%= `https://image.tmdb.org/t/p/w200${data.sec3[i]['CommentMovie.poster_path']}` %>" alt="" /></div>
                     </a>
                   </li>
                 </ul>
@@ -123,10 +124,10 @@
                 <ul>
                   <li class="md-movie__rating">
                     <i class="bi bi-brightness-high"></i>
-                    <span class="">5.0</span>
+                    <span class=""><%= data.sec3[i].averageRate%></span>
                   </li>
                   <li>
-                    <h4 class="movie-title__large">타이틀</h4>
+                    <h4 class="movie-title__large"><%= data.sec3[i]['CommentMovie.title'] %></h4>
                   </li>
                 </ul>
               </div>
@@ -188,16 +189,6 @@
 
       //     const endpoint = 'https://api.themoviedb.org/3/movie';
 
-    //       // Top rated
-    //       axios.get(`${endpoint}/top_rated?api_key=${key}&language=ko-KR`).then((res) => {
-    //         const movieData = res.data.results.slice(3);
-    //         const posterPath = movieData.map((movie) => movie.poster_path);
-
-    //         const bestMoviePosters = document.querySelectorAll('.best-movie__poster img');
-    //         bestMoviePosters.forEach((poster, index) => {
-    //           poster.src = `https://image.tmdb.org/t/p/w200/${posterPath[index]}`;
-    //         });
-    //       });
 
     //       // Upcoming
     //       axios.get(`${endpoint}/upcoming?api_key=${key}&language=ko-KR`).then((res) => {
@@ -231,13 +222,14 @@
     <!-- best-section swiper -->
     <script>
       const bestSwiper = new Swiper('.best-section-swiper', {
-        slidesPerView: 5,
+        slidesPerView: 5, 
         spaceBetween: 20,
         navigation: {
           prevEl: '.swiper-button-prev',
           nextEl: '.swiper-button-next',
         },
       });
+</script>
     </script>
 
     <!-- md-section swiper -->
