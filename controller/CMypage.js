@@ -173,9 +173,6 @@ exports.delete_user = async (req, res) => {
   }
 };
 
-//내 인생영화 수정하기
-exports.manage_fav_movie = (req, res) => {};
-
 //내가 좋아요 누른 영화 삭제하기
 exports.delete_movie_like = async (req, res) => {
   try {
