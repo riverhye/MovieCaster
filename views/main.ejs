@@ -37,6 +37,7 @@
           <a href="/mypage"><i class="fa-solid fa-user user-icon"></i></a>
         </div>
       </section>
+    </header>
       <section class="box-office-section">
         <div class="box-office__film">
           <img src="../static/img/filmroll.jpg" alt="" width="1500px" height="280px" />
@@ -51,7 +52,6 @@
           </div>
         </div>
       </section>
-    </header>
 
     <div class="main-section">
       <section class="best-section">
@@ -123,7 +123,6 @@
               <div class="md-movie__info">
                 <ul>
                   <li class="md-movie__rating">
-                    <i class="bi bi-brightness-high"></i>
                     <span class=""><%= data.sec3[i].averageRate%></span>
                   </li>
                   <li>
@@ -154,86 +153,85 @@
     <script>
       // section 1 : 슬라이드 3초 주기 무한 반복
       document.addEventListener('DOMContentLoaded', () => {
-      const boxOfficePosters = document.querySelectorAll('.box-office-poster img');
-      const ranking = document.querySelectorAll('.box-office-rank');
-      
-      const data = <%- JSON.stringify(data.sec1) %>;
-      let currentIdx = 0;
-
-      setInterval(() => {
-        if (data && data.length > 0) {
-          currentIdx = currentIdx % data.length;
-
-          for (let i = 0; i < boxOfficePosters.length; i++) {
-            const posterPath = data[currentIdx].poster_path;
-
-            boxOfficePosters[i].src = `https://image.tmdb.org/t/p/w154/${posterPath}`;
-            ranking[i].innerHTML = `${(currentIdx % data.length) + 1}`;
-            currentIdx++;
+        const boxOfficePosters = document.querySelectorAll('.box-office-poster img');
+        const ranking = document.querySelectorAll('.box-office-rank');
+        
+        const data = <%- JSON.stringify(data.sec1) %>;
+        let currentIdx = 0;
+    
+        setInterval(() => {
+          if (data && data.length > 0) {
+            currentIdx = currentIdx % data.length;
+    
+            for (let i = 0; i < boxOfficePosters.length; i++) {
+              const posterPath = data[currentIdx].poster_path;
+    
+              boxOfficePosters[i].src = `https://image.tmdb.org/t/p/w154/${posterPath}`;
+              ranking[i].innerHTML = `${(currentIdx % data.length) + 1}`;
+              currentIdx++;
+            }
           }
-        }
-      }, 3000);
-    });
+        }, 3000);
+      });
 
-      
-      // API로 영화 정보 받아오기 : Box Office, Top rated, Upcoming
-      // mainApiPosters();
-
-      // function mainApiPosters() {
-      //   // API key
-      //   axios({
-      //     method: 'post',
-      //     url: '/',
-      //   }).then((res) => {
-      //     const key = res.data;
-
-      //     const endpoint = 'https://api.themoviedb.org/3/movie';
-
-
-    //       // Upcoming
-    //       axios.get(`${endpoint}/upcoming?api_key=${key}&language=ko-KR`).then((res) => {
-    //         const movieData = res.data.results;
-    //         const posterPath = movieData.map((movie) => movie.poster_path);
-    //         const posterTitle = movieData.map((movie) => movie.title);
-
-    //         const mdMoivePosters = document.querySelectorAll('.md-movie__poster img');
-    //         mdMoivePosters.forEach((poster, index) => {
-    //           poster.src = `https://image.tmdb.org/t/p/w200/${posterPath[index]}`;
-    //         });
-
-    //         const upcomingMovies = document.querySelectorAll('.movie-title__large');
-    //         upcomingMovies.forEach((title, index) => {
-    //           title.textContent = `${posterTitle[index]}`;
-    //         });
-    //       });
-    //     });
-    //   }
-    // </script>
-
-    <script>
+      // section 2 : 코멘트 한 좋아요 - 마이페이지
       function clickLike(thisIcon) {
         thisIcon.classList.toggle('heart-active');
       }
+  
+      // section 3 : 평점 날씨 아이콘
+      const rateIcons = document.querySelectorAll('.md-movie__rating');
+      const dataSec3 = <%- JSON.stringify(data.sec3) %>;
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        for (let i = 0; i < 10; i++) {
+          const movieData = dataSec3[i].averageRate;
+      
+          const iconElement = document.createElement('i');
+      
+          if (movieData >= 4.0) {
+            iconElement.className = 'bi bi-brightness-high sun-icon weather-icon';
+            iconElement.setAttribute('data-index', i);
+          } else if (movieData >= 3.0) {
+            iconElement.className = 'bi bi-cloud-sun weather-icon';
+            iconElement.setAttribute('data-index', i);
+          } else {
+            iconElement.className = 'bi bi-cloud-rain rain-icon weather-icon';
+            iconElement.setAttribute('data-index', i);
+          }
+      
+          iconElement.setAttribute('data-index', i);
+      
+          // 아이콘 적용
+          if (rateIcons[i]) {
+            // 제대로 선택했나 확인
+            if (rateIcons[i].hasChildNodes()) {
+              rateIcons[i].insertBefore(iconElement, rateIcons[i].firstChild);
+            } else {
+              rateIcons[i].appendChild(iconElement);
+            }
+      
+          } else {
+            console.error(`rateIcons[${i}] is undefined.`);
+          }
+        }
+      });
     </script>
 
     <!-- swiper.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <!-- best-section swiper -->
+    <!-- section 2, 3 : 슬라이드 -->
     <script>
       const bestSwiper = new Swiper('.best-section-swiper', {
         slidesPerView: 5, 
-        spaceBetween: 20,
+        spaceBetween: 25,
         navigation: {
           prevEl: '.swiper-button-prev',
           nextEl: '.swiper-button-next',
         },
       });
-</script>
-    </script>
 
-    <!-- md-section swiper -->
-    <script>
       const mdSwiper = new Swiper('.md-section-swiper', {
         slidesPerView: 5,
         spaceBetween: 20,
@@ -241,41 +239,30 @@
           prevEl: '.swiper-button-prev__bt',
           nextEl: '.swiper-button-next__bt',
         },
-        // breakpoints: {
-        // 320: {
-        // slidesPerView: 2,
-        // spaceBetween: 20
-        // },
-        // 480: {
-        // slidesPerView: 3,
-        // spaceBetween: 30
-        // },
-        // 1000: {
-        // slidesPerView: 4,
-        // spaceBetween: 40
-        // }
-        // }
       });
     </script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-  const posters = document.querySelectorAll('.box-office-poster img');
-  posters.forEach((poster, index) => {
-    poster.addEventListener('click', () => {
-      const movieidx = index; // 클릭한 포스터의 인덱스를 movieidx로 사용
 
-      axios.get(`/detail/getMovieInfo/${movieidx}`)
-        .then((response) => {
-          const movieInfo = encodeURIComponent(JSON.stringify(response.data)); // 영화 정보를 URL에서 사용할 수 있도록 인코딩
-          // 영화 정보를 URL에 추가하여 상세 페이지로 이동
-          window.location.href = `/detail?movieidx=${movieidx}&movieInfo=${movieInfo}`;
-        })
-        .catch((error) => {
-          console.error('Error fetching movie information:', error);
+    <script>
+      // 상세 페이지 이동
+      
+      document.addEventListener('DOMContentLoaded', () => {
+      const posters = document.querySelectorAll('.box-office-poster img');
+      posters.forEach((poster, index) => {
+        poster.addEventListener('click', () => {
+          const movieidx = index; // 클릭한 포스터의 인덱스를 movieidx로 사용
+
+          axios.get(`/detail/getMovieInfo/${movieidx}`)
+            .then((response) => {
+              const movieInfo = encodeURIComponent(JSON.stringify(response.data)); // 영화 정보를 URL에서 사용할 수 있도록 인코딩
+              // 영화 정보를 URL에 추가하여 상세 페이지로 이동
+              window.location.href = `/detail?movieidx=${movieidx}&movieInfo=${movieInfo}`;
+            })
+            .catch((error) => {
+              console.error('Error fetching movie information:', error);
+            });
         });
+      });
     });
-  });
-});
     </script>
   </body>
 </html>

@@ -9,6 +9,7 @@ ul {
 
 body {
     margin: 0 auto;
+    overflow-x: hidden;
 }
 
 .main-section {
@@ -43,6 +44,7 @@ body {
 
 .section__list {
     display: flex;
+    width: 1400px;
     height: 650px;
     position: relative;
 }
@@ -84,12 +86,17 @@ body {
 /* section 1*/
 .box-office-section {
     padding-top: 150px;
+    text-align: center;
+    max-width: 1400px;
 }
 
 .box-office__film {
     position: absolute;
     z-index: 0;
-    left: 400px;
+    left: 50%;
+    transform: translateX(-50%); 
+    width: 100%;
+    max-width: 1400px; 
 }
 
 .box-office-text {
@@ -106,7 +113,8 @@ body {
     position: absolute;
     width: 100%;
     top: 25px;
-    left: 20px;
+    left: 55%;
+    transform: translateX(-50%);
     display: flex;
     z-index: 9;
 }
@@ -130,14 +138,16 @@ body {
     margin: 30px 10px 0;
     padding: 5px 10px;
     width: 240px;
+    max-width: 240px;
     height: 130px;
 }
 
 /* section 3 */
 .md-movie__info {
     margin: 30px 10px 0;
-    padding: 5px 10px;
-    width: 240px;
+    padding: 5px 20px;
+    width: 250px;
+    max-width: 250px;
     height: 130px;
 }
 
@@ -168,6 +178,7 @@ body {
 .comment-sm {
     height: 60px;
     font-size: 15px;
+    overflow: hidden;
 }
 
 .md-movie__title {
@@ -193,7 +204,12 @@ body {
     color: red;
 }
 
-.cloud-icon {
+.weather-icon {
+    font-size: 20px;
+}
+
+.cloud-icon,
+.rain-icon {
     color: darkblue;
     margin-right: 5px;
 }
@@ -213,5 +229,5 @@ body {
 
 /* 밖으로 화살표 빼려면? */
 .right-arrow {
-    right: 0px;
+    right: -25px;
 }
