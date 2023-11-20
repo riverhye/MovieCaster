@@ -6,59 +6,62 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/static/css/index.css" />
-    <link rel="stylesheet" href="/static/css/mypage/mypageFav.css">
+    <link rel="stylesheet" href="../static/css/search.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>인생영화 등록</title>
-    
+    <style>
+        /* 버튼 스타일 */
+        .confirm-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            color: #fff;
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .confirm-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div style="font-size: 24px; font-weight: bold;">인생영화 등록</div>
-
-        <div class="searchBox">
-            <form class="search" action="/searching" method="post">
-                <div class="input-group">
-                    <input type="text" name="search" class="form-control" id="search" placeholder="검색할 영화를 입력하세요." />
-                    <span class="input-group-text" id="search-icon">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </span>
-                </div>
-            </form>
-        </div>
-
-        <div class="line"></div>
-
-        <div style="margin-bottom: 20px;">등록된 인생작품</div>
-
-        <!-- 검색 결과 나타나기 -->
+    <div class="search-container">
+        <section class="search__section">
+            <div class="search__body">
+                <input type="text" name="search" class="search-body__input" id="search" placeholder="검색할 영화를 입력하세요." />
+                <i class="fa-solid fa-magnifying-glass regular-icon search-icon" onclick="searchResult()"></i>
+            </div>
+                <a href="/mypage"><i class="fa-solid fa-xmark regular-icon close-icon"></i></a>
+        </section>
+    
         <section class="search-result__section hidden">
             <h2 class="search-result__count"></h2>
 
             <div class="search-result__list">
                 <div class="search-result"></div>
-                <% for (let i = 0; i < 10; i++) { %>
+                <% for (let i = 0; i < 1; i++) { %>
                     <div class="search-result__body">
                         <div class="search-result__info">
                             <div class="search-result__poster">
                                 <img src="" alt="" />
                             </div>
                             <h3 class="search-result__title"></h3>
+                            <a href="#" class="confirm-button" onclick="saveMovie">확인</a>
                         </div>
                     </div>
                 <% } %>
         </section>
+    </div>
 
-
-        <button onclick="saveFavMovie()">저장</button>
-        <button id="cancelBtn">취소</button>
-
-        <script>
-            //취소 누르면 마이페이지로 돌아가게 만드는 기능
-            document.getElementById("cancelBtn").addEventListener("click", function() {
-            window.location.href = "/mypage"; 
-            });
-
-            const posterUrl = `https://image.tmdb.org/t/p/w200`;
+    <script>
+        const posterUrl = `https://image.tmdb.org/t/p/w200`;
         
         const searchInput = document.querySelector('.search-body__input');
         const searchCount = document.querySelector('.search-result__count');
@@ -128,27 +131,63 @@
             })
         }
 
-        //저장 버튼 클릭 시 호출되는 함수
-        function saveFavMovie() {
-        // 검색 결과 중에서 등록하려는 영화의 정보를 가져오는 코드
-        const selectedMovie = {
-            title: '선택한 영화의 제목',
-            poster_path: '선택한 영화의 포스터 URL',
-            // 다른 필요한 정보들도 추가
-        };
+        // 태그 공통 부분
+        function handleTagSearch(url) {
+            // 결과 초기화
+            onSearch();
+            failResult.textContent = '';
 
-        // 서버로 선택한 영화의 정보 전송
-        axios.post('/mypage/myfav/add', selectedMovie)
-            .then(response => {
-            console.log(response.data);
-            // 성공적으로 등록되었을 때의 로직 추가
-            })
-            .catch(error => {
-            console.error('Error adding fav movie:', error.response);
-            // 등록에 실패했을 때의 로직 추가
+            document.querySelector('.search-result__section').classList.remove('hidden');
+
+            // 배경색 초기화
+            resetBgColor();
+
+            axios({
+                method: 'get',
+                url: url,
+            }).then(result => {
+                const res = result.data;
+
+                if (res.data) {
+                    for (let i = 0; i < res.data.length; i++) {
+                        // 결과 title
+                        resultTitle[i].textContent = res.data[i].title;
+
+                        // 결과 img(poster)
+                        const url = res.data[i].poster_path
+                        const resultPoster = document.querySelectorAll('.search-result__poster img');
+                        resultPoster[i].src = `${posterUrl}${url}`;
+                    }
+                }
             });
         }
-        </script>
-    </div>
+
+        // 배경색 초기화 : 검색 결과 있음 -> 태그 클릭 영향 상쇄
+        function resetBgColor() {
+            for (const poster of resultPosterBody) {
+                poster.style.backgroundColor = '';
+            }
+        }
+
+
+        // 확인 버튼을 눌렀을 때 호출되는 함수
+        function saveMovieToDatabase(title) {
+        // Axios를 사용하여 서버에 POST 요청을 보냄
+        axios({
+            method: 'post',
+            url: '/search/saveMovie',
+            data: { title: title }  // 저장할 영화의 제목을 서버에 전달
+        })
+        .then((response) => {
+            console.log('영화가 성공적으로 저장되었습니다:', response.data);
+            // 저장 성공 시 사용자에게 메시지 또는 다른 동작 수행
+        })
+        .catch((error) => {
+            console.error('영화 저장 중 오류 발생:', error);
+            // 오류 처리
+        });
+    }
+
+    </script>
 </body>
 </html>
