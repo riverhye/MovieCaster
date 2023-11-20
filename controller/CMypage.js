@@ -15,6 +15,53 @@ exports.myfav = (req, res) => {
   res.render('mypage/mypageFav', { root: 'views' });
 };
 
+//인생영화 검색 기능
+exports.search_movie_result = (req, res) => {
+  if (!req.query.input) {
+      res.json({data: null});
+  } else {
+      Movie_info.findAll({
+          where: {
+              title: {[Op.like]: `%${req.query.input}%`}
+          }
+      }).then((result) => {
+          let movieInfo;
+
+          if (result && result.length > 0) {
+              movieInfo = result.map(movie => ({
+                  title: movie.title,
+                  poster: movie.poster_path,
+                  count: result.length
+              }));
+          } else {
+              movieInfo = [{ msg: '검색 결과가 없습니다.' }];
+          }
+
+          res.json({movie: movieInfo, searchInput: req.query.input});
+      
+      })
+  }
+}
+
+//인생영화 등록하기
+exports.addFavMovie = async (req, res) => {
+  try {
+    // req.body에는 클라이언트에서 전송한 검색한 영화의 정보가 포함되어 있어야 합니다.
+    const { title, poster_path } = req.body;
+
+    // fav_movie 테이블에 등록
+    const result = await Fav_movie.create({
+      title,
+      poster_path,
+    });
+
+    res.json({ success: true, result });
+  } catch (error) {
+    console.error('Error adding fav movie:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+};
+
 //내 정보 수정,삭제 이동
 exports.myinfo = async (req, res) => {
   try {
@@ -88,7 +135,7 @@ exports.mycomment = async (req, res) => {
       where: { useridx: targetUserIdx },
     });
 
-    res.render('mypage/mypageComment', { root: 'views', data: userComments, nickname: req.session.nickname });
+    res.render('mypage/mypageComment', { root: 'views', data: userComments });
   } catch (error) {
     res.status(500).send('서버 에러');
   }
@@ -154,7 +201,6 @@ exports.delete_movie_like = async (req, res) => {
 //내가 좋아요 누른 코멘트 삭제하기
 exports.delete_comment_like = async (req, res) => {
   try {
-    // const targetUserIdx = 1;
     const targetUserIdx = req.session.useridx;
     const commentId = req.params.id;
 
@@ -177,6 +223,7 @@ exports.delete_comment_like = async (req, res) => {
       return res.status(404).send({ error: 'Comment not found' });
     }
 
+    // 바로 삭제가 반영되도록 클라이언트에게 응답을 보냅니다.
     res.send({ result: true });
   } catch (error) {
     res.status(500).send({ error: 'Internal Server Error' });

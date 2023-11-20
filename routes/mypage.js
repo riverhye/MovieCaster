@@ -20,4 +20,6 @@ mypageRouter.put('/mycomment/:id', controller.update_comment);
 mypageRouter.delete('/mycommentlike/:id', controller.delete_comment_like);
 //내가 좋아요 누른 영화 삭제하기 위한 라우터
 mypageRouter.delete('/mymovielike/:id', controller.delete_movie_like);
+//인생영화 검색 
+mypageRouter.post('/myfav/add', controller.addFavMovie);
 module.exports = mypageRouter;

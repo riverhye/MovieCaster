@@ -82,15 +82,16 @@
                                             </span>
                                             <div>
                                                 <% 
-                                                // 사용자가 좋아요 누른 코멘트의 작성자 가져오기
-                                                const userInfo = data[i].CommentUser; 
-                                                        if (userInfo) { %>
-                                                            <%= userInfo.nickname %>
-                                                    <% } else { %>
-                                                        <!-- 영화 정보가 없을 경우 처리 -->
-                                                        &nbsp; 작성자 정보 없음
-                                                    <% } %>
-                                                    </div>
+                                                    // 사용자가 좋아요 누른 코멘트의 작성자 가져오기
+                                                    const userInfo = data[i].CommentUser; 
+                                                    if (userInfo) { 
+                                                %>
+                                                    <%= userInfo.nickname %>
+                                                <% } else { %>
+                                                    <!-- 영화 정보가 없을 경우 처리 -->
+                                                    작성자 정보 없음
+                                                <% } %>
+                                            </div>
                                         </div>
                                         <div class="close">
                                             <button onclick="deleteComment('<%= data[i].commentid %>')" style="color: transparent; background-color: transparent; border: none;">
@@ -134,7 +135,7 @@
         </div>
         
         <script>
-            // 삭제하기 버튼 클릭 이벤트 핸들러
+            /// 삭제하기 버튼 클릭 이벤트 핸들러
             function deleteComment(commentId) {
                 console.log('Deleting comment with ID:', commentId);
 
@@ -142,12 +143,17 @@
                 axios.delete(`/mypage/mycommentlike/${commentId}`)
                     .then(response => {
                         console.log(response.data);
-                        location.reload(); // 삭제 후 페이지 새로고침
+
+                        // 삭제된 코멘트를 화면에서 감추는 로직 추가
+                        const deletedCommentElement = document.getElementById(`comment_${commentId}`);
+                        if (deletedCommentElement) {
+                            deletedCommentElement.style.display = 'none';
+                        }
                     })
                     .catch(error => {
                         console.error('Error deleting comment:', error.response);
                     });
-            }
+}
         </script>
 
     </div>
