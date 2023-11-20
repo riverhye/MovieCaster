@@ -13,14 +13,23 @@
     <header></header>
     <!------------------------------------------------- grid row1 start ------------------------------------------->
     <div class="gridRow1 container">
-      <h1>Movie Reviews</h1>
+      <h1>이 영화 한줄평</h1>
+      <div class="userReviews">
+        <% for (let i = 0; i < Math.min(comments.length, 5); i++) { %>
+          <div class="userReview">
+            <span class="description"><%= comments[i].description %></span>
+            <span class="rate">평점: <%= comments[i].rate %></span>
+          </div>
+        <% } %>
+      </div>
+    
 
       <!-- 리뷰 작성 폼 -->
-      <!-- <div class="starRate">
-        <form class="mb-3" name="myform" id="myform" method="post"> -->
+      <div class="starRate">
+        <form class="mb-3" name="myform" id="myform" method="post">
       <!-- 별점 남기기 -->
-      <!-- <fieldset>
-            <span class="text-bold">별점을 선택해주세요</span>
+      <fieldset>
+            <span class="text-bold">평점을 선택해주세요</span>
             <input type="radio" name="reviewStar" value="5" id="rate1" /><label
               for="rate1"
               onclick="saveRating(5)"
@@ -48,16 +57,18 @@
             >
           </fieldset>
         </form>
-      </div> -->
-      <!-- <form class="myReview">
+      </div>
+      <form class="myReview">
         <input type="text" class="writeReview" id="userReview" placeholder="리뷰를 작성해보세요" />
-        <button type="button" class="submitReview" onclick="submitReview()">리뷰작성</button>
-      </form> -->
+        <button type="button" class="submitReview" onclick="submitReview(movieIdx)">리뷰작성</button>
+
+      </form>
     </div>
+  </div>
     <!--------------------------------- grid row1 end / row2 start ------------------------------------------->
-    <!-- <div class="gridRow2 container">
+    <div class="gridRow2 container">
       <div class="poster" id="poster_path"></div>
-      <div class="rates">
+      <div class="movieDetail">
         <div class="movieName" id="title"></div>
         <div class="movieGenre" id="genre"></div>
         <div class="movieRelease_date" id="release_date"></div>
@@ -65,14 +76,21 @@
       <div class="summaries">
         <div class="movieOverview" id="overview"></div>
       </div>
-    </div> -->
+    </div>
     <!--------------------------------- grid row2 end / row3 start ------------------------------------------->
     <div class="gridRow3 container">
-      <!-- <div class="alikeMovies">
-        <div id="alikeMovieLeft" class="alikeMovie">이 영화와 비슷한 영화 포스터</div>
-        <div id="alikeMovieMain" class="alikeMovie">이 영화와 비슷한 영화 포스터</div>
-        <div id="alikeMovieRight" class="alikeMovie">이 영화와 비슷한 영화 포스터</div>
-      </div> -->
+      <div class="alikeMovies">
+        <% if (similarMovies.length > 0) { %>
+          <% similarMovies.forEach(movie => { %>
+            <div class="alikeMovie">
+              <img src="<%= movie.poster_path %>" alt="<%= movie.title %> Poster">
+              <p><strong>Title:</strong> <%= movie.title %></p>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p>비슷한 장르의 영화를 불러오지 못했습니다.</p>
+        <% } %>
+      </div>
     </div>
     <footer>
       <div class="footer">
@@ -82,80 +100,58 @@
         © 2023 by MovieCaster, Inc. All rights reserved. <br />
       </div>
     </footer>
+    <!--------------------------- 리뷰 작성--------------------- -->
     <script>
-      // ---------------------------------script-----row1 start------------------------------------------
-      // function saveRating(rate) {
-      //   console.log('나의 평가:', rate);
-      //   window.rating = rate;
-      // }
+      const movieIdx = getMovieIdxFromURL();
 
-      // function submitReview() {
-      //   const reviewText = document.getElementById('userReview').value;
-      //   const rating = window.rating;
-
-      //   // 보낼 데이터 준비
-      //   const reviewData = {
-      //     rating: rating,
-      //     review: reviewText,
-      //   };
-
-      //   // Axios를 사용하여 데이터를 POST 요청으로 보내기
-      //   axios({
-      //     method: 'post',
-      //     url: '/detail/saveReview',
-      //     data: reviewData, // 보낼 데이터 객체
-      //   })
-      //     .then((response) => {
-      //       console.log('리뷰가 성공적으로 제출되었습니다:', response.data);
-
-      //       // 추가된 리뷰 데이터 가져오기
-      //       const newReview = response.data.review;
-
-      //       // 새로운 리뷰를 첫 번째 항목으로 추가
-      //       const reviewList = document.querySelector('.review-list');
-      //       const newReviewItem = document.createElement('li');
-      //       newReviewItem.classList.add('review-item');
-      //       newReviewItem.innerHTML = `
-      //   <span>닉네임: ${newReview.nickname}</span>
-      //   <span>${newReview.description}</span>
-      //   <span>평가: ${newReview.rate}/5</span>
-      // `;
-      //       reviewList.insertBefore(newReviewItem, reviewList.firstChild);
-
-      //       // 기존 첫 번째 리뷰 삭제 (두 번째로 이동)
-      //       if (reviewList.children.length > 3) {
-      //         reviewList.removeChild(reviewList.lastElementChild);
-      //       }
-      //     })
-      //     .catch((error) => {
-      //       console.error('리뷰 제출 중 오류 발생:', error);
-      //     });
-      // }
-      // --------------------------------------------row1 end / row2 start---------------------------------------
-
-      // document.addEventListener('DOMContentLoaded', () => {
-      //   axios({
-      //     method: 'get',
-      //     url: '/detail/getMovieInfo',
-      //   })
-      //     .then((response) => {
-      //       const movieInfo = response.data;
-      //       updateMovieInfo(movieInfo);
-      //     })
-      //     .catch((error) => {
-      //       console.error('Error fetching movie information:', error);
-      //     });
-      // });
-
-      // function updateMovieInfo(movieInfo) {
-      //   document.getElementById(
-      //     'poster_path'
-      //   ).innerHTML = `<img src="${movieInfo.poster_path}" alt="포스터" />`;
-      //   document.getElementById('title').innerHTML = `제목: ${movieInfo.title}`;
-      //   document.getElementById('genre').innerHTML = `장르: ${movieInfo.genre}`;
-      //   document.getElementById('release_date').innerHTML = `개봉일: ${movieInfo.release_date}`;
-      //   document.getElementById('overview').innerHTML = `영화 줄거리: ${movieInfo.overview}`;
-      // }
+      function getMovieIdxFromURL() {
+      const url = window.location.href;
+      const lastSlashIndex = url.lastIndexOf('/');
+      const movieIdx = url.substring(lastSlashIndex + 1);
+      console.log('현재 movieIdx: ', movieIdx)
+      return movieIdx;
+}
+      function saveRating(rating) {
+        window.rating = rating;
+        console.log('선택한 평점: ', rating)
+      }
+    
+      function submitReview(movieIdx) {
+        const reviewText = document.getElementById('userReview').value;
+        const rating = window.rating;
+    
+        const reviewData = {
+          rating: rating,
+          description: reviewText,
+        };
+    
+        axios({
+          method: 'post',
+          url: `/detail/${movieIdx}`,
+          data: reviewData,
+        })
+          .then((response) => {
+            console.log('리뷰가 성공적으로 제출되었습니다:', response.data);
+            // 여기서 서버로부터 새로운 리뷰 목록을 받아와서 표시하거나 새로운 리뷰를 추가할 수 있음
+          })
+          .catch((error) => {
+            console.error('리뷰 제출 중 오류 발생:', error);
+          });
+      }
+    
+      document.addEventListener('DOMContentLoaded', () => {
+        const movieInfo = <%- JSON.stringify(movieInfo) %>; // 서버에서 전달한 movieInfo 데이터
+    
+        updateMovieInfo(movieInfo);
+      });
+    
+      function updateMovieInfo(movieInfo) {
+        document.getElementById('poster_path').innerHTML = `<img src="${movieInfo.poster_path}" alt="Movie Poster">`;
+        document.getElementById('title').innerHTML = `<strong>제목: </strong> ${movieInfo.title}`;
+        document.getElementById('genre').innerHTML = `<strong>장르: </strong> ${movieInfo.genre}`;
+        document.getElementById('release_date').innerHTML = `<strong>개봉일: </strong> ${movieInfo.release_date}`;
+        document.getElementById('overview').innerHTML = `<strong>줄거리: </strong> ${movieInfo.overview}`;
+      }
     </script>
   </body>
 </html>

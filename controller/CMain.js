@@ -19,7 +19,6 @@ exports.main = async (req, res) => {
     // section 3: 평균 평점이 2.0~3.5 미만인 영화
     const lowerRatedMovies = await getLowerRatedMovies();
 
-    console.log(lowerRatedMovies);
 
     res.render('main', { data: { sec1: latestMovies, sec2: topRatedMovies, sec3: lowerRatedMovies }, user: req.session.useridx });
   } catch(err) {

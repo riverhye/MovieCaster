@@ -67,13 +67,7 @@
               <div class="best-movie__poster-body section__poster-body">
                 <ul>
                   <li>
-                    <a href="">
-                      <!-- 수정된 코드 -->
-<div class="best-movie__poster">
-  <img src="<%= `https://image.tmdb.org/t/p/w200${data.sec2[i]['CommentMovie.poster_path']}` %>" alt="" onclick="redirectToDetail('<%= data.sec2[i]['CommentMovie.id'] %>')" />
-</div>
-
-                    </a>
+                      <div class="best-movie__poster"><img onclick="move(<%= data.sec2[i].movieidx %>)" src="<%= `https://image.tmdb.org/t/p/w200${data.sec2[i]['CommentMovie.poster_path']}` %>" alt="" /></div>
                   </li>
                 </ul>
               </div>
@@ -118,9 +112,9 @@
               <div class="md-movie__poster-body section__poster-body">
                 <ul>
                   <li>
-                    <a href="">
-                      <div class="md-movie__poster"><img src="<%= `https://image.tmdb.org/t/p/w200${data.sec3[i]['CommentMovie.poster_path']}` %>" alt="" /></div>
-                    </a>
+                    <div class="md-movie__poster" onclick="move(<%= data.sec3[i].movieidx %>)">
+                      <img src="<%= `https://image.tmdb.org/t/p/w200${data.sec3[i]['CommentMovie.poster_path']}` %>" alt="" />
+                    </div>                 
                   </li>
                 </ul>
               </div>
@@ -262,10 +256,12 @@
       });
     </script>
     <script>
-      function redirectToDetail(movieId) {
-    // movieId를 이용하여 detail 페이지로 이동
-    window.location.href = `/detail/${movieId}`;
+    function move(movieIdx) {
+    const detailPageURL = `/detail/${movieIdx}`;
+    console.log('selectedMovieIdx: ', movieIdx)
+    window.location.href = detailPageURL;
   }
-    </script>
+</script>
+  </script>
   </body>
 </html>

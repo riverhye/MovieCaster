@@ -92,7 +92,6 @@
                 params: {input: searchInput.value}
             }).then((res) => {
                 const result = res.data;
-                console.log(result);
 
                 for(let i=0; i<result.movie.length; i++) {
                     if (result.movie.length > 0 && result.movie[i].count) {
@@ -113,7 +112,6 @@
                         if (url) {
                             resultPoster[i].src = `${posterUrl}${url}`;
                         } else {
-                            // resultPosterBody[i].textContent = '정보 없음';
                             resultPosterBody[i].style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
                         }
                         
