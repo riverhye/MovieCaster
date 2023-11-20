@@ -26,15 +26,13 @@
         <p>No reviews available.</p>
         <% } else { %>
         <ul class="review-list">
-          <% for (let i = 0; i < 3; i++) { %>
-          <!-- 처음 3개의 데이터만 렌더링 -->
+          <% reviews.forEach(review => { %>
           <li class="review-item">
-            <!-- 해당 useridx의 nickname으로 수정 -->
-            <span>닉네임: <%= reviews[i].nickname %></span>
-            <span><%= reviews[i].description %></span>
-            <span>평가: <%= reviews[i].rate %>/5</span>
+            <span>닉네임: <%= review.nickname %></span>
+            <span><%= review.description %></span>
+            <span>평가: <%= review.rate %>/5</span>
           </li>
-          <% } %>
+          <% }); %>
         </ul>
         <% } %>
       </div>
@@ -125,7 +123,7 @@
         // Axios를 사용하여 데이터를 POST 요청으로 보내기
         axios({
           method: 'post',
-          url: '/detail/saveReview', // 실제 서버에 요청을 보내는 엔드포인트 경로를 지정해주세요
+          url: '/detail/saveReview',
           data: reviewData, // 보낼 데이터 객체
         })
           .then((response) => {
@@ -152,30 +150,25 @@
           })
           .catch((error) => {
             console.error('리뷰 제출 중 오류 발생:', error);
-            // 오류를 처리합니다 (필요한 경우)
           });
       }
       // --------------------------------------------row1 end / row2 start---------------------------------------
 
       document.addEventListener('DOMContentLoaded', () => {
-        // 페이지가 로드되면 서버로부터 영화 정보를 가져옵니다.
         axios({
           method: 'get',
           url: '/detail/getMovieInfo',
         })
           .then((response) => {
             const movieInfo = response.data;
-            // 받은 데이터를 이용하여 화면에 표시하거나 다른 작업을 수행할 수 있습니다.
             updateMovieInfo(movieInfo);
           })
           .catch((error) => {
             console.error('Error fetching movie information:', error);
-            // 오류 처리
           });
       });
 
       function updateMovieInfo(movieInfo) {
-        // 받아온 영화 정보를 화면에 표시하는 함수
         document.getElementById(
           'poster_path'
         ).innerHTML = `<img src="${movieInfo.poster_path}" alt="포스터" />`;
