@@ -39,7 +39,7 @@ header {
   height: 30px;
   width: 100%;
 }
-input[type="text"] {
+input[type='text'] {
   height: 40px;
   width: 900px;
   font-size: 18px;
@@ -75,7 +75,7 @@ input[type="text"] {
 #myform fieldset legend {
   text-align: right;
 }
-#myform input[type="radio"] {
+#myform input[type='radio'] {
   display: none;
 }
 #myform label {
@@ -89,7 +89,7 @@ input[type="text"] {
 #myform label:hover ~ label {
   text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
-#myform input[type="radio"]:checked ~ label {
+#myform input[type='radio']:checked ~ label {
   text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
 span.text-bold {
@@ -135,7 +135,7 @@ span.text-bold {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 80%;
   height: 80%;
 }
@@ -143,8 +143,8 @@ span.text-bold {
   border: 1px solid black;
 }
 #alikeMovieLeft {
-  height: 180px;
-  width: 120px;
+  height: 200px;
+  width: 150px;
   margin-left: 20px;
 }
 #alikeMovieMain {
@@ -152,7 +152,7 @@ span.text-bold {
   width: 150px;
 }
 #alikeMovieRight {
-  height: 180px;
-  width: 120px;
+  height: 200px;
+  width: 150px;
   margin-right: 20px;
 }
