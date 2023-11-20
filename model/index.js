@@ -75,6 +75,15 @@ db.Fav_movie.belongsTo(db.User, {
   as: "FavMovieUser"
 });
 
+db.User.hasMany(db.Comment_like, {
+  foreignKey: "useridx"
+});
+
+db.Comment_like.belongsTo(db.User, {
+  foreignKey: "useridx",
+  as: "CommentLikeUser"
+});
+
 // Comment와 연결
 db.Comment.hasMany(db.Comment_like, {
   foreignKey: "commentid"
