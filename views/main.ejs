@@ -68,8 +68,7 @@
                 <ul>
                   <li>
                     <a href="">
-
-                      <div class="best-movie__poster"><img src="" alt="" /></div>
+                      <div class="best-movie__poster"><img src="<%= `https://image.tmdb.org/t/p/w200${data.sec2[i]['CommentMovie.poster_path']}` %>" alt="" /></div>
                     </a>
                   </li>
                 </ul>
@@ -78,14 +77,14 @@
                 <ul>
                   <li class="text-sm">
 
-                    <span class="nickname-sm"></span>
+                    <span class="nickname-sm"><%= data.sec2[i].CommentUser.nickname %></span>
                     <i class="fa-solid fa-heart heart-icon" onclick="clickLike(this)"></i>
                   </li>
                   <li class="movie-title text-sm">
-                    <strong><span></span></strong>
+                    <strong><span><%= data.sec2[i]['CommentMovie.title'] %></span></strong>
                   </li>
                   <li class="comment-sm text-sm">
-                    <span></span>
+                    <span><%= data.sec2[i].description %></span>
                   </li>
                 </ul>
               </div>
@@ -105,7 +104,7 @@
         <div class="md-section__title section__title">
           <i class="bi bi-brightness-high sun-icon"></i>
           <i class="fa-solid fa-cloud cloud-icon"></i>
-          <h4>개봉 예정 영화</h4>
+          <h4>호불호 확실한 영화</h4>
         </div>
         <div class="swiper md-section-swiper">
           <div class="swiper-wrapper md-movie__list section__list">
@@ -116,7 +115,7 @@
                 <ul>
                   <li>
                     <a href="">
-                      <div class="md-movie__poster"><img src="" alt="" /></div>
+                      <div class="md-movie__poster"><img src="<%= `https://image.tmdb.org/t/p/w200${data.sec3[i]['CommentMovie.poster_path']}` %>" alt="" /></div>
                     </a>
                   </li>
                 </ul>
@@ -125,10 +124,10 @@
                 <ul>
                   <li class="md-movie__rating">
                     <i class="bi bi-brightness-high"></i>
-                    <span class="">5.0</span>
+                    <span class=""><%= data.sec3[i].averageRate%></span>
                   </li>
                   <li>
-                    <h4 class="movie-title__large">타이틀</h4>
+                    <h4 class="movie-title__large"><%= data.sec3[i]['CommentMovie.title'] %></h4>
                   </li>
                 </ul>
               </div>
