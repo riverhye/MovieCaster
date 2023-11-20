@@ -1,11 +1,3 @@
-const dotenv = require('dotenv');
-const path = require('path');
-dotenv.config();
-dotenv.config({ path: path.join(__dirname, '../config/envs/key.env') });
-const key = process.env.API_KEY;
-exports.key = (req, res) => {
-  res.send(key);
-};
 const { MovieInfo, User, Comment } = require('../model');
 
 Comment.belongsTo(User, { foreignKey: 'useridx' });
