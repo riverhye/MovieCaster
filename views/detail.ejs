@@ -6,7 +6,10 @@
     <link rel="stylesheet" href="../static/css/detail.css" />
     <link rel="stylesheet" href="../static/css/detail_review.css" />
     <link rel="stylesheet" href="../static/css/footer.css" />
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>상세페이지</title>
@@ -14,159 +17,79 @@
   <body>
     <!-- 헤더 삽입 -->
     <header></header>
-    <!-- grid row1 -->
+    <!------------------------------------------------- grid row1 start ------------------------------------------->
     <div class="gridRow1 container">
-      <!-- 리뷰 페이지 네이션 테스트 -->
-      <article class="article">
-        <ul class="contents"></ul>
-        <div class="buttons"></div>
-      </article>
-      <section class="reviewPagination">
-        <script>
-          // 리뷰 데이터를 받아온 후 실행되는 코드
-          const renderReviews = (reviews) => {
-            const contents = document.querySelector('.contents');
+      <h1>Movie Reviews</h1>
 
-            // 리뷰 목록을 추가할 부모 요소 선택 후 초기화
-            contents.innerHTML = '';
-
-            // 리뷰 데이터를 순회하면서 HTML에 동적으로 추가
-            reviews.forEach((review, index) => {
-              const content = makeContent(index, review); // makeContent 함수는 리뷰 내용을 생성하는 함수로 가정
-              contents.appendChild(content);
-            });
-          };
-
-          const contents = document.querySelector('.contents');
-          const buttons = document.querySelector('.buttons');
-          const numOfContent = 30;
-          const maxContent = 3;
-          const maxButton = 5;
-          const maxPage = Math.ceil(numOfContent / maxContent);
-          let page = 1;
-          let prev, next;
-          // 리뷰 목록
-          // db랑 연동해야함
-          const makeContent = (id, reviewData) => {
-            if (!reviewData || !reviewData.commentid) {
-              console.error('Invalid review data: ', reviewData)
-              return null;
-            }
-            const {
-              commentid,
-              useridx,
-              description,
-              rate
-            } = reviewData;
-            const content = document.createElement('li');
-            content.classList.add('content');
-            content.innerHTML = `
-              <span class="contentId">${contentId}</span>
-              <span class="contentNickname">${contentNickname}</span>
-              <span class="contentReview">${contentReview}</span>
-              <span class="contentRate">${contentRate}</span>
-            `;
-            return content;
-          };
-          const makeButton = (id) => {
-            const button = document.createElement('button');
-            button.classList.add('button');
-            button.dataset.num = id;
-            button.innerText = id;
-            button.addEventListener('click', (e) => {
-              Array.prototype.forEach.call(buttons.children, (button) => {
-                if (button.dataset.num) button.classList.remove('active');
-              });
-              e.target.classList.add('active');
-              renderContent(parseInt(e.target.dataset.num));
-            });
-            return button;
-          };
-          const goPrevPage = () => {
-            page = Math.max(page - 1, 1);
-            render(page);
-          };
-          const goNextPage = () => {
-            page = Math.min(page + 1, maxPage);
-            render(page);
-          };
-          // 렌더링
-          const renderContent = (page) => {
-            while (contents.hasChildNodes()) {
-              contents.removeChild(contents.lastChild);
-            }
-            for (
-              let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++
-            ) {
-              contents.appendChild(makeContent(id));
-            }
-          };
-          const renderButton = (page) => {
-            if (prev && buttons.contains(prev)) {
-              buttons.removeChild(prev);
-            } else if (next && buttons.contains(next)) {
-              buttons.removeChild(next);
-            }
-            while (buttons.hasChildNodes()) {
-              buttons.removeChild(buttons.lastChild);
-            }
-            for (let id = page; id < page + maxButton && id <= maxPage; id++) {
-              buttons.appendChild(makeButton(id));
-            }
-            buttons.children[0].classList.add('active');
-          };
-          const render = (page) => {
-            renderButton(page);
-            renderContent(page);
-          };
-          render(page);
-        </script>
-      </section>
+      <div class="reviews">
+        <% if (reviews.length === 0) { %>
+        <p>No reviews available.</p>
+        <% } else { %>
+        <ul class="review-list">
+          <% for (let i = 0; i < 3; i++) { %>
+          <!-- 처음 3개의 데이터만 렌더링 -->
+          <li class="review-item">
+            <!-- 해당 useridx의 nickname으로 수정 -->
+            <span>닉네임: <%= reviews[i].nickname %></span>
+            <span><%= reviews[i].description %></span>
+            <span>평가: <%= reviews[i].rate %>/5</span>
+          </li>
+          <% } %>
+        </ul>
+        <% } %>
+      </div>
       <!-- 리뷰 작성 폼 -->
       <div class="starRate">
         <form class="mb-3" name="myform" id="myform" method="post">
           <!-- 별점 남기기 -->
           <fieldset>
             <span class="text-bold">별점을 선택해주세요</span>
-            <input type="radio" name="reviewStar" value="5" id="rate1" /><label for="rate1" onclick="saveRating(5)">★</label>
-            <input type="radio" name="reviewStar" value="4" id="rate2" /><label for="rate2" onclick="saveRating(4)">★</label>
-            <input type="radio" name="reviewStar" value="3" id="rate3" /><label for="rate3" onclick="saveRating(3)">★</label>
-            <input type="radio" name="reviewStar" value="2" id="rate4" /><label for="rate4" onclick="saveRating(2)">★</label>
-            <input type="radio" name="reviewStar" value="1" id="rate5" /><label for="rate5" onclick="saveRating(1)">★</label>
+            <input type="radio" name="reviewStar" value="5" id="rate1" /><label
+              for="rate1"
+              onclick="saveRating(5)"
+              >★</label
+            >
+            <input type="radio" name="reviewStar" value="4" id="rate2" /><label
+              for="rate2"
+              onclick="saveRating(4)"
+              >★</label
+            >
+            <input type="radio" name="reviewStar" value="3" id="rate3" /><label
+              for="rate3"
+              onclick="saveRating(3)"
+              >★</label
+            >
+            <input type="radio" name="reviewStar" value="2" id="rate4" /><label
+              for="rate4"
+              onclick="saveRating(2)"
+              >★</label
+            >
+            <input type="radio" name="reviewStar" value="1" id="rate5" /><label
+              for="rate5"
+              onclick="saveRating(1)"
+              >★</label
+            >
           </fieldset>
         </form>
       </div>
-      <form class="myReview" action="/saveReview" method="post">
+      <form class="myReview">
         <input type="text" class="writeReview" id="userReview" placeholder="리뷰를 작성해보세요" />
         <button type="button" class="submitReview" onclick="submitReview()">리뷰작성</button>
       </form>
     </div>
-    <!-- grid row2 -->
+    <!--------------------------------- grid row1 end / row2 start ------------------------------------------->
     <div class="gridRow2 container">
-      <!-- 포스터 api 받아오기 -->
-      <div class="poster" id="poster_path"><img />포스터</div>
+      <div class="poster" id="poster_path"></div>
       <div class="rates">
-        <!-- 평점 api 받아오기 -->
-        <!-- 관객수 api 받아오기 -->
-        <div class="movieGenre" id="genre">장르:</div>
-        <!-- 개봉일 api 받아오기 -->
-        <div class="movieRelease_date" id="release_date">개봉일:</div>
-        <div class="movieName" id="movieName">제목:</div>
-      </div>
-      <div class="directors">
-        <!-- 감독 api 받아오기 -->
-        <!-- <div id="director">감독:</div> -->
-      </div>
-      <div class="actors">
-        <!-- 배우 api 받아오기 -->
-        <!-- <div id="actor">배우:</div> -->
+        <div class="movieName" id="title"></div>
+        <div class="movieGenre" id="genre"></div>
+        <div class="movieRelease_date" id="release_date"></div>
       </div>
       <div class="summaries">
-        <!-- 줄거리 api 받아오기 -->
-        <div class="movieOverview" id="overview">영화 줄거리</div>
+        <div class="movieOverview" id="overview"></div>
       </div>
     </div>
-    <!-- grid row3 -->
+    <!--------------------------------- grid row2 end / row3 start ------------------------------------------->
     <div class="gridRow3 container">
       <input type="button" value="이전" />
       <div class="alikeMovies">
@@ -185,53 +108,84 @@
       </div>
     </footer>
     <script>
-      // 리뷰 받아오기
-      const fetchAndRenderReviews = () => {
-        axios.get('/getReviews') // 리뷰를 가져오는 엔드포인트로 수정해야 합니다.
-          .then((response) => {
-            const reviews = response.data; // 서버에서 받은 리뷰 데이터
-            renderReviews(reviews); // 리뷰 데이터를 HTML에 추가하는 함수 호출
-          })
-          .catch((error) => {
-            console.error('Error fetching reviews:', error);
-          });
-      };
-
-
-      // 별점 선택
-      let selectedRating = 0;
-
-      function saveRating(value) {
-        selectedRating = value;
-        const data = {
-          rate: selectedRating,
-        };
-        console.log('data_userRate: ', data);
+      // ---------------------------------script-----row1 start------------------------------------------
+      function saveRating(rate) {
+        console.log('나의 평가:', rate);
+        window.rating = rate;
       }
 
       function submitReview() {
-        const description = document.getElementById('userReview').value;
-        const rate = selectedRating;
-        const data = {
-          description: description,
-          rate: rate,
-        };
-        axios({
-            method: 'post',
-            url: '/',
-            data: data,
-          })
-          .then((response) => {
-            console.log('Review Submitted: ', response.data);
-            console.log('Review Sending: ', data);
+        const reviewText = document.getElementById('userReview').value;
+        const rating = window.rating;
 
-            fetchAndRenderReviews();
+        // 보낼 데이터 준비
+        const reviewData = {
+          rating: rating,
+          review: reviewText,
+        };
+
+        // Axios를 사용하여 데이터를 POST 요청으로 보내기
+        axios({
+          method: 'post',
+          url: '/detail/saveReview', // 실제 서버에 요청을 보내는 엔드포인트 경로를 지정해주세요
+          data: reviewData, // 보낼 데이터 객체
+        })
+          .then((response) => {
+            console.log('리뷰가 성공적으로 제출되었습니다:', response.data);
+
+            // 추가된 리뷰 데이터 가져오기
+            const newReview = response.data.review;
+
+            // 새로운 리뷰를 첫 번째 항목으로 추가
+            const reviewList = document.querySelector('.review-list');
+            const newReviewItem = document.createElement('li');
+            newReviewItem.classList.add('review-item');
+            newReviewItem.innerHTML = `
+        <span>닉네임: ${newReview.nickname}</span>
+        <span>${newReview.description}</span>
+        <span>평가: ${newReview.rate}/5</span>
+      `;
+            reviewList.insertBefore(newReviewItem, reviewList.firstChild);
+
+            // 기존 첫 번째 리뷰 삭제 (두 번째로 이동)
+            if (reviewList.children.length > 3) {
+              reviewList.removeChild(reviewList.lastElementChild);
+            }
           })
           .catch((error) => {
-            console.error('Error submitting:', error);
+            console.error('리뷰 제출 중 오류 발생:', error);
+            // 오류를 처리합니다 (필요한 경우)
           });
       }
-      // 영화 상세정보 api 불러오기
+      // --------------------------------------------row1 end / row2 start---------------------------------------
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // 페이지가 로드되면 서버로부터 영화 정보를 가져옵니다.
+        axios({
+          method: 'get',
+          url: '/detail/getMovieInfo',
+        })
+          .then((response) => {
+            const movieInfo = response.data;
+            // 받은 데이터를 이용하여 화면에 표시하거나 다른 작업을 수행할 수 있습니다.
+            updateMovieInfo(movieInfo);
+          })
+          .catch((error) => {
+            console.error('Error fetching movie information:', error);
+            // 오류 처리
+          });
+      });
+
+      function updateMovieInfo(movieInfo) {
+        // 받아온 영화 정보를 화면에 표시하는 함수
+        document.getElementById(
+          'poster_path'
+        ).innerHTML = `<img src="${movieInfo.poster_path}" alt="포스터" />`;
+        document.getElementById('title').innerHTML = `제목: ${movieInfo.title}`;
+        document.getElementById('genre').innerHTML = `장르: ${movieInfo.genre}`;
+        document.getElementById('release_date').innerHTML = `개봉일: ${movieInfo.release_date}`;
+        document.getElementById('overview').innerHTML = `영화 줄거리: ${movieInfo.overview}`;
+      }
     </script>
   </body>
 </html>

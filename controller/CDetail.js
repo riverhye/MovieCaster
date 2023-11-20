@@ -1,59 +1,81 @@
-const dotenv = require("dotenv");
-const path = require("path");
+const dotenv = require('dotenv');
+const path = require('path');
 dotenv.config();
-dotenv.config({ path: path.join(__dirname, "../config/envs/key.env") });
+dotenv.config({ path: path.join(__dirname, '../config/envs/key.env') });
 const key = process.env.API_KEY;
 exports.key = (req, res) => {
   res.send(key);
 };
-const { MovieInfo } = require("../model");
-const { User } = require("../model");
-const { Comment } = require("../model");
-const { error } = require("console");
+const { MovieInfo, User, Comment } = require('../model');
 
-// const apiMovies = require("../model.getMovies");
+Comment.belongsTo(User, { foreignKey: 'useridx' });
 
 exports.detail = (req, res) => {
-  res.render("detail");
+  res.render('detail');
 };
-// model/comment에 저장된 리뷰 받기
+// 리뷰 3개 불러오기 선택된 인덱스는 임시이므로 수정해야함!
 exports.getReviews = async (req, res) => {
   try {
-    // 데이터베이스에서 리뷰 데이터를 조회합니다. 이 부분은 실제로 데이터를 어떻게 조회하는지에 따라 코드가 달라질 수 있습니다.
-    const reviews = await Comment.findAll(); // Comment 모델로부터 리뷰 데이터를 가져옵니다.
+    const page = req.query.page || 1;
 
-    // 클라이언트에 리뷰 데이터를 JSON 형식으로 응답합니다.
-    res.json(reviews);
-    console.log("reviewDataReceived: ", reviews);
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Error" });
-  }
-};
-// 작성한 리뷰 저장하기
-exports.saveReview = async (req, res) => {
-  try {
-    const { description, rate } = req.body;
+    const maxRowsPerPage = 3;
+    const offset = (page - 1) * maxRowsPerPage;
+    const limit = maxRowsPerPage;
 
-    const tempUserId = 1;
-    const tempMovieId = 1;
-
-    // 테스트 코드
-    const savedReview = await Comment.create({
-      description,
-      rate,
-      useridx: tempUserId, // 임시로 설정한 사용자 ID
-      movieidx: tempMovieId, // 임시로 설정한 영화 ID
+    const { count, rows: reviews } = await Comment.findAndCountAll({
+      where: { movieidx: 1 },
+      offset: offset,
+      limit: limit,
+      include: [
+        {
+          model: User,
+          attributes: ['nickname'],
+        },
+      ],
     });
 
-    // 사용 코드
-    // const savedReview = await Comment.create({
-    //   description: description,
-    //   rate: rate,
-    // });
-    res.status(201).json({ message: "Review saved successfully", review: savedReview });
+    const totalPages = Math.ceil(count / maxRowsPerPage);
+
+    res.render('detail', { reviews, totalPages, currentPage: page });
   } catch (error) {
-    console.error("Error saving review:", error);
-    res.status(500).json({ error: "Failed to save review" });
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Error' });
+  }
+};
+
+// ejs에서 작성한 리뷰를 데이터에 저장하기. idx는 임시이므로 수정해야함!
+exports.saveReview = async (req, res) => {
+  try {
+    const { review, rating } = req.body; // POST 요청으로부터 데이터를 받음
+
+    // Comment 모델을 사용하여 데이터베이스에 새로운 리뷰를 추가
+    const savedReview = await Comment.create({
+      description: review,
+      rate: rating,
+      movieidx: 1, // movieidx를 1로 가정
+      useridx: 1, // useridx를 1로 가정
+      // 외래키값을 설정해서 연결하기!
+    });
+
+    res.status(201).json({ message: 'Review saved successfully', review: savedReview });
+  } catch (error) {
+    console.error('Error saving review:', error);
+    res.status(500).json({ error: 'Failed to save review' });
+  }
+};
+
+exports.getMovieInfo = async (req, res) => {
+  try {
+    // MovieInfo 테이블에서 movieidx가 1인 데이터 조회
+    const movieInfo = await MovieInfo.findOne({ where: { movieidx: 1 } });
+
+    if (!movieInfo) {
+      return res.status(404).json({ error: 'Movie not found' });
+    }
+    res.json(movieInfo);
+    // 영화 정보를 EJS 템플릿에 렌더링하기 위해 JSON 형태로 클라이언트에 응답
+  } catch (error) {
+    console.error('Error fetching movie information:', error);
+    res.status(500).json({ error: 'Failed to fetch movie information' });
   }
 };
