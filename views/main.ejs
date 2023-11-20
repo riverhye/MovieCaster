@@ -62,12 +62,13 @@
         <div class="swiper best-section-swiper">
           <div class="swiper-wrapper best-movie__list section__list">
             <!-- length -->
-            <% for (let i = 0; i<10; i++) { %>
+            <% for (let i = 0; i<data.sec2.length; i++) { %>
             <div class="swiper-slide best-movie__body section__body">
               <div class="best-movie__poster-body section__poster-body">
                 <ul>
                   <li>
                     <a href="">
+
                       <div class="best-movie__poster"><img src="" alt="" /></div>
                     </a>
                   </li>
@@ -76,14 +77,15 @@
               <div class="best-movie__comment">
                 <ul>
                   <li class="text-sm">
-                    <span class="nickname-sm">유저닉네임</span>
+
+                    <span class="nickname-sm"></span>
                     <i class="fa-solid fa-heart heart-icon" onclick="clickLike(this)"></i>
                   </li>
                   <li class="movie-title text-sm">
-                    <strong><span>헝거게임 : 노래하는 어쩌고와 저쩌고</span></strong>
+                    <strong><span></span></strong>
                   </li>
                   <li class="comment-sm text-sm">
-                    <span>개봉을 기다리는 영화인데 내년으로 미뤄진다고...</span>
+                    <span></span>
                   </li>
                 </ul>
               </div>
@@ -188,16 +190,6 @@
 
       //     const endpoint = 'https://api.themoviedb.org/3/movie';
 
-    //       // Top rated
-    //       axios.get(`${endpoint}/top_rated?api_key=${key}&language=ko-KR`).then((res) => {
-    //         const movieData = res.data.results.slice(3);
-    //         const posterPath = movieData.map((movie) => movie.poster_path);
-
-    //         const bestMoviePosters = document.querySelectorAll('.best-movie__poster img');
-    //         bestMoviePosters.forEach((poster, index) => {
-    //           poster.src = `https://image.tmdb.org/t/p/w200/${posterPath[index]}`;
-    //         });
-    //       });
 
     //       // Upcoming
     //       axios.get(`${endpoint}/upcoming?api_key=${key}&language=ko-KR`).then((res) => {
@@ -231,13 +223,14 @@
     <!-- best-section swiper -->
     <script>
       const bestSwiper = new Swiper('.best-section-swiper', {
-        slidesPerView: 5,
+        slidesPerView: 5, 
         spaceBetween: 20,
         navigation: {
           prevEl: '.swiper-button-prev',
           nextEl: '.swiper-button-next',
         },
       });
+</script>
     </script>
 
     <!-- md-section swiper -->
