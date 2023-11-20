@@ -79,7 +79,49 @@ body {
     position: relative;
 }
 
-/* section 1 */
+/* section 1*/
+.box-office-section {
+    padding-top: 150px;
+}
+
+.box-office__film {
+    position: absolute;
+    z-index: 0;
+    left: 400px;
+}
+
+.box-office-text {
+    writing-mode: vertical-lr;
+    padding: 20px;
+    width: 20px;
+    position: absolute;
+    top: 65px;
+    left: -50px;
+    font-size: 18px;
+}
+
+.box-office-slider {
+    position: absolute;
+    width: 100%;
+    top: 25px;
+    left: 20px;
+    display: flex;
+    z-index: 9;
+}
+
+.box-office-poster {
+    width: 200px;
+    height: 200px;
+    margin: 0 45px;
+}
+
+.box-office-rank {
+    font-size: 30px;
+    color: white;
+    font-style: italic;
+}
+
+/* section 2 */
 .best-movie__comment {
     border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 20px;
@@ -89,7 +131,7 @@ body {
     height: 130px;
 }
 
-/* section 2 */
+/* section 3 */
 .md-movie__info {
     margin: 30px 10px 0;
     padding: 5px 10px;

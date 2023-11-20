@@ -74,6 +74,10 @@
     width: 200px;
     height: 300px;
     overflow: hidden;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .search-result__count {

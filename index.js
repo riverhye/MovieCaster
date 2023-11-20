@@ -37,7 +37,8 @@ app.use('/search', searchRouter);
 
 const signinRouter = require('./routes/signin');
 app.use('/signin', signinRouter);
-app.get('/check-session', signinRouter); // session check for managing login and logout status
+const signoutRouter = require('./routes/signout');
+app.use('/signout', signoutRouter);
 
 const signupRouter = require('./routes/signup');
 app.use('/signup', signupRouter);

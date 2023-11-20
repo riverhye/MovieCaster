@@ -25,25 +25,27 @@
         </div>
         <div class="icon-group">
           <a href="/search"><i class="fa-solid fa-magnifying-glass search-icon"></i></a>
+          <% if ( user ) { %>
+          <a id="logoutButton" href="/signout">
+            <div class="user-status">LOGOUT</div>
+          </a>
+          <% } else { %>
           <a id="loginButton" href="/signin">
             <div class="user-status">LOGIN</div>
           </a>
-          <a id="logoutButton" href="" style="display: none">
-            <div class="user-status">LOGOUT</div>
-          </a>
+          <% } %>
           <a href="/mypage"><i class="fa-solid fa-user user-icon"></i></a>
         </div>
       </section>
-
       <section class="box-office-section">
         <div class="box-office__film">
           <img src="../static/img/filmroll.jpg" alt="" width="1500px" height="280px" />
           <span class="box-office-text">Box Office</span>
           <div class="box-office-swiper">
             <ul class="box-office-slider">
-              <% for (let i = 0; i<5; i++) { %>
-              <div class="box-office-rank"></div>
-              <li class="box-office-poster"><img href="" src="" /></li>
+              <% for (let i = 0; i < (data.sec1.length)/2; i++) { %>
+              <div class="box-office-rank"><%= i + 1 %></div>
+              <li class="box-office-poster"><img src="<%= `https://image.tmdb.org/t/p/w154${data.sec1[i].poster_path}` %>" /></li>
               <% } %>
             </ul>
           </div>
@@ -149,75 +151,73 @@
     </div>
 
     <script>
+      // section 1 : 슬라이드 3초 주기 무한 반복
+      document.addEventListener('DOMContentLoaded', () => {
+      const boxOfficePosters = document.querySelectorAll('.box-office-poster img');
+      const ranking = document.querySelectorAll('.box-office-rank');
+      
+      const data = <%- JSON.stringify(data.sec1) %>;
+      let currentIdx = 0;
+
+      setInterval(() => {
+        if (data && data.length > 0) {
+          currentIdx = currentIdx % data.length;
+
+          for (let i = 0; i < boxOfficePosters.length; i++) {
+            const posterPath = data[currentIdx].poster_path;
+
+            boxOfficePosters[i].src = `https://image.tmdb.org/t/p/w154/${posterPath}`;
+            ranking[i].innerHTML = `${(currentIdx % data.length) + 1}`;
+            currentIdx++;
+          }
+        }
+      }, 3000);
+    });
+
+      
       // API로 영화 정보 받아오기 : Box Office, Top rated, Upcoming
-      mainApiPosters();
+      // mainApiPosters();
 
-      function mainApiPosters() {
-        // API key
-        axios({
-          method: 'post',
-          url: '/',
-        }).then((res) => {
-          const key = res.data;
+      // function mainApiPosters() {
+      //   // API key
+      //   axios({
+      //     method: 'post',
+      //     url: '/',
+      //   }).then((res) => {
+      //     const key = res.data;
 
-          const endpoint = 'https://api.themoviedb.org/3/movie';
+      //     const endpoint = 'https://api.themoviedb.org/3/movie';
 
-          // Box Office
-          axios.get(`${endpoint}/now_playing?api_key=${key}&language=ko-KR`).then((res) => {
-            const movieData = res.data.results.slice(0, 10);
-            const posterPath = movieData.map((movie) => movie.poster_path); // poster 하나의 배열로
+    //       // Top rated
+    //       axios.get(`${endpoint}/top_rated?api_key=${key}&language=ko-KR`).then((res) => {
+    //         const movieData = res.data.results.slice(3);
+    //         const posterPath = movieData.map((movie) => movie.poster_path);
 
-            const boxOfficePosters = document.querySelectorAll('.box-office-poster img');
-            const ranking = document.querySelectorAll('.box-office-rank');
+    //         const bestMoviePosters = document.querySelectorAll('.best-movie__poster img');
+    //         bestMoviePosters.forEach((poster, index) => {
+    //           poster.src = `https://image.tmdb.org/t/p/w200/${posterPath[index]}`;
+    //         });
+    //       });
 
-            // 초기 화면 : 포스터 1~5위(posterPath[0]~[4])
-            for (let i = 0; i < boxOfficePosters.length; i++) {
-              boxOfficePosters[i].src = `https://image.tmdb.org/t/p/w154/${posterPath[i % 5]}`;
-              ranking[i].innerHTML = `<span>${i + 1}</span>`;
-            }
+    //       // Upcoming
+    //       axios.get(`${endpoint}/upcoming?api_key=${key}&language=ko-KR`).then((res) => {
+    //         const movieData = res.data.results;
+    //         const posterPath = movieData.map((movie) => movie.poster_path);
+    //         const posterTitle = movieData.map((movie) => movie.title);
 
-            // 슬라이드 3초 주기 무한 반복
-            let currentIdx = 0;
-            setInterval(() => {
-              currentIdx = currentIdx % 10;
-              for (let i = 0; i < boxOfficePosters.length; i++) {
-                boxOfficePosters[i].src = `https://image.tmdb.org/t/p/w154/${posterPath[currentIdx % 10]}`;
-                ranking[i].innerHTML = `${(currentIdx % 10) + 1}`;
-                currentIdx++;
-              }
-            }, 3000);
-          });
+    //         const mdMoivePosters = document.querySelectorAll('.md-movie__poster img');
+    //         mdMoivePosters.forEach((poster, index) => {
+    //           poster.src = `https://image.tmdb.org/t/p/w200/${posterPath[index]}`;
+    //         });
 
-          // Top rated
-          axios.get(`${endpoint}/top_rated?api_key=${key}&language=ko-KR`).then((res) => {
-            const movieData = res.data.results.slice(3);
-            const posterPath = movieData.map((movie) => movie.poster_path);
-
-            const bestMoviePosters = document.querySelectorAll('.best-movie__poster img');
-            bestMoviePosters.forEach((poster, index) => {
-              poster.src = `https://image.tmdb.org/t/p/w200/${posterPath[index]}`;
-            });
-          });
-
-          // Upcoming
-          axios.get(`${endpoint}/upcoming?api_key=${key}&language=ko-KR`).then((res) => {
-            const movieData = res.data.results;
-            const posterPath = movieData.map((movie) => movie.poster_path);
-            const posterTitle = movieData.map((movie) => movie.title);
-
-            const mdMoivePosters = document.querySelectorAll('.md-movie__poster img');
-            mdMoivePosters.forEach((poster, index) => {
-              poster.src = `https://image.tmdb.org/t/p/w200/${posterPath[index]}`;
-            });
-
-            const upcomingMovies = document.querySelectorAll('.movie-title__large');
-            upcomingMovies.forEach((title, index) => {
-              title.textContent = `${posterTitle[index]}`;
-            });
-          });
-        });
-      }
-    </script>
+    //         const upcomingMovies = document.querySelectorAll('.movie-title__large');
+    //         upcomingMovies.forEach((title, index) => {
+    //           title.textContent = `${posterTitle[index]}`;
+    //         });
+    //       });
+    //     });
+    //   }
+    // </script>
 
     <script>
       function clickLike(thisIcon) {
@@ -263,43 +263,6 @@
         // spaceBetween: 40
         // }
         // }
-      });
-    </script>
-
-    <!-- Showing LogIn or LogOut button -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        // 세션 상태를 확인하고 버튼을 업데이트하는 함수
-        function updateButtons() {
-          axios
-            .get('/check-session') // 서버에 세션 상태를 확인하는 요청
-            .then((response) => {
-              const isLoggedIn = response.data.isLoggedIn;
-
-              const loginButton = document.getElementById('loginButton');
-              const logoutButton = document.getElementById('logoutButton');
-
-              if (isLoggedIn) {
-                loginButton.style.display = 'none'; // 로그인 버튼을 숨김
-                logoutButton.style.display = 'block'; // 로그아웃 버튼을 보임
-              } else {
-                loginButton.style.display = 'block'; // 로그인 버튼을 보임
-                logoutButton.style.display = 'none'; // 로그아웃 버튼을 숨김
-              }
-            })
-            .catch((error) => {
-              console.error('세션 상태 확인에 실패했습니다.', error);
-            });
-        }
-
-        // 페이지 로드 시 세션 상태 확인 및 버튼 업데이트
-        updateButtons();
-
-        // 로그아웃 버튼 클릭 시 세션 상태 업데이트
-        document.getElementById('logoutButton').addEventListener('click', function (event) {
-          alert('로그아웃 되었습니다');
-          updateButtons();
-        });
       });
     </script>
   </body>
