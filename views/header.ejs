@@ -14,7 +14,11 @@
             <div class="logo" onclick="location.href='/'"><img src="/static/img/logo.png" alt="logo" width="150px" height="100px"/></div>
             <div class="icon-group">
                 <a href="/search"><i class="fa-solid fa-magnifying-glass search-icon"></i></a>
-                <a href="/signin"><div class="user-status">LOGIN</div></a>
+                <% if (typeof session !== 'undefined' && session.nickname) { %>
+                    <a href="/signout"><div class="user-status">LogOut</div></a>
+                <% } else { %>
+                    <a href="/signin"><div class="user-status">LogIn</div></a>
+                <% } %>
                 <a href="/mypage"><i class="fa-solid fa-user user-icon"></i></a>
             </div>
         </section>
