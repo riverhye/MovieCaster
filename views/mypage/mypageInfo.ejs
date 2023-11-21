@@ -16,7 +16,11 @@
   </head>
 
   <body>
-    <div class="container overflow-hidden text-center" id="MyPage_Profile">
+    <%- include('../header') %>
+
+   <!-- Mypage_Profile -->
+   <div style="padding-top: 20px;"> 
+    <div class="container overflow-hidden text-center" id="MyPage_Profile" style="margin-top: 70px;">
       <div class="title">
         <p>My Page</p>
       </div>
@@ -122,7 +126,7 @@
           
       <!-- footer.html -->
       <%- include('../footer') %>
-
+</div>
       <script>
         //취소 누르면 마이페이지로 돌아가게 만드는 기능
         document.getElementById('cancelBtn').addEventListener('click', function () {

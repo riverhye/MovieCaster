@@ -132,6 +132,12 @@ exports.mycommentlike = async (req, res) => {
 
     const userLikedComments = await Comment.findAll({
       where: { commentid: commentIndices },
+      include: [
+        {
+          model: User,
+          attributes: ['useridx', 'nickname', 'email'],
+        },
+      ],
     });
 
     res.render('mypage/mypageCommentLike', { root: 'views', data: userLikedComments });

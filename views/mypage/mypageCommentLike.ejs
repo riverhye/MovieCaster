@@ -13,8 +13,11 @@
     <title>마이페이지 좋아요 누른 영화 보기</title>
 </head>
 <body>
-     <!-- Mypage_Profile 부분 -->
-     <div class="container overflow-hidden text-center" id="MyPage_Profile">
+    <%- include('../header') %>
+
+    <!-- Mypage_Profile -->
+    <div style="padding-top: 20px;"> 
+    <div class="container overflow-hidden text-center" id="MyPage_Profile" style="margin-top: 70px;">
         <div class="title">
             <p>My Page</p>
         </div>
@@ -82,7 +85,7 @@
                                             <div>
                                                 <% 
                                                     // 사용자가 좋아요 누른 코멘트의 작성자 가져오기
-                                                    const userInfo = data[i].CommentUser; 
+                                                    const userInfo = data[i].User;
                                                     if (userInfo) { 
                                                 %>
                                                     <%= userInfo.nickname %>
@@ -127,7 +130,7 @@
 
         <!-- footer.html -->
         <%- include('../footer') %>
-        
+        </div>
         <script>
             /// 삭제하기 버튼 클릭 이벤트 핸들러
             function deleteComment(commentId) {
