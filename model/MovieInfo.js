@@ -1,6 +1,6 @@
 function Movie_info(Sequelize, DataTypes) {
   return Sequelize.define(
-    "movie_info",
+    "Movie_info",
     {
       movieidx: {
         type: DataTypes.INTEGER,
@@ -34,7 +34,7 @@ function Movie_info(Sequelize, DataTypes) {
       },
     },
     {
-      tableName: "movie_info",
+      tableName: "Movie_info",
       freezeTableName: true,
       timestamps: false,
     }

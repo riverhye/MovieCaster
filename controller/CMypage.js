@@ -8,7 +8,7 @@ exports.mypage = async (req, res) => {
       where: { useridx: targetUserIdx },
     });
 
-    const movieIndices = favMovies.map((like) => like.favmovieidx);
+    const movieIndices = favMovies.map((like) => like.movieidx);
 
     const movies = await Movie_info.findAll({
       where: { movieidx: movieIndices },

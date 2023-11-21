@@ -3,7 +3,7 @@ const { Movie_info } = require('./MovieInfo');
 
 function Movie_like(Sequelize, DataTypes) {
     return Sequelize.define(
-      'movie_like',
+      'Movie_like',
       {
         movielikeidx: {
           type: DataTypes.INTEGER,
@@ -21,7 +21,7 @@ function Movie_like(Sequelize, DataTypes) {
         },
       },
       {
-        tableName: 'movie_like',
+        tableName: 'Movie_like',
         freezeTableName: true,
         timestamps: false,
         uniqueKeys: {
