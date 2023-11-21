@@ -45,7 +45,7 @@ body {
 .section__list {
     display: flex;
     width: 1400px;
-    height: 650px;
+    height: 700px;
     position: relative;
 }
 
@@ -94,7 +94,7 @@ body {
     position: absolute;
     z-index: 0;
     left: 50%;
-    transform: translateX(-50%); 
+    transform: translateX(-53%); 
     width: 100%;
     max-width: 1400px; 
 }
@@ -132,14 +132,15 @@ body {
 }
 
 /* section 2 */
+
 .best-movie__comment {
     border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 20px;
-    margin: 30px 10px 0;
-    padding: 5px 10px;
-    width: 240px;
-    max-width: 240px;
-    height: 130px;
+    margin: 20px 30px 0;
+    padding: 10px 15px;
+    width: 220px;
+    height: 140px;
+    overflow: hidden;
 }
 
 /* section 3 */
@@ -206,11 +207,12 @@ body {
 
 .weather-icon {
     font-size: 20px;
+    color: #FFC73C;
 }
 
 .cloud-icon,
 .rain-icon {
-    color: darkblue;
+    color: blue;
     margin-right: 5px;
 }
 
@@ -218,7 +220,7 @@ body {
     border-radius: 50%;
     font-size: 35px;
     position: absolute;
-    top: 280px;
+    top: 300px;
     width: 50px;
     height: 50px;
 }

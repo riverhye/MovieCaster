@@ -24,7 +24,7 @@
       <section class="box-office-section">
         <div class="box-office__film">
           <img src="../static/img/filmroll.jpg" alt="" width="1500px" height="280px" />
-          <span class="box-office-text">Box Office</span>
+          <span class="box-office-text">New Release</span>
           <div class="box-office-swiper">
             <ul class="box-office-slider">
               <% for (let i = 0; i < (data.sec1.length)/2; i++) { %>
@@ -44,7 +44,6 @@
         </div>
         <div class="swiper best-section-swiper">
           <div class="swiper-wrapper best-movie__list section__list">
-            <!-- length -->
             <% for (let i = 0; i<data.sec2.length; i++) { %>
             <div class="swiper-slide best-movie__body section__body">
               <div class="best-movie__poster-body section__poster-body">
@@ -57,9 +56,10 @@
               <div class="best-movie__comment">
                 <ul>
                   <li class="text-sm">
-
                     <span class="nickname-sm"><%= data.sec2[i].CommentUser.nickname %></span>
-                    <i class="fa-solid fa-heart heart-icon" onclick="clickLike(this)"></i>
+                    <i class="fa-solid fa-heart heart-icon" 
+                      onclick="clickLike(this, '<%=data.sec2[i].commentid%>')">
+                    </i>
                   </li>
                   <li class="movie-title text-sm">
                     <strong><span><%= data.sec2[i]['CommentMovie.title'] %></span></strong>
@@ -67,6 +67,7 @@
                   <li class="comment-sm text-sm">
                     <span><%= data.sec2[i].description %></span>
                   </li>
+                  <span style="display: none;"><%= data.sec2[i].timestamp %></span>
                 </ul>
               </div>
             </div>
@@ -89,8 +90,7 @@
         </div>
         <div class="swiper md-section-swiper">
           <div class="swiper-wrapper md-movie__list section__list">
-            <!-- length -->
-            <% for (let i=0; i<10; i++) { %>
+            <% for (let i=0; i<data.sec3.length; i++) { %>
             <div class="swiper-slide md-movie__body section__body">
               <div class="md-movie__poster-body section__poster-body">
                 <ul>
@@ -104,7 +104,6 @@
               <div class="md-movie__info">
                 <ul>
                   <li class="md-movie__rating">
-                    <i class="bi bi-brightness-high"></i>
                     <span class=""><%= data.sec3[i].averageRate%></span>
                   </li>
                   <li>
@@ -148,51 +147,72 @@
               currentIdx++;
             }
           }
-        }, 3000);
-      });
+         }, 3000);
+        });
 
-      // section 2 : 코멘트 한 좋아요 - 마이페이지
-      function clickLike(thisIcon) {
-        thisIcon.classList.toggle('heart-active');
-      }
-  
-      // section 3 : 평점 날씨 아이콘
-      const rateIcons = document.querySelectorAll('.md-movie__rating');
-      const dataSec3 = <%- JSON.stringify(data.sec3) %>;
-      
-      document.addEventListener('DOMContentLoaded', () => {
-        for (let i = 0; i < 10; i++) {
-          const movieData = dataSec3[i].averageRate;
-      
-          const iconElement = document.createElement('i');
-      
-          if (movieData >= 4.0) {
-            iconElement.className = 'bi bi-brightness-high sun-icon weather-icon';
-            iconElement.setAttribute('data-index', i);
-          } else if (movieData >= 3.0) {
-            iconElement.className = 'bi bi-cloud-sun weather-icon';
-            iconElement.setAttribute('data-index', i);
-          } else {
-            iconElement.className = 'bi bi-cloud-rain rain-icon weather-icon';
-            iconElement.setAttribute('data-index', i);
-          }
-      
-          iconElement.setAttribute('data-index', i);
-      
-          // 아이콘 적용
-          if (rateIcons[i]) {
-            // 제대로 선택했나 확인
-            if (rateIcons[i].hasChildNodes()) {
-              rateIcons[i].insertBefore(iconElement, rateIcons[i].firstChild);
-            } else {
-              rateIcons[i].appendChild(iconElement);
+
+
+        // section 2 : 코멘트 한 좋아요 - 마이페이지
+        function clickLike(heart, commentid) {
+          axios({
+            method: 'post',
+            url: '/mypage/mycommentlike',
+            data: {
+              commentid: commentid
             }
-      
-          } else {
-            console.error(`rateIcons[${i}] is undefined.`);
-          }
+          })
+          .then((res) => {
+            if(res.data.result) {
+              // console.log("마이페이지 전달 완료");
+              heart.classList.toggle('heart-active');
+              // heart-active 유지
+            } else {
+              alert(res.data.error)
+            }
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
         }
-      });
+    
+        // section 3 : 평점 날씨 아이콘
+        const rateIcons = document.querySelectorAll('.md-movie__rating');
+        const dataSec3 = <%- JSON.stringify(data.sec3) %>;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+          for (let i = 0; i < 10; i++) {
+            const movieData = dataSec3[i].averageRate;
+        
+            const iconElement = document.createElement('i');
+        
+            if (movieData >= 4.0) {
+              iconElement.className = 'bi bi-brightness-high sun-icon weather-icon';
+              iconElement.setAttribute('data-index', i);
+            } else if (movieData >= 3.0) {
+              iconElement.className = 'bi bi-cloud-sun weather-icon';
+              iconElement.setAttribute('data-index', i);
+            } else {
+              iconElement.className = 'bi bi-cloud-rain rain-icon weather-icon';
+              iconElement.setAttribute('data-index', i);
+            }
+        
+            iconElement.setAttribute('data-index', i);
+        
+            // 아이콘 적용
+            if (rateIcons[i]) {
+              // 제대로 선택했나 확인
+              if (rateIcons[i].hasChildNodes()) {
+                rateIcons[i].insertBefore(iconElement, rateIcons[i].firstChild);
+              } else {
+                rateIcons[i].appendChild(iconElement);
+              }
+        
+            } else {
+              console.error(`rateIcons[${i}] is undefined.`);
+            }
+          }
+        });
     </script>
 
     <!-- swiper.js CDN -->
@@ -202,7 +222,7 @@
     <script>
       const bestSwiper = new Swiper('.best-section-swiper', {
         slidesPerView: 5, 
-        spaceBetween: 25,
+        spaceBetween: 5,
         navigation: {
           prevEl: '.swiper-button-prev',
           nextEl: '.swiper-button-next',

@@ -15,7 +15,6 @@ exports.main = async (req, res) => {
 
     // section 2: 평점 높은 영화
     const topRatedMovies = await getTopRatedMovies();
-
     // section 3: 평균 평점이 2.0~3.5 미만인 영화
     const lowerRatedMovies = await getLowerRatedMovies();
 
@@ -36,7 +35,11 @@ exports.footer = (req, res) => {
 
 async function getTopRatedMovies() {
   const getMovieInfo = await Comment.findAll({
-    attributes: ['movieidx', [Sequelize.fn('AVG', Sequelize.col('rate')), 'averageRate']],
+    attributes: [
+      'movieidx',
+      [Sequelize.fn('AVG', Sequelize.col('rate')), 'averageRate'],
+      [Sequelize.fn('MAX', Sequelize.col('timestamp')), 'timestamp'],
+    ],
     group: ['movieidx'],
     order: [[Sequelize.literal('averageRate'), 'DESC']],
     limit: 10,
@@ -46,6 +49,13 @@ async function getTopRatedMovies() {
         model: Movie_info,
         as: 'CommentMovie',
         attributes: ['title', 'poster_path'],
+      },
+      {
+        model: User,
+        as: 'CommentUser',
+        attributes: [
+          [Sequelize.fn('MAX', Sequelize.col('nickname')), 'nickname']
+        ],
       },
     ],
   });
@@ -96,6 +106,9 @@ async function getTopRatedMovies() {
     );
     const descriptions = descriptionDetails.filter((desc) => topDetail.commentIds.includes(desc.commentid));
     const description = descriptions.length > 0 ? descriptions[0].description : '';
+    
+    const commentids = descriptionDetails.filter((desc) => topDetail.commentIds.includes(desc.commentid));
+    const commentid = commentids.length > 0 ? commentids[0].commentid : '';
 
     return {
       ...movie,
@@ -103,6 +116,7 @@ async function getTopRatedMovies() {
         nickname: topDetail?.nicknames,
       },
       description: description,
+      commentid: commentid
     };
   });
 
