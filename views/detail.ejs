@@ -16,45 +16,25 @@
       <h1>이 영화 한줄평</h1>
       <div class="userReviews">
         <% for (let i = 0; i < Math.min(comments.length, 5); i++) { %>
-          <div class="userReview">
-            <span class="description"><%= comments[i].description %></span>
-            <span class="rate">평점: <%= comments[i].rate %></span>
-          </div>
+        <div class="userReview">
+          <span class="description"><%= comments[i].description %></span>
+          <span class="rate">평점: <%= comments[i].rate %>/5</span>
+        </div>
         <% } %>
       </div>
-    
+
 
       <!-- 리뷰 작성 폼 -->
       <div class="starRate">
         <form class="mb-3" name="myform" id="myform" method="post">
-      <!-- 별점 남기기 -->
-      <fieldset>
+          <!-- 별점 남기기 -->
+          <fieldset>
             <span class="text-bold">평점을 선택해주세요</span>
-            <input type="radio" name="reviewStar" value="5" id="rate1" /><label
-              for="rate1"
-              onclick="saveRating(5)"
-              >★</label
-            >
-            <input type="radio" name="reviewStar" value="4" id="rate2" /><label
-              for="rate2"
-              onclick="saveRating(4)"
-              >★</label
-            >
-            <input type="radio" name="reviewStar" value="3" id="rate3" /><label
-              for="rate3"
-              onclick="saveRating(3)"
-              >★</label
-            >
-            <input type="radio" name="reviewStar" value="2" id="rate4" /><label
-              for="rate4"
-              onclick="saveRating(2)"
-              >★</label
-            >
-            <input type="radio" name="reviewStar" value="1" id="rate5" /><label
-              for="rate5"
-              onclick="saveRating(1)"
-              >★</label
-            >
+            <input type="radio" name="reviewStar" value="5" id="rate1" /><label for="rate1" onclick="saveRating(5)">★</label>
+            <input type="radio" name="reviewStar" value="4" id="rate2" /><label for="rate2" onclick="saveRating(4)">★</label>
+            <input type="radio" name="reviewStar" value="3" id="rate3" /><label for="rate3" onclick="saveRating(3)">★</label>
+            <input type="radio" name="reviewStar" value="2" id="rate4" /><label for="rate4" onclick="saveRating(2)">★</label>
+            <input type="radio" name="reviewStar" value="1" id="rate5" /><label for="rate5" onclick="saveRating(1)">★</label>
           </fieldset>
         </form>
       </div>
@@ -64,7 +44,7 @@
 
       </form>
     </div>
-  </div>
+    </div>
     <!--------------------------------- grid row1 end / row2 start ------------------------------------------->
     <div class="gridRow2 container">
       <div class="poster" id="poster_path"></div>
@@ -80,15 +60,18 @@
     <!--------------------------------- grid row2 end / row3 start ------------------------------------------->
     <div class="gridRow3 container">
       <div class="alikeMovies">
+        <div class="alikeMovie1"></div>
+        <div class="alikeMovie2"></div>
+        <div class="alikeMovie3"></div>
         <% if (similarMovies.length > 0) { %>
-          <% similarMovies.forEach(movie => { %>
-            <div class="alikeMovie">
-              <img src="<%= movie.poster_path %>" alt="<%= movie.title %> Poster">
-              <p><strong>Title:</strong> <%= movie.title %></p>
-            </div>
-          <% }) %>
+        <% for (let i = 0; i < Math.min(similarMovies.length, 3); i++) { %>
+        <div class="alikeMovie">
+          <img src="https://image.tmdb.org/t/p/w154<%= similarMovies[i].poster_path %>" alt="<%= similarMovies[i].title %> Poster">
+          <p><%= similarMovies[i].title %></p>
+        </div>
+        <% } %>
         <% } else { %>
-          <p>비슷한 장르의 영화를 불러오지 못했습니다.</p>
+        <p>비슷한 장르의 영화를 불러오지 못했습니다.</p>
         <% } %>
       </div>
     </div>
@@ -104,49 +87,51 @@
     <script>
       const movieIdx = getMovieIdxFromURL();
 
+
       function getMovieIdxFromURL() {
-      const url = window.location.href;
-      const lastSlashIndex = url.lastIndexOf('/');
-      const movieIdx = url.substring(lastSlashIndex + 1);
-      console.log('현재 movieIdx: ', movieIdx)
-      return movieIdx;
-}
+        const url = window.location.href;
+        const lastSlashIndex = url.lastIndexOf('/');
+        const movieIdx = url.substring(lastSlashIndex + 1);
+        console.log('현재 movieIdx: ', movieIdx)
+        return movieIdx;
+      }
+
       function saveRating(rating) {
         window.rating = rating;
         console.log('선택한 평점: ', rating)
+        console.log('접속중인 유저 인덱스:', "<%= useridx %>")
       }
-    
+
       function submitReview(movieIdx) {
         const reviewText = document.getElementById('userReview').value;
         const rating = window.rating;
-    
+
         const reviewData = {
           rating: rating,
           description: reviewText,
         };
-    
+
         axios({
-          method: 'post',
-          url: `/detail/${movieIdx}`,
-          data: reviewData,
-        })
+            method: 'post',
+            url: `/detail/${movieIdx}`,
+            data: reviewData,
+          })
           .then((response) => {
             console.log('리뷰가 성공적으로 제출되었습니다:', response.data);
-            // 여기서 서버로부터 새로운 리뷰 목록을 받아와서 표시하거나 새로운 리뷰를 추가할 수 있음
           })
           .catch((error) => {
             console.error('리뷰 제출 중 오류 발생:', error);
           });
       }
-    
+
       document.addEventListener('DOMContentLoaded', () => {
         const movieInfo = <%- JSON.stringify(movieInfo) %>; // 서버에서 전달한 movieInfo 데이터
-    
+
         updateMovieInfo(movieInfo);
       });
-    
+
       function updateMovieInfo(movieInfo) {
-        document.getElementById('poster_path').innerHTML = `<img src="${movieInfo.poster_path}" alt="Movie Poster">`;
+        document.getElementById('poster_path').innerHTML = `<img src="https://image.tmdb.org/t/p/w154${movieInfo.poster_path}"  alt="Movie Poster">`;
         document.getElementById('title').innerHTML = `<strong>제목: </strong> ${movieInfo.title}`;
         document.getElementById('genre').innerHTML = `<strong>장르: </strong> ${movieInfo.genre}`;
         document.getElementById('release_date').innerHTML = `<strong>개봉일: </strong> ${movieInfo.release_date}`;
