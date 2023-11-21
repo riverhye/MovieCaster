@@ -13,8 +13,11 @@
     <title>마이페이지 좋아요 누른 영화 보기</title>
 </head>
 <body>
+    <%- include('../header') %>
+
      <!-- Mypage_Profile 부분 -->
-     <div class="container overflow-hidden text-center" id="MyPage_Profile">
+     <div style="padding-top: 20px;"> 
+        <div class="container overflow-hidden text-center" id="MyPage_Profile" style="margin-top: 70px;">
         <div class="title">
             <p>My Page</p>
         </div>
@@ -97,7 +100,7 @@
         </div>
         <!-- footer.html -->
         <%- include('../footer') %>
-
+        </div>
         <script>
             function deleteMovie(movielikeidx) {
                 axios.delete(`/mypage/mymovielike/${movielikeidx}`)
