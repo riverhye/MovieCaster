@@ -22,3 +22,6 @@ mypageRouter.delete('/mymovielike/:id', controller.delete_movie_like);
 //인생영화 등록
 mypageRouter.post('/myfav/add', controller.addFavMovie);
 module.exports = mypageRouter;
+
+// 메인에서 좋아요 한 코멘트 마이 페이지로 연결
+mypageRouter.post('/mycommentlike', controller.maintomycommentlike);

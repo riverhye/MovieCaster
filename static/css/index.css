@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;600;900&display=swap');
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -55,8 +57,8 @@ table {
     --blue-point-color: #004AAD;
 }
 
-/* 사용 예시
-.container {
-    background-color: var(--yellow-point-color);
+/* font */
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
 }
-*/

@@ -64,6 +64,7 @@
         <div class="alikeMovie2"></div>
         <div class="alikeMovie3"></div>
         <% if (similarMovies.length > 0) { %>
+          <% console.log(similarMovies) %>
         <% for (let i = 0; i < Math.min(similarMovies.length, 3); i++) { %>
         <div class="alikeMovie">
           <img src="https://image.tmdb.org/t/p/w154<%= similarMovies[i].poster_path %>" alt="<%= similarMovies[i].title %> Poster">

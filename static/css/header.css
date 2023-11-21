@@ -8,6 +8,8 @@ body {
 /* 로고 section */
 .logo {
     margin-left: 300px;
+    width: 100px;
+    height: 100px;
     cursor: pointer;
 }
 
