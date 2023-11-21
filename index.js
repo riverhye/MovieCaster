@@ -6,10 +6,6 @@ const session = require('express-session');
 
 app.set('view engine', 'ejs');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use('/static', express.static('static'));
-
 app.use(
   session({
     secret: 'secretKey', // envs에 세션키가 환경변수로 존재한다고 가정
@@ -21,6 +17,17 @@ app.use(
     },
   })
 );
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isAuthenticated;
+  res.locals.user = req.session.useridx;
+  console.log('res.locals.user', res.locals.user);
+  next();
+});
+app.use('/static', express.static('static'));
 
 const router = require('./routes');
 app.use('/', router);

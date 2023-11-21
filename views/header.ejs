@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>header</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <link rel="stylesheet" href="../static/css/header.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <section class="logo-section">
-            <div class="logo" onclick="location.href='/'"><img src="/static/img/logo.png" alt="logo" width="150px" height="100px"/></div>
-            <div class="icon-group">
-                <a href="/search"><i class="fa-solid fa-magnifying-glass search-icon"></i></a>
-                <% if (typeof session !== 'undefined' && session.nickname) { %>
-                    <a href="/signout"><div class="user-status">LogOut</div></a>
-                <% } else { %>
-                    <a href="/signin"><div class="user-status">LogIn</div></a>
-                <% } %>
-                <a href="/mypage"><i class="fa-solid fa-user user-icon"></i></a>
-            </div>
-        </section>
+      <section class="logo-section">
+        <div class="logo" onclick="location.href='/'">
+          <img src="/static/img/logo.png" alt="logo" width="150px" height="100px" />
+        </div>
+        <div class="icon-group">
+          <a href="/search"><i class="fa-solid fa-magnifying-glass search-icon"></i></a>
+          <% if ( user ) { %>
+          <a href="/signout"><div class="user-status">LogOut</div></a>
+          <% } else { %>
+          <a href="/signin"><div class="user-status">LogIn</div></a>
+          <% } %>
+          <a href="/mypage"><i class="fa-solid fa-user user-icon"></i></a>
+        </div>
+      </section>
     </header>
-</body>
+  </body>
 </html>
