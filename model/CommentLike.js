@@ -4,7 +4,7 @@ const { Comment } = require('./Comment');
 
 function Comment_like(Sequelize, DataTypes) {
     return Sequelize.define(
-      'comment_like',
+      'Comment_like',
       {
         commentlikeidx: {
           type: DataTypes.INTEGER,
@@ -22,7 +22,7 @@ function Comment_like(Sequelize, DataTypes) {
         },
       },
       {
-        tableName: 'comment_like',
+        tableName: 'Comment_like',
         freezeTableName: true,
         timestamps: false,
       }

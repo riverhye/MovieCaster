@@ -3,7 +3,7 @@ const { User } = require('./User');
 
 function Comment(Sequelize, DataTypes) {
   return Sequelize.define(
-    "comment",
+    "Comment",
 
     {
       commentid: {
@@ -37,7 +37,7 @@ function Comment(Sequelize, DataTypes) {
       },
     },
     {
-      tableName: "comment",
+      tableName: "Comment",
       freezeTableName: true,
       timestamps: false,
     }

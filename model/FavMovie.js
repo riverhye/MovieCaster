@@ -3,7 +3,7 @@ const { Movie_info } = require('./MovieInfo');
 
 function Fav_movie(Sequelize, DataTypes) {
     return Sequelize.define(
-      'fav_movie',
+      'Fav_movie',
       {
         favmovieidx: {
           type: DataTypes.INTEGER,
@@ -21,7 +21,7 @@ function Fav_movie(Sequelize, DataTypes) {
         },
       },
       {
-        tableName: 'fav_movie',
+        tableName: 'Fav_movie',
         freezeTableName: true,
         timestamps: false,
         uniqueKeys: {
