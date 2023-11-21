@@ -82,18 +82,6 @@
                   <span style="font-family: Noto Sans KR, 'Source Sans Pro'; white-space: nowrap"
                     >닉네임</span
                   >
-                  <!-- <input
-                    type="text"
-                    id="nicknameInput"
-                    name="usersName"
-                    value="은구"
-                    style="
-                      border-color: transparent;
-                      background-color: rgb(233, 233, 233);
-                      margin-left: -5px;
-                      width: 400px;
-                    "
-                  /> -->
                   <span id="email_placeholder"><%= nickname %></span>
                 </div>
               </div>
@@ -101,17 +89,19 @@
           </div>
 
           <div class="p-4">
-            <form action="/mypage/mypage/update" method="post" enctype="multipart/form-data" id="updateUser">
               <span style="font-family: Noto Sans KR, 'Source Sans Pro'">인생작품</span>
               <div class="profileBtn" style="margin-bottom: 20px">
                 <a href="/mypage/myfav" style="color: #a7d4f9">관리</a>
               </div>
               <div id="imageContainer">
-                <img src="/images/mypage/user.png" id="movieImage" style="height: 200px; width: 150px" />
-                <input type="file" id="fileInput" name="movieImage" style="display: none" />
+                <% for (let i = 0; i < data.length; i++) { %>
+                  <input type="hidden" name="movieidx" id="movieidxInput" value="<%= data[i].movieidx %>" />
+                  <img src="https://image.tmdb.org/t/p/w154<%= data[i].poster_path %>"
+                    alt="<%= data[i].title %> 포스터 이미지" id="movieImage" style="height: 200px; width: 150px" />
+                  <input type="file" id="fileInput" name="movieImage" style="display: none" />
+                <% } %>
               </div>
               <div class="profileBtn" style="margin-bottom: 20px"></div>
-            </form>
           </div>
         </div>
       </div>

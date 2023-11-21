@@ -132,6 +132,7 @@ exports.search_movie_result = (req, res) => {
 
             if (result && result.length > 0) {
                 movieInfo = result.map(movie => ({
+                    movieidx: movie.movieidx,
                     title: movie.title,
                     poster: movie.poster_path,
                     count: result.length

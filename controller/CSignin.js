@@ -37,10 +37,14 @@ exports.user_signin = (req, res) => {
       console.log('로그인 성공!');
       console.log(`{sessionUser: ${req.session.nickname}, userIndex: ${req.session.useridx}}`);
       data = { isSuccess: true };
+
+      // 세션에 정보가 있는 경우에 isAuthenticated를 true로 설정
+      res.locals.isAuthenticated = true;
     } else {
       console.log('로그인 실패');
       console.log(`{sessionUser: ${req.session.nickname}, userIndex: ${req.session.useridx}}`);
       data = { isSuccess: false };
+      res.locals.isAuthenticated = false;
     }
     res.send(data);
   });

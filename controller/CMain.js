@@ -19,16 +19,15 @@ exports.main = async (req, res) => {
     // section 3: 평균 평점이 2.0~3.5 미만인 영화
     const lowerRatedMovies = await getLowerRatedMovies();
 
-
-    res.render('main', { data: { sec1: latestMovies, sec2: topRatedMovies, sec3: lowerRatedMovies }, user: req.session.useridx });
-  } catch(err) {
-    console.error("section err: ", err);
+    res.render('main', { data: { sec1: latestMovies, sec2: topRatedMovies, sec3: lowerRatedMovies } });
+  } catch (err) {
+    console.error('section err: ', err);
   }
 };
 
 // header, footer
 exports.header = (req, res) => {
-  res.render('header');
+  res.send('header', { user: req.session.isAuthenticated });
 };
 
 exports.footer = (req, res) => {
@@ -37,10 +36,7 @@ exports.footer = (req, res) => {
 
 async function getTopRatedMovies() {
   const getMovieInfo = await Comment.findAll({
-    attributes: [
-      'movieidx',
-      [Sequelize.fn('AVG', Sequelize.col('rate')), 'averageRate'],
-    ],
+    attributes: ['movieidx', [Sequelize.fn('AVG', Sequelize.col('rate')), 'averageRate']],
     group: ['movieidx'],
     order: [[Sequelize.literal('averageRate'), 'DESC']],
     limit: 10,
@@ -61,7 +57,12 @@ async function getTopRatedMovies() {
       'movieidx',
       [Sequelize.fn('MAX', Sequelize.col('rate')), 'maxRate'],
       [Sequelize.fn('GROUP_CONCAT', Sequelize.col('commentid')), 'commentIds'],
-      [Sequelize.literal('(SELECT GROUP_CONCAT(DISTINCT nickname) FROM User WHERE User.userid = CommentUser.userid GROUP BY CommentUser.userid)'), 'nicknames'],
+      [
+        Sequelize.literal(
+          '(SELECT GROUP_CONCAT(DISTINCT nickname) FROM User WHERE User.userid = CommentUser.userid GROUP BY CommentUser.userid)'
+        ),
+        'nicknames',
+      ],
     ],
     where: {
       movieidx: movieIds,
@@ -89,7 +90,10 @@ async function getTopRatedMovies() {
 
   const topRatedMovies = getMovieInfo.map((movie) => {
     const movieDetails = additionalDetails.filter((detail) => detail.movieidx === movie.movieidx);
-    const topDetail = movieDetails.reduce((prev, current) => (prev.maxRate > current.maxRate ? prev : current), {});
+    const topDetail = movieDetails.reduce(
+      (prev, current) => (prev.maxRate > current.maxRate ? prev : current),
+      {}
+    );
     const descriptions = descriptionDetails.filter((desc) => topDetail.commentIds.includes(desc.commentid));
     const description = descriptions.length > 0 ? descriptions[0].description : '';
 
@@ -110,7 +114,7 @@ async function getLowerRatedMovies() {
     attributes: [
       'movieidx',
       [Sequelize.fn('ROUND', Sequelize.fn('AVG', Sequelize.col('rate')), 1), 'averageRate'], // 소수점 1자리까지 반올림
-      ],
+    ],
     group: ['movieidx'],
     having: Sequelize.literal('averageRate < 3.5 AND averageRate >= 2.0'),
     order: [[Sequelize.literal('averageRate'), 'DESC']],
@@ -125,51 +129,61 @@ async function getLowerRatedMovies() {
     ],
   });
 
-  const resultLowerRated = await Promise.all(lowerRatedMovies.map(async (movie) => {
-    const additionalDetails = await Comment.findAll({
-      attributes: [
-        'movieidx',
-        [Sequelize.fn('MAX', Sequelize.col('rate')), 'maxRate'],
-        [Sequelize.fn('GROUP_CONCAT', Sequelize.col('commentid')), 'commentIds'],
-        [Sequelize.literal('(SELECT GROUP_CONCAT(DISTINCT nickname) FROM User WHERE User.userid = CommentUser.userid GROUP BY CommentUser.userid)'), 'nicknames'],
-      ],
-      where: {
-        movieidx: movie.movieidx,
-      },
-      include: [
-        {
-          model: User,
-          as: 'CommentUser',
-          attributes: ['userid'],
+  const resultLowerRated = await Promise.all(
+    lowerRatedMovies.map(async (movie) => {
+      const additionalDetails = await Comment.findAll({
+        attributes: [
+          'movieidx',
+          [Sequelize.fn('MAX', Sequelize.col('rate')), 'maxRate'],
+          [Sequelize.fn('GROUP_CONCAT', Sequelize.col('commentid')), 'commentIds'],
+          [
+            Sequelize.literal(
+              '(SELECT GROUP_CONCAT(DISTINCT nickname) FROM User WHERE User.userid = CommentUser.userid GROUP BY CommentUser.userid)'
+            ),
+            'nicknames',
+          ],
+        ],
+        where: {
+          movieidx: movie.movieidx,
         },
-      ],
-      group: ['movieidx', 'CommentUser.userid'],
-      raw: true,
-    });
+        include: [
+          {
+            model: User,
+            as: 'CommentUser',
+            attributes: ['userid'],
+          },
+        ],
+        group: ['movieidx', 'CommentUser.userid'],
+        raw: true,
+      });
 
-    const commentIds = additionalDetails.map((detail) => detail.commentIds.split(','));
+      const commentIds = additionalDetails.map((detail) => detail.commentIds.split(','));
 
-    const descriptionDetails = await Comment.findAll({
-      attributes: ['commentid', 'description'],
-      where: {
-        commentid: { [Op.in]: commentIds },
-      },
-      raw: true,
-    });
+      const descriptionDetails = await Comment.findAll({
+        attributes: ['commentid', 'description'],
+        where: {
+          commentid: { [Op.in]: commentIds },
+        },
+        raw: true,
+      });
 
-    const movieDetails = additionalDetails.filter((detail) => detail.movieidx === movie.movieidx);
-    const topDetail = movieDetails.reduce((prev, current) => (prev.maxRate > current.maxRate ? prev : current), {});
-    const descriptions = descriptionDetails.filter((desc) => topDetail.commentIds.includes(desc.commentid));
-    const description = descriptions.length > 0 ? descriptions[0].description : '';
+      const movieDetails = additionalDetails.filter((detail) => detail.movieidx === movie.movieidx);
+      const topDetail = movieDetails.reduce(
+        (prev, current) => (prev.maxRate > current.maxRate ? prev : current),
+        {}
+      );
+      const descriptions = descriptionDetails.filter((desc) => topDetail.commentIds.includes(desc.commentid));
+      const description = descriptions.length > 0 ? descriptions[0].description : '';
 
-    return {
-      ...movie,
-      CommentUser: {
-        nickname: topDetail?.nicknames,
-      },
-      description: description,
-    };
-  }));
+      return {
+        ...movie,
+        CommentUser: {
+          nickname: topDetail?.nicknames,
+        },
+        description: description,
+      };
+    })
+  );
 
   return resultLowerRated;
 }
