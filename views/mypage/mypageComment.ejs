@@ -73,7 +73,7 @@
                                         <div class="container text-center">
                                             <div class="row align-items-center g-1">
                                                 <div class="col-3">
-                                                    <img src="/images/" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px" />
+                                                   <img src="" alt="">
                                                 </div>
                                                 <div class="col-6" style="text-align: left;">
                                                     <!-- Display either input or description -->
@@ -85,11 +85,6 @@
                                                 </div>
                                                 <div class="col-3 d-flex justify-content-end">
                                                     <div class="d-grip gap2">
-                                                        <% if (data[i].isEditing) { %>
-                                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" onclick="confirmComment('<%= data[i].commentid %>')">확인</a>
-                                                        <% } else { %>
-                                                            <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" onclick="updateComment('<%= data[i].commentid %>')">수정</a>
-                                                        <% } %>
                                                         <a href="#" class="btn btn-sm btn-light mb-3 d-block" id="receiptBtn" onclick="deleteComment('<%= data[i].commentid %>')">삭제</a>
                                                     </div>
                                                 </div>

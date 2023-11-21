@@ -1,12 +1,28 @@
 const { User, Comment, Movie_like, Movie_info, Fav_movie, Comment_like } = require('../model');
 
 //마이페이지 메인 이동
-exports.mypage = (req, res) => {
-  if (req.session.useridx) {
-    res.render('mypage/mypage', { root: 'views', nickname: req.session.nickname, email: req.session.email });
-  } else {
-    // 세션에 유저가 없으면 로그인 화면으로
-    res.redirect('/signin');
+exports.mypage = async (req, res) => {
+  try {
+    const targetUserIdx = req.session.useridx;
+    const favMovies = await Fav_movie.findAll({
+      where: { useridx: targetUserIdx },
+    });
+
+    const movieIndices = favMovies.map((like) => like.favmovieidx);
+
+    const movies = await Movie_info.findAll({
+      where: { movieidx: movieIndices },
+    });
+
+    res.render('mypage/mypage', {
+      root: 'views',
+      data: movies,  
+      nickname: req.session.nickname,
+      email: req.session.email
+    });
+  } catch (error) {
+    console.error('Error fetching fav movies:', error);
+    res.status(500).send('Internal Server Error');
   }
 };
 
@@ -47,12 +63,12 @@ exports.search_movie_result = (req, res) => {
 exports.addFavMovie = async (req, res) => {
   try {
     // req.body에는 클라이언트에서 전송한 검색한 영화의 정보가 포함되어 있어야 합니다.
-    const { title, poster_path } = req.body;
+    const { movieidx } = req.body;
 
     // fav_movie 테이블에 등록
     const result = await Fav_movie.create({
-      title,
-      poster_path,
+      useridx : req.session.useridx,
+      movieidx : movieidx
     });
 
     res.json({ success: true, result });
@@ -107,7 +123,6 @@ exports.mymovielike = async (req, res) => {
 //좋아요 누른 코멘트 이동
 exports.mycommentlike = async (req, res) => {
   try {
-    // const targetUserIdx = 1;
     const targetUserIdx = req.session.useridx;
     const likedComments = await Comment_like.findAll({
       where: { useridx: targetUserIdx },
@@ -226,9 +241,6 @@ exports.delete_comment_like = async (req, res) => {
     res.status(500).send({ error: 'Internal Server Error' });
   }
 };
-
-//내가 작성한 코멘트 수정하기
-exports.update_comment = (req, res) => {};
 
 //내가 작성한 코멘트 삭제하기 /mypage/mycomment/:id
 exports.delete_comment = async (req, res) => {
