@@ -1,3 +1,9 @@
+:root {
+  --logoBox-margin-top: 40px;
+  --logoBox-right: 150px;
+  --logoImg-width: 100px;
+  --logoImg-height: 80px;
+}
 .body {
   display: flex;
   justify-content: center;
@@ -16,11 +22,15 @@
 }
 .logoBox {
   position: relative;
-  margin-top: 60px;
-  right: 150px;
+  margin-top: var(--logoBox-margin-top);
+  right: var(--logoBox-right);
+}
+.logoBox .logoImg {
+  width: var(--logoImg-width);
+  height: var(--logoImg-height);
 }
 .signinMsgBox {
-  margin-top: 20px;
+  margin-top: 10px;
   width: 400px;
   position: relative;
 }
@@ -55,8 +65,8 @@
   height: 80px;
   /* right: 25px; */
 }
-input[type='text'],
-[type='password'] {
+input[type="text"],
+[type="password"] {
   height: 50px;
   width: 220px;
   font-size: 18px;
@@ -66,7 +76,7 @@ input[type='text'],
   padding-inline-start: 10px;
   box-shadow: 3px 3px 3px lightgrey;
 }
-input[type='button'] {
+input[type="button"] {
   box-shadow: 3px 3px 3px lightgrey;
   width: 75px;
 }
@@ -105,4 +115,15 @@ input[type='button'] {
   text-align: center;
   font-size: 12px;
   opacity: 0.7;
+}
+
+.footerBox {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+@media (max-height: 1013px) {
+  .footerBox {
+    position: static;
+  }
 }

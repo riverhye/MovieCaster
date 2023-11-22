@@ -1,3 +1,9 @@
+:root {
+  --logoBox-margin-top: 40px;
+  --logoBox-right: 150px;
+  --logoImg-width: 100px;
+  --logoImg-height: 80px;
+}
 .body {
   display: flex;
   justify-content: center;
@@ -16,8 +22,12 @@
 }
 .logoBox {
   position: relative;
-  margin-top: 60px;
-  right: 150px;
+  margin-top: var(--logoBox-margin-top);
+  right: var(--logoBox-right);
+}
+.logoBox .logoImg {
+  width: var(--logoImg-width);
+  height: var(--logoImg-height);
 }
 .findidMsgBox {
   margin-top: 20px;
@@ -53,7 +63,7 @@
   width: 400px;
   height: 80px;
 }
-input[type='email'] {
+input[type="email"] {
   height: 50px;
   width: 220px;
   font-size: 18px;
@@ -63,17 +73,17 @@ input[type='email'] {
   padding-inline-start: 10px;
   box-shadow: 3px 3px 3px lightgrey;
 }
-input[type='button'] {
+input[type="button"] {
   box-shadow: 3px 3px 3px lightgrey;
   width: 75px;
 }
-button[type='button'].buttonFindId {
+button[type="button"].buttonFindId {
   box-shadow: 3px 3px 3px lightgrey;
   width: 90px;
   position: relative;
   top: 20px;
 }
-input[type='button'].Btn {
+input[type="button"].Btn {
   position: relative;
   top: 200px;
 }
@@ -91,4 +101,14 @@ input[type='button'].Btn {
   text-align: center;
   font-size: 12px;
   opacity: 0.7;
+}
+.footerBox {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+@media (max-height: 1013px) {
+  .footerBox {
+    position: static;
+  }
 }

@@ -9,8 +9,9 @@
     <title>상세페이지</title>
   </head>
   <body>
-    <!-- 헤더 삽입 -->
-    <header></header>
+    <header>
+      <%- include('./header') %>
+    </header>
     <!------------------------------------------------- grid row1 start ------------------------------------------->
     <div class="gridRow1 container">
       <h1>이 영화 한줄평</h1>
@@ -49,9 +50,13 @@
     <div class="gridRow2 container">
       <div class="poster" id="poster_path"></div>
       <div class="movieDetail">
-        <div class="movieName" id="title"></div>
-        <div class="movieGenre" id="genre"></div>
-        <div class="movieRelease_date" id="release_date"></div>
+        <div class="MDsection1">
+          <div class="movieName MD" id="title"></div>
+          <div class="movieGenre MD" id="genre"></div>
+        </div>
+        <div class="MDsection2">
+          <div class="movieRelease_date MD" id="release_date"></div>
+        </div>
       </div>
       <div class="summaries">
         <div class="movieOverview" id="overview"></div>
@@ -64,7 +69,7 @@
         <div class="alikeMovie2"></div>
         <div class="alikeMovie3"></div>
         <% if (similarMovies.length > 0) { %>
-          <% console.log(similarMovies) %>
+        <% console.log(similarMovies) %>
         <% for (let i = 0; i < Math.min(similarMovies.length, 3); i++) { %>
         <div class="alikeMovie">
           <img src="https://image.tmdb.org/t/p/w154<%= similarMovies[i].poster_path %>" alt="<%= similarMovies[i].title %> Poster">

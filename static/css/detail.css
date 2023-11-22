@@ -27,6 +27,24 @@ header {
   justify-content: space-evenly;
   height: 400px;
 }
+.gridRow1 h1 {
+  position: relative;
+  left: 100px;
+  font-weight: 600;
+}
+.gridRow1 .userReviews {
+  position: relative;
+  left: 60px;
+}
+.gridRow1 .userReviews .userReview {
+  margin-top: 10px;
+  border-bottom: 1px solid rgb(224, 222, 222);
+  width: 980px;
+}
+.gridRow1 .userReviews .userReview .rate {
+  position: absolute;
+  right: 120px;
+}
 .myReview {
   display: flex;
   flex-direction: row;
@@ -39,7 +57,7 @@ header {
   height: 30px;
   width: 100%;
 }
-input[type='text'] {
+input[type="text"] {
   height: 40px;
   width: 900px;
   font-size: 18px;
@@ -75,7 +93,7 @@ input[type='text'] {
 #myform fieldset legend {
   text-align: right;
 }
-#myform input[type='radio'] {
+#myform input[type="radio"] {
   display: none;
 }
 #myform label {
@@ -89,7 +107,7 @@ input[type='text'] {
 #myform label:hover ~ label {
   text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
-#myform input[type='radio']:checked ~ label {
+#myform input[type="radio"]:checked ~ label {
   text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
 span.text-bold {
@@ -100,32 +118,54 @@ span.text-bold {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
+  height: 310px;
 }
-.poster {
+.gridRow2 .poster {
   border-right: 1px solid lightgray;
   grid-column: 1 / 2;
   grid-row: 1 / 6;
 }
-.rates {
+.gridRow2 .poster img {
+  position: relative;
+  top: 30px;
+  left: 30px;
+  border: 5px solid black;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px rgb(100, 97, 97);
+}
+/* .gridRow2 .movieDetail {
   border-bottom: 1px solid lightgray;
-  grid-column: 2 / 3;
+  grid-column: 2 / 6;
+  grid-row: 1 / 2;
+} */
+.gridRow2 .movieDetail .MDsection1 {
+  grid-column: 2 / 4;
+  grid-row: 1 / 2;
+  background-color: pink;
+}
+.gridRow2 .movieDetail .MDsection2 {
+  background-color: blue;
+  grid-column: 4 / 6;
   grid-row: 1 / 2;
 }
-.summaries {
+.gridRow2 .movieDetail .MD {
+  position: relative;
+  margin-top: 5px;
+  margin-left: 20px;
+}
+.gridRow2 .summaries {
   /* border: 1px solid black; */
   grid-column: 2 / 6;
   grid-row: 2 / 6;
 }
-.directors {
-  border-bottom: 1px solid lightgray;
-  grid-column: 3 / 4;
-  grid-row: 1 / 2;
+.summaries .movieOverview {
+  position: relative;
+  margin-top: 10px;
+  margin-right: 20px;
+  margin-left: 20px;
+  line-height: 1.5;
 }
-.actors {
-  border-bottom: 1px solid lightgray;
-  grid-column: 4 / 6;
-  grid-row: 1 / 2;
-}
+
 /* grid row3: alikeMovies */
 .gridRow3 {
   align-items: center;
