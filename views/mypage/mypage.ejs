@@ -16,10 +16,48 @@
 
   <body>
     <%- include('../header') %>
-    <div style="padding-top: 20px">
-      <div class="container overflow-hidden text-center" id="MyPage_Profile" style="margin-top: 70px">
-        <div class="title">
-          <p>My Page</p>
+
+    <div style="padding-top: 20px;"> 
+    <div class="container overflow-hidden text-center" id="MyPage_Profile" style="margin-top: 70px;">
+      
+      <div class="title">
+        <p>My Page</p>
+      </div>
+      <br /><br />
+      <div class="row gx-5">
+        <!--left-->
+        <div class="col-3">
+          <div class="p-3">
+            <!--디폴트 유저사진 넣고 싶은데 안 되네요,,-->
+            <img src="../img/mypage/default_user.jpg" id="userImg" style="border-radius: 5px" />
+            <h5 id="userName"><%= nickname %> 님</h5>
+            <div class="row" id="profileLeft">
+              <div class="col mb-2">
+                <a href="/mypage/myinfo">
+                  <span
+                    ><i class="fa-solid fa-gear fa-sm" style="color: #000000"></i
+                    >&nbsp;&nbsp;&nbsp;프로필관리</span
+                  >
+                </a>
+              </div>
+              <div class="col mb-2">
+                <a href="/mypage/mymovielike">
+                  <span
+                    ><i class="fa-regular fa-heart fa-sm" style="color: #000000"></i
+                    >&nbsp;&nbsp;&nbsp;좋아요</span
+                  >
+                </a>
+              </div>
+              <div class="col mb-2">
+                <a href="/mypage/mycomment">
+                  <span
+                    ><i class="fas fa-pencil-alt" style="color: #000000"></i>&nbsp;&nbsp;&nbsp;내코멘트</span
+                  >
+                </a>
+              </div>
+            </div>
+          </div>
+
         </div>
         <br /><br />
         <div class="row gx-5">
@@ -112,14 +150,12 @@
               </div>
               <div id="imageContainer">
                 <% for (let i = 0; i < data.length; i++) { %>
-                <input type="hidden" name="movieidx" id="movieidxInput" value="<%= data[i].movieidx %>" />
-                <img
-                  src="https://image.tmdb.org/t/p/w154<%= data[i].poster_path %>"
-                  alt="<%= data[i].title %> 포스터 이미지"
-                  id="movieImage"
-                  style="height: 200px; width: 150px"
-                />
-                <input type="file" id="fileInput" name="movieImage" style="display: none" />
+                    <input type="hidden" name="movieidx" id="movieidxInput" value="<%= data[i].movieidx %>" />
+                                        <img src="https://image.tmdb.org/t/p/w154<%= data[i].poster_path %>"
+                                            alt="<%= data[i].title %> 포스터 이미지"
+                                            id="movieImage"
+                                            style="height: 200px; width: 150px; border-radius: 10px;" />
+                    <input type="file" id="fileInput" name="movieImage" style="display: none" />
                 <% } %>
               </div>
               <div class="profileBtn" style="margin-bottom: 20px"></div>

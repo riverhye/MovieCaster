@@ -191,6 +191,7 @@ exports.mycomment = async (req, res) => {
 
     const user = await User.findOne({
       where: { useridx: targetUserIdx },
+
     });
 
     res.render('mypage/mypageComment', {
