@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MovieCaster - Main</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/main.css" />
+    <link rel="stylesheet" href="../static/css/header.css" />
+    <link rel="stylesheet" href="../static/css/footer.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <section class="logo-section">
+        <div class="logo" onclick="location.href='/'">
+          <img src="/static/img/logo.png" alt="logo" width="150px" height="100px" />
+        </div>
+        <div class="icon-group">
+          <a href="/search"><i class="fa-solid fa-magnifying-glass search-icon"></i></a>
+          <a id="loginButton" href="/signin">
+            <div class="user-status">LOGIN</div>
+          </a>
+          <a id="logoutButton" href="" style="display: none">
+            <div class="user-status">LOGOUT</div>
+          </a>
+          <a href="/mypage"><i class="fa-solid fa-user user-icon"></i></a>
+        </div>
+      </section>
+
+      <section class="box-office-section">
+        <div class="box-office__film">
+          <img src="../static/img/filmroll.jpg" alt="" width="1500px" height="280px" />
+          <span class="box-office-text">Box Office</span>
+          <div class="box-office-swiper">
+            <ul class="box-office-slider">
+              <% for (let i = 0; i<5; i++) { %>
+              <div class="box-office-rank"></div>
+              <li class="box-office-poster"><img href="" src="" /></li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </header>
+
+    <div class="main-section">
+      <section class="best-section">
+        <div class="best-section__title section__title">
+          <i class="bi bi-brightness-high sun-icon"></i>
+          <h4>해가 쨍쨍! 평점 높은 영화</h4>
+        </div>
+        <div class="swiper best-section-swiper">
+          <div class="swiper-wrapper best-movie__list section__list">
+            <!-- length -->
+            <% for (let i = 0; i<10; i++) { %>
+            <div class="swiper-slide best-movie__body section__body">
+              <div class="best-movie__poster-body section__poster-body">
+                <ul>
+                  <li>
+                    <a href="">
+                      <div class="best-movie__poster"><img src="" alt="" /></div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="best-movie__comment">
+                <ul>
+                  <li class="text-sm">
+                    <span class="nickname-sm">유저닉네임</span>
+                    <i class="fa-solid fa-heart heart-icon" onclick="clickLike(this)"></i>
+                  </li>
+                  <li class="movie-title text-sm">
+                    <strong><span>헝거게임 : 노래하는 어쩌고와 저쩌고</span></strong>
+                  </li>
+                  <li class="comment-sm text-sm">
+                    <span>개봉을 기다리는 영화인데 내년으로 미뤄진다고...</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <% } %>
+          </div>
+        </div>
+        <div class="arrow-box swiper-button-prev">
+          <i class="fa-solid fa-chevron-left arrow-icon left-arrow"></i>
+        </div>
+        <div class="arrow-box swiper-button-next">
+          <i class="fa-solid fa-chevron-right arrow-icon right-arrow"></i>
+        </div>
+      </section>
+
+      <section class="md-section">
+        <div class="md-section__title section__title">
+          <i class="bi bi-brightness-high sun-icon"></i>
+          <i class="fa-solid fa-cloud cloud-icon"></i>
+          <h4>개봉 예정 영화</h4>
+        </div>
+        <div class="swiper md-section-swiper">
+          <div class="swiper-wrapper md-movie__list section__list">
+            <!-- length -->
+            <% for (let i=0; i<10; i++) { %>
+            <div class="swiper-slide md-movie__body section__body">
+              <div class="md-movie__poster-body section__poster-body">
+                <ul>
+                  <li>
+                    <a href="">
+                      <div class="md-movie__poster"><img src="" alt="" /></div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="md-movie__info">
+                <ul>
+                  <li class="md-movie__rating">
+                    <i class="bi bi-brightness-high"></i>
+                    <span class="">5.0</span>
+                  </li>
+                  <li>
+                    <h4 class="movie-title__large">타이틀</h4>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <% } %>
+          </div>
+        </div>
+        <div class="arrow-box swiper-button-prev__bt">
+          <i class="fa-solid fa-chevron-left arrow-icon left-arrow"></i>
+        </div>
+        <div class="arrow-box swiper-button-next__bt">
+          <i class="fa-solid fa-chevron-right arrow-icon right-arrow"></i>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">
+      <strong>주식회사</strong> 무비캐스터 <strong>대표</strong> 4FLEX 서울특별시 용산구 청파로
+      109(나진전자월드상가) 3층 <br />
+      <strong>사업자 등록 번호</strong> 595-95-0099 <br />
+      © 2023 by MovieCaster, Inc. All rights reserved. <br />
+    </div>
+
+    <script>
+      // API로 영화 정보 받아오기 : Box Office, Top rated, Upcoming
+      mainApiPosters();
+
+      function mainApiPosters() {
+        // API key
+        axios({
+          method: 'post',
+          url: '/',
+        }).then((res) => {
+          const key = res.data;
+
+          const endpoint = 'https://api.themoviedb.org/3/movie';
+
+          // Box Office
+          axios({
+            method: 'get',
+            url: '/'
+          }).then(res => {
+            const movieData = res.data.movie.boxOfficeList;
+            const posterPath = movieData.map((movie) => movie.poster_path); // poster 하나의 배열로
+
+            const boxOfficePosters = document.querySelectorAll('.box-office-poster img');
+            const ranking = document.querySelectorAll('.box-office-rank');
+
+            // 초기 화면 : 포스터 1~5위(posterPath[0]~[4])
+            for (let i = 0; i < boxOfficePosters.length; i++) {
+              boxOfficePosters[i].src = `https://image.tmdb.org/t/p/w154/${posterPath[i % 5]}`;
+              ranking[i].innerHTML = `<span>${i + 1}</span>`;
+            }
+
+            // 슬라이드 3초 주기 무한 반복
+            let currentIdx = 0;
+            setInterval(() => {
+              currentIdx = currentIdx % 10;
+              for (let i = 0; i < boxOfficePosters.length; i++) {
+                boxOfficePosters[i].src = `https://image.tmdb.org/t/p/w154/${posterPath[currentIdx % 10]}`;
+                ranking[i].innerHTML = `${(currentIdx % 10) + 1}`;
+                currentIdx++;
+              }
+            }, 3000);
+          })
+
+
+          // axios.get(`${endpoint}/now_playing?api_key=${key}&language=ko-KR`).then((res) => {
+          //   const movieData = res.data.results.slice(0, 10);
+          //   const posterPath = movieData.map((movie) => movie.poster_path); // poster 하나의 배열로
+
+          //   const boxOfficePosters = document.querySelectorAll('.box-office-poster img');
+          //   const ranking = document.querySelectorAll('.box-office-rank');
+
+          //   // 초기 화면 : 포스터 1~5위(posterPath[0]~[4])
+          //   for (let i = 0; i < boxOfficePosters.length; i++) {
+          //     boxOfficePosters[i].src = `https://image.tmdb.org/t/p/w154/${posterPath[i % 5]}`;
+          //     ranking[i].innerHTML = `<span>${i + 1}</span>`;
+          //   }
+
+          //   // 슬라이드 3초 주기 무한 반복
+          //   let currentIdx = 0;
+          //   setInterval(() => {
+          //     currentIdx = currentIdx % 10;
+          //     for (let i = 0; i < boxOfficePosters.length; i++) {
+          //       boxOfficePosters[i].src = `https://image.tmdb.org/t/p/w154/${posterPath[currentIdx % 10]}`;
+          //       ranking[i].innerHTML = `${(currentIdx % 10) + 1}`;
+          //       currentIdx++;
+          //     }
+          //   }, 3000);
+          // });
+
+          // Top rated
+          axios.get(`${endpoint}/top_rated?api_key=${key}&language=ko-KR`).then((res) => {
+            const movieData = res.data.results.slice(3);
+            const posterPath = movieData.map((movie) => movie.poster_path);
+
+            const bestMoviePosters = document.querySelectorAll('.best-movie__poster img');
+            bestMoviePosters.forEach((poster, index) => {
+              poster.src = `https://image.tmdb.org/t/p/w200/${posterPath[index]}`;
+            });
+          });
+
+          // Upcoming
+          axios.get(`${endpoint}/upcoming?api_key=${key}&language=ko-KR`).then((res) => {
+            const movieData = res.data.results;
+            const posterPath = movieData.map((movie) => movie.poster_path);
+            const posterTitle = movieData.map((movie) => movie.title);
+
+            const mdMoivePosters = document.querySelectorAll('.md-movie__poster img');
+            mdMoivePosters.forEach((poster, index) => {
+              poster.src = `https://image.tmdb.org/t/p/w200/${posterPath[index]}`;
+            });
+
+            const upcomingMovies = document.querySelectorAll('.movie-title__large');
+            upcomingMovies.forEach((title, index) => {
+              title.textContent = `${posterTitle[index]}`;
+            });
+          });
+        });
+      }
+    </script>
+
+    <script>
+      function clickLike(thisIcon) {
+        thisIcon.classList.toggle('heart-active');
+      }
+    </script>
+
+    <!-- swiper.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- best-section swiper -->
+    <script>
+      const bestSwiper = new Swiper('.best-section-swiper', {
+        slidesPerView: 5,
+        spaceBetween: 20,
+        navigation: {
+          prevEl: '.swiper-button-prev',
+          nextEl: '.swiper-button-next',
+        },
+      });
+    </script>
+
+    <!-- md-section swiper -->
+    <script>
+      const mdSwiper = new Swiper('.md-section-swiper', {
+        slidesPerView: 5,
+        spaceBetween: 20,
+        navigation: {
+          prevEl: '.swiper-button-prev__bt',
+          nextEl: '.swiper-button-next__bt',
+        },
+        // breakpoints: {
+        // 320: {
+        // slidesPerView: 2,
+        // spaceBetween: 20
+        // },
+        // 480: {
+        // slidesPerView: 3,
+        // spaceBetween: 30
+        // },
+        // 1000: {
+        // slidesPerView: 4,
+        // spaceBetween: 40
+        // }
+        // }
+      });
+    </script>
+
+    <!-- Showing LogIn or LogOut button -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // 세션 상태를 확인하고 버튼을 업데이트하는 함수
+        function updateButtons() {
+          axios
+            .get('/check-session') // 서버에 세션 상태를 확인하는 요청
+            .then((response) => {
+              const isLoggedIn = response.data.isLoggedIn;
+
+              const loginButton = document.getElementById('loginButton');
+              const logoutButton = document.getElementById('logoutButton');
+
+              if (isLoggedIn) {
+                loginButton.style.display = 'none'; // 로그인 버튼을 숨김
+                logoutButton.style.display = 'block'; // 로그아웃 버튼을 보임
+              } else {
+                loginButton.style.display = 'block'; // 로그인 버튼을 보임
+                logoutButton.style.display = 'none'; // 로그아웃 버튼을 숨김
+              }
+            })
+            .catch((error) => {
+              console.error('세션 상태 확인에 실패했습니다.', error);
+            });
+        }
+
+        // 페이지 로드 시 세션 상태 확인 및 버튼 업데이트
+        updateButtons();
+
+        // 로그아웃 버튼 클릭 시 세션 상태 업데이트
+        document.getElementById('logoutButton').addEventListener('click', function (event) {
+          alert('로그아웃 되었습니다');
+          updateButtons();
+        });
+      });
+    </script>
+  </body>
+</html>

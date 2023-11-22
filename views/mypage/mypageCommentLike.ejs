@@ -1,56 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
-    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet" />
     <link rel="stylesheet" href="/static/css/index.css" />
-    <link rel="stylesheet" href="/static/css/mypage/mypageMovieLike.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/mypage/mypageMovieLike.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>마이페이지 좋아요 누른 영화 보기</title>
-</head>
-<body>
+  </head>
+  <body>
     <%- include('../header') %>
 
     <!-- Mypage_Profile -->
-    <div style="padding-top: 20px;"> 
-    <div class="container overflow-hidden text-center" id="MyPage_Profile" style="margin-top: 70px;">
+    <div style="padding-top: 20px">
+      <div class="container overflow-hidden text-center" id="MyPage_Profile" style="margin-top: 70px">
         <div class="title">
-            <p>My Page</p>
+          <p>My Page</p>
         </div>
         <br /><br />
         <div class="row gx-5">
-            <!-- 좌측 프로필 정보 부분 -->
-            <div class="col-3">
-                <div class="p-3">
-                    <!-- 사용자 이미지 표시 부분 -->
-                    <img src="/images/mypage/user.png" id="userImg" style="border-radius: 5px;"/>
-                    
-                    <!-- 사용자 이름 표시 부분 -->
-                    <h5 id="userName">User Name</h5>
-                    
-                    <!-- 프로필 설정, 위시리스트, 내여행 링크 표시 부분 -->
-                    <div class="row" id="profileLeft">
-                        <div class="col mb-2">
-                            <a href="/mypage/myinfo">
-                                <span><i class="fa-solid fa-gear fa-sm" style="color: #000000;"></i>&nbsp;&nbsp;&nbsp;프로필관리</span>
-                            </a>
-                        </div>
-                        <div class="col mb-2">
-                            <a href="/mypage/mymovielike">
-                                <span><i class="fa-regular fa-heart fa-sm" style="color: #000000;"></i>&nbsp;&nbsp;&nbsp;좋아요</span>
-                            </a>
-                        </div>
-                        <div class="col mb-2">
-                            <a href="/mypage/mycomment">
-                                <span><i class="fas fa-pencil-alt" style="color: #000000;"></i>&nbsp;&nbsp;&nbsp;내코멘트</span>
-                            </a>
-                        </div>
-                    </div>
+          <!-- 좌측 프로필 정보 부분 -->
+          <div class="col-3">
+            <div class="p-3">
+              <!-- 사용자 이미지 표시 부분 -->
+              <img src="/images/mypage/user.png" id="userImg" style="border-radius: 5px" />
+
+              <!-- 사용자 이름 표시 부분 -->
+              <h5 id="userName"><%=user%> 님</h5>
+
+              <!-- 프로필 설정, 위시리스트, 내여행 링크 표시 부분 -->
+              <div class="row" id="profileLeft">
+                <div class="col mb-2">
+                  <a href="/mypage/myinfo">
+                    <span
+                      ><i class="fa-solid fa-gear fa-sm" style="color: #000000"></i
+                      >&nbsp;&nbsp;&nbsp;프로필관리</span
+                    >
+                  </a>
                 </div>
+                <div class="col mb-2">
+                  <a href="/mypage/mymovielike">
+                    <span
+                      ><i class="fa-regular fa-heart fa-sm" style="color: #000000"></i
+                      >&nbsp;&nbsp;&nbsp;좋아요</span
+                    >
+                  </a>
+                </div>
+                <div class="col mb-2">
+                  <a href="/mypage/mycomment">
+                    <span
+                      ><i class="fas fa-pencil-alt" style="color: #000000"></i
+                      >&nbsp;&nbsp;&nbsp;내코멘트</span
+                    >
+                  </a>
+                </div>
+              </div>
             </div>
             
             <!-- 위시리스트 코멘트 정보 부분 -->
@@ -124,40 +135,52 @@
                                     </div>
                                 </div>
                             </div>
-                            <% } %>
-                            <!-- Add more cards as needed -->
+                            <div class="col-8" style="text-align: left">
+                              <% if (data[i] && data[i].description) { %>
+                              <p class="card-text"><%= data[i].description %></p>
+                              <% } else { %>
+                              <p class="card-text">좋아요 누른 코멘트가 없습니다.</p>
+                              <% } %>
+                            </div>
+                          </div>
                         </div>
+                      </div>
                     </div>
+                  </div>
+                  <% } %>
+                  <!-- Add more cards as needed -->
                 </div>
+              </div>
             </div>
-            <!--전체 페이지 감싸는 div: 삭제하지 말 것!-->
+          </div>
+          <!--전체 페이지 감싸는 div: 삭제하지 말 것!-->
         </div>
 
         <!-- footer.html -->
         <%- include('../footer') %>
-        </div>
-        <script>
-            /// 삭제하기 버튼 클릭 이벤트 핸들러
-            function deleteComment(commentId) {
-                console.log('Deleting comment with ID:', commentId);
+      </div>
+      <script>
+        /// 삭제하기 버튼 클릭 이벤트 핸들러
+        function deleteComment(commentId) {
+          console.log('Deleting comment with ID:', commentId);
 
-                // Axios를 사용하여 서버에 DELETE 요청을 보냅니다.
-                axios.delete(`/mypage/mycommentlike/${commentId}`)
-                    .then(response => {
-                        console.log(response.data);
+          // Axios를 사용하여 서버에 DELETE 요청을 보냅니다.
+          axios
+            .delete(`/mypage/mycommentlike/${commentId}`)
+            .then((response) => {
+              console.log(response.data);
 
-                        // 삭제된 코멘트를 화면에서 감추는 로직 추가
-                        const deletedCommentElement = document.getElementById(`comment_${commentId}`);
-                        if (deletedCommentElement) {
-                            deletedCommentElement.style.display = 'none';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error deleting comment:', error.response);
-                    });
-}
-        </script>
-
+              // 삭제된 코멘트를 화면에서 감추는 로직 추가
+              const deletedCommentElement = document.getElementById(`comment_${commentId}`);
+              if (deletedCommentElement) {
+                deletedCommentElement.style.display = 'none';
+              }
+            })
+            .catch((error) => {
+              console.error('Error deleting comment:', error.response);
+            });
+        }
+      </script>
     </div>
-</body>
+  </body>
 </html>

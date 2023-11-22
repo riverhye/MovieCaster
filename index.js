@@ -3,6 +3,7 @@ const app = express();
 const PORT = 8000;
 const multer = require('multer');
 const session = require('express-session');
+const path = require('path');
 
 app.set('view engine', 'ejs');
 
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use('/static', express.static('static'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const router = require('./routes');
 app.use('/', router);
