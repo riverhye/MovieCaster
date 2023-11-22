@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.article {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+.content {
+  display: flex;
+  padding-top: 40px;
+  /* margin-bottom: 20px; */
+  list-style: none;
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.08); */
+}
+.contentId,
+.contentNickname,
+.contentRate {
+  flex-basis: 10%;
+}
+.contentReview {
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.buttons {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 20px;
+}
+.button {
+  padding: 0 1rem;
+  font-size: 1.2rem;
+  color: #333;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+.button.active,
+.button:hover {
+  color: #1f975d;
+  font-weight: 600;
+  text-decoration: underline;
+}
+.prev {
+  position: absolute;
+  left: 30px;
+}
+.next {
+  position: absolute;
+  right: -2.5rem;
+}
+ion-icon {
+  padding-top: 0.05rem;
+}

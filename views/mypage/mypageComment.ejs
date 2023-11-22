@@ -29,10 +29,13 @@
             <div class="col-3">
                 <div class="p-3">
                     <!-- 사용자 이미지 표시 부분 -->
+                    <% if (user.img) { %>
+                    <img src="../../<%= user.img %>" id="userImg" style="border-radius: 5px;"/>
+                    <% } else { %>
                     <img src="/images/mypage/" id="userImg" style="border-radius: 5px;"/>
-                    
+                    <% } %>
                     <!-- 사용자 이름 표시 부분 -->
-                    <h5 id="userName">User Name</h5>
+                    <h5 id="userName"><%=nickname%> 님</h5>
                     
                     <!-- 프로필 설정, 위시리스트, 내여행 링크 표시 부분 -->
                     <div class="row" id="profileLeft">

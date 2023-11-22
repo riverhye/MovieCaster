@@ -14,11 +14,16 @@ exports.mypage = async (req, res) => {
       where: { movieidx: movieIndices },
     });
 
+    const user = await User.findOne({
+      where: { useridx: targetUserIdx },
+    });
+
     res.render('mypage/mypage', {
       root: 'views',
-      data: movies,  
+      data: movies,
+      user: user,
       nickname: req.session.nickname,
-      email: req.session.email
+      email: req.session.email,
     });
   } catch (error) {
     console.error('Error fetching fav movies:', error);
@@ -34,30 +39,29 @@ exports.myfav = (req, res) => {
 //인생영화 검색 기능
 exports.search_movie_result = (req, res) => {
   if (!req.query.input) {
-      res.json({data: null});
+    res.json({ data: null });
   } else {
-      Movie_info.findAll({
-          where: {
-              title: {[Op.like]: `%${req.query.input}%`}
-          }
-      }).then((result) => {
-          let movieInfo;
+    Movie_info.findAll({
+      where: {
+        title: { [Op.like]: `%${req.query.input}%` },
+      },
+    }).then((result) => {
+      let movieInfo;
 
-          if (result && result.length > 0) {
-              movieInfo = result.map(movie => ({
-                  title: movie.title,
-                  poster: movie.poster_path,
-                  count: result.length
-              }));
-          } else {
-              movieInfo = [{ msg: '검색 결과가 없습니다.' }];
-          }
+      if (result && result.length > 0) {
+        movieInfo = result.map((movie) => ({
+          title: movie.title,
+          poster: movie.poster_path,
+          count: result.length,
+        }));
+      } else {
+        movieInfo = [{ msg: '검색 결과가 없습니다.' }];
+      }
 
-          res.json({movie: movieInfo, searchInput: req.query.input});
-      
-      })
+      res.json({ movie: movieInfo, searchInput: req.query.input });
+    });
   }
-}
+};
 
 //인생영화 등록하기
 exports.addFavMovie = async (req, res) => {
@@ -67,8 +71,8 @@ exports.addFavMovie = async (req, res) => {
 
     // fav_movie 테이블에 등록
     const result = await Fav_movie.create({
-      useridx : req.session.useridx,
-      movieidx : movieidx
+      useridx: req.session.useridx,
+      movieidx: movieidx,
     });
 
     res.json({ success: true, result });
@@ -83,12 +87,12 @@ exports.myinfo = async (req, res) => {
   try {
     // const targetUserIdx = 1;
     const targetUserIdx = req.session.useridx;
-    const user = await User.findAll({
+    const user = await User.findOne({
       where: { useridx: targetUserIdx },
     });
     res.render('mypage/mypageInfo', {
       root: 'views',
-      data: user,
+      user: user,
       nickname: req.session.nickname,
       email: req.session.email,
     });
@@ -113,7 +117,15 @@ exports.mymovielike = async (req, res) => {
       where: { movieidx: movieIndices },
     });
 
-    res.render('mypage/mypageMovieLike', { root: 'views', data: userLikedMovies });
+    const img = await User.findOne({
+      where: { useridx: targetUserIdx },
+    });
+    res.render('mypage/mypageMovieLike', {
+      root: 'views',
+      data: userLikedMovies,
+      nickname: req.session.nickname,
+      img: img,
+    });
   } catch (error) {
     console.error('Error fetching liked movies:', error);
     res.status(500).send('Internal Server Error');
@@ -149,7 +161,11 @@ exports.mycommentlike = async (req, res) => {
       ],
     });
 
-    res.render('mypage/mypageCommentLike', { root: 'views', data: userLikedComments });
+    res.render('mypage/mypageCommentLike', {
+      root: 'views',
+      data: userLikedComments,
+      user: req.session.nickname,
+    });
   } catch (error) {
     console.error('Error fetching liked comments:', error);
     res.status(500).send('Internal Server Error');
@@ -173,7 +189,17 @@ exports.mycomment = async (req, res) => {
       ],
     });
 
-    res.render('mypage/mypageComment', { root: 'views', data: userComments });
+    const user = await User.findOne({
+      where: { useridx: targetUserIdx },
+
+    });
+
+    res.render('mypage/mypageComment', {
+      root: 'views',
+      data: userComments,
+      nickname: req.session.nickname,
+      user: user,
+    });
   } catch (error) {
     res.status(500).send('서버 에러');
   }
@@ -183,11 +209,14 @@ exports.mycomment = async (req, res) => {
 exports.update_profile = async (req, res) => {
   try {
     await User.update(
-      { nickname: req.body.usersNickname, pw: req.body.usersPw },
+      { nickname: req.body.usersNickname, pw: req.body.usersPw, img: req.file.path },
       { where: { useridx: req.session.useridx } }
     );
+    const user = await User.findOne({
+      where: { useridx: req.session.useridx },
+    });
     req.session.nickname = req.body.usersNickname;
-    res.send('프로필 수정 성공!');
+    res.status(200).send({ user: user });
   } catch (error) {
     console.log(error);
     res.status(500).send('서버 에러');
@@ -302,17 +331,17 @@ exports.delete_comment = async (req, res) => {
 // 메인에서 전달한 데이터
 exports.maintomycommentlike = (req, res) => {
   const { commentid } = req.body;
-  const useridx = req.session.useridx
+  const useridx = req.session.useridx;
 
-  if(useridx) {
+  if (useridx) {
     Comment_like.create({
       commentid,
-      useridx
-     }).then(()=>{
-      res.send({result: true})
-     })
+      useridx,
+    }).then(() => {
+      res.send({ result: true });
+    });
   } else {
-    res.send({result: false, error: '로그인 후 이용가능한 기능입니다.' });
+    res.send({ result: false, error: '로그인 후 이용가능한 기능입니다.' });
   }
 };
 
