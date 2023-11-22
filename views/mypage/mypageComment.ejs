@@ -79,10 +79,14 @@
                                         <div class="container text-center">
                                             <div class="row align-items-center g-1">
                                                 <div class="col-3">
-                                                   <img src="" alt="">
+                                                    <% if (data[i].CommentMovie && data[i].CommentMovie.poster_path) { %>
+                                                        <img src="https://image.tmdb.org/t/p/w154<%= data[i].CommentMovie.poster_path %>" alt="영화 포스터" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
+                                                    <% } else { %>
+                                                        <img src="/path/to/default/poster.jpg" alt="기본 포스터" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
+                                                    <% } %>
                                                 </div>
+                                                
                                                 <div class="col-6" style="text-align: left;">
-                                                    <!-- Display either input or description -->
                                                     <% if (data[i].isEditing) { %>
                                                         <input type="text" class="form-control" id="editedCommentText<%= data[i].commentid %>" value="<%= data[i].description %>" />
                                                     <% } else { %>

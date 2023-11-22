@@ -113,6 +113,7 @@
       </div>
       <script>
         function deleteMovie(movielikeidx) {
+          // 수정: movieidx를 movielikeidx로 변경
           axios
             .delete(`/mypage/mymovielike/${movielikeidx}`)
             .then((response) => {
@@ -120,7 +121,8 @@
               location.reload();
             })
             .catch((error) => {
-              console.error('Error deleting movie:', error.response);
+              console.error('Error deleting movie:', error);
+              // Handle error
             });
         }
       </script>
