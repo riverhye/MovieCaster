@@ -10,7 +10,7 @@
   <body>
     <div class="body">
       <div class="containerMain">
-        <div class="logoBox">Movie Caster</div>
+        <div class="logoBox"><img class="logoImg" src="../static/img/logo.png" onclick="goToMain()"></div>
         <div class="signupMsgBox">
           <h2>회원가입</h2>
           <h4>회원가입을 위해 정보를 입력해 주세요.</h4>
@@ -21,21 +21,23 @@
               <div class="idBoxR boxR">
                 <!-- 아이디 -->
                 <!-- 숫자+영문 대소문자 최소6/최대15 -->
-                <input type="text" name="userid" id="userid" required placeholder="아이디 입력" oninput="validCheckId(this)" />
+                <input type="text" name="userid" id="userid" required placeholder="아이디 입력" oninput="validCheckId(this)" onfocus="showValidationInfoId('숫자,영문,대소문자/ 최소5자~최대10자')" />
                 <!-- pattern="^[a-zA-Z0-9]+$"////// -->
                 <!-- minlength="6" maxlength="15"  -->
                 <div class="idValidMsg hide validMsg">사용 가능한 아이디 입니다.</div>
                 <div class="idInvalidMsg hide invalidMsg">사용 불가능한 아이디 입니다.</div>
+                <div class="validationMessageId validationMessage" id="validationMessageId"></div>
               </div>
             </div>
             <div class="pwBox innerBox">
               <div class="pwBoxR boxR">
                 <!-- 비밀번호 -->
                 <!-- 최소8/최대16 숫자,영문,특수문자 각 1개 이상 -->
-                <input type="password" id="pw" name="pw" required placeholder="비밀번호" oninput="validCheckPw(this)" />
+                <input type="password" id="pw" name="pw" required placeholder="비밀번호" oninput="validCheckPw(this)" onfocus="showValidationInfoPw('숫자,영문,특수문자 각 1개 이상/ 최소8자~최대16자 ')" />
                 <!-- pattern=" ^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$" -->
                 <div class="pwValidMsg hide validMsg">사용 가능한 비밀번호 입니다.</div>
                 <div class="pwInvalidMsg hide invalidMsg">사용 불가능한 비밀번호 입니다.</div>
+                <div class="validationMessagePw validationMessage" id="validationMessagePw"></div>
               </div>
             </div>
             <div class="pwCheckBox innerBox">
@@ -60,10 +62,11 @@
               <div class="nicknameBoxR boxR">
                 <!-- 닉네임 -->
                 <!-- 한글 최소2 최대 5 -->
-                <input type="text" name="nickname" id="nickname" required placeholder="닉네임" oninput="validCheckNickname(this)" />
+                <input type="text" name="nickname" id="nickname" required placeholder="닉네임" oninput="validCheckNickname(this)" onfocus="showValidationInfoNickname('한글만 입력/ 최소2자~최대5자')" />
                 <!-- pattern="^[가-힣]+$" minlength="3" maxlength="5"  -->
                 <div class="nicknameValidMsg hide validMsg">사용 가능한 닉네임 입니다.</div>
                 <div class="nicknameInvalidMsg hide invalidMsg">사용 불가능한 닉네임 입니다.</div>
+                <div class="validationMessageNickname validationMessage" id="validationMessageNickname"></div>
               </div>
             </div>
           </div>
@@ -72,14 +75,16 @@
         </form>
       </div>
     </div>
-    <footer>
-      <div class="footer">
-        <strong>주식회사</strong> 무비캐스터 <strong>대표</strong> 4FLEX 서울특별시 용산구 청파로
-        109(나진전자월드상가) 3층 <br />
-        <strong>사업자 등록 번호</strong> 595-95-0099 <br />
-        © 2023 by MovieCaster, Inc. All rights reserved. <br />
-      </div>
-    </footer>
+    <div class="footerBox">
+      <footer>
+        <div class="footer">
+          <strong>주식회사</strong> 무비캐스터 <strong>대표</strong> 4FLEX 서울특별시 용산구 청파로
+          109(나진전자월드상가) 3층 <br />
+          <strong>사업자 등록 번호</strong> 595-95-0099 <br />
+          © 2023 by MovieCaster, Inc. All rights reserved. <br />
+        </div>
+      </footer>
+    </div>
     <script>
       const form = document.querySelector('.userForm');
 
@@ -168,11 +173,42 @@
           data: data,
         }).then((res) => {
           const result = res.data;
-          alert('회원가입 성공');
+          alert('회원가입에 성공하였습니다!');
           document.location.href = '/signin';
           console.log('res data result', result);
         });
       }
+
+      function goToMain() {
+        location.href = '/';
+      }
+
+      function showValidationInfoId(message) {
+        const validationMessage = document.getElementById('validationMessageId');
+        validationMessage.textContent = message;
+        validationMessage.style.display = 'block';
+      }
+
+      function showValidationInfoPw(message) {
+        const validationMessage = document.getElementById('validationMessagePw');
+        validationMessage.textContent = message;
+        validationMessage.style.display = 'block';
+      }
+
+      function showValidationInfoNickname(message) {
+        const validationMessage = document.getElementById('validationMessageNickname');
+        validationMessage.textContent = message;
+        validationMessage.style.display = 'block';
+      }
+
+      const inputs = document.querySelectorAll('.innerBox input');
+      inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+          const validationMessage = input.parentElement.querySelector('#validationMessageId, #validationMessagePw, #validationMessageNickname');
+          validationMessage.textContent = '';
+          validationMessage.style.display = 'none';
+        });
+      });
     </script>
   </body>
 </html>

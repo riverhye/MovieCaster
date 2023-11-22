@@ -36,7 +36,7 @@ detailRouter.get("/:movieidx", async (req, res) => {
       // 각 장르에 대해 비슷한 영화를 찾아서 배열에 추가하는 부분
       for (const genre of currentMovieGenres) {
         const moviesWithGenre = await Movie_info.findAll({
-          attributes: ["title", "poster_path"],
+          attributes: ["title", "poster_path", "movieidx"],
           where: {
             genre: {
               [Op.like]: `%${genre}%`, // 해당 장르를 포함하는 영화 검색

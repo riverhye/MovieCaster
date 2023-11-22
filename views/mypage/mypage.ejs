@@ -14,10 +14,22 @@
   <body>
     <%- include('../header') %>
 
+<<<<<<< HEAD
     <div style="padding-top: 20px">
       <div class="container overflow-hidden text-center" id="MyPage_Profile" style="margin-top: 70px">
         <div class="title">
           <p>My Page</p>
+=======
+    <div style="padding-top: 20px;">
+      <div class="container overflow-hidden text-center" id="MyPage_Profile" style="margin-top: 70px;">
+
+        <div class="title">
+          <p>My Page</p>
+        </div>
+        <br /><br />
+        <div class="row gx-5">
+
+>>>>>>> develop
         </div>
         <br /><br />
         <div class="row gx-5"></div>
@@ -92,12 +104,16 @@
                 <% for (let i = 0; i < data.length; i++) { %>
                 <a href="/detail/<%= data[i].movieidx %>">
                   <input type="hidden" name="movieidx" id="movieidxInput" value="<%= data[i].movieidx %>" />
+<<<<<<< HEAD
                   <img
                     src="https://image.tmdb.org/t/p/w154<%= data[i].poster_path %>"
                     alt="<%= data[i].title %> 포스터 이미지"
                     id="movieImage"
                     style="height: 200px; width: 150px; border-radius: 10px"
                   />
+=======
+                  <img src="https://image.tmdb.org/t/p/w154<%= data[i].poster_path %>" alt="<%= data[i].title %> 포스터 이미지" id="movieImage" style="height: 200px; width: 150px; border-radius: 10px;" />
+>>>>>>> develop
                   <input type="file" id="fileInput" name="movieImage" style="display: none" />
                 </a>
 
