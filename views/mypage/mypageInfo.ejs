@@ -17,7 +17,6 @@
 
   <body>
     <%- include('../header') %>
-
    <!-- Mypage_Profile -->
    <div style="padding-top: 20px;"> 
     <div class="container overflow-hidden text-center" id="MyPage_Profile" style="margin-top: 70px;">
@@ -29,8 +28,12 @@
         <!--left-->
         <div class="col-3">
           <div class="p-3">
+            <% if (user.img) { %>
+            <img src="../../<%= user.img %>" id="userImg" style="border-radius: 5px" />
+            <% } else { %>
             <img src="/images/mypage/user.png" id="userImg" style="border-radius: 5px" />
-            <h5 id="userName"><%= nickname %> 님</h5>
+            <% } %>
+            <h5 id="userName"><%= user.nickname %> 님</h5>
             <div class="row" id="profileLeft">
               <div class="col mb-2">
                 <a href="/mypage/myinfo">
@@ -61,7 +64,6 @@
         <!--right-->
         <div class="col-6">
           <div class="p-4">
-            <% for (let i = 0; i < data.length; i++) { %>
             <form action="/mypage/mypage/update" method="post" enctype="multipart/form-data" id="updateUser">
               <div class="profileBtn" style="margin-bottom: 20px">
                 <input type="reset" value="취소" class="btn btn-sm" id="cancelBtn" />
@@ -69,17 +71,20 @@
               </div>
               <div class="img" style="margin-bottom: 40px">
                 <div id="imageContainer">
+                  <%if (user.img) {%>
+                    <img src="../../<%= user.img %>" id="profileImage" style="height: 200px; width: 200px" />
+                  <% } else{ %>
                   <img src="/images/mypage/user.png" id="profileImage" style="height: 200px; width: 200px" />
-                  <input type="file" id="fileInput" name="profileImage" style="display: none" />
+                  <% }%>
+                  <input type="file" id="fileInput" name="profileImage" style="margin-left: 90px;"/>
                 </div>
-                <button type="button" class="btn btn-sm" id="selectBtn">파일선택</button>
               </div>
               <div class="row" id="userInfo" style="margin-bottom: 10px">
                 <div class="col">
                   <span style="font-family: Noto Sans KR, 'Source Sans Pro'; white-space: nowrap"
                     >이메일</span
                   >
-                  <span id="email_placeholder"><%= email %></span>
+                  <span id="email_placeholder"><%= user.email %></span>
                 </div>
                 <div class="col">
                   <span style="font-family: Noto Sans KR, 'Source Sans Pro'; white-space: nowrap"
@@ -118,11 +123,10 @@
               <!-- 톱니바퀴 누르면 버튼 뜨게 구현!-->
               <div class="exit">
                 <!-- <a href="/mypage/mypageProfile/delete" style="color: #a7d4f9">회원탈퇴</a> -->
-                <button type="button" id="deleteUser" style="color: #a7d4f9">회원탈퇴</button>
+                <button type="button" id="deleteUser" style="color: #000000">회원탈퇴</button>
               </div>
             </form>
           </div>
-          <% } %>
           
       <!-- footer.html -->
       <%- include('../footer') %>
@@ -153,15 +157,27 @@
 
           const usersNickname = document.getElementById('usersNickname').value;
           const usersPw = document.getElementById('usersPw').value;
+          const fileInput = document.getElementById('fileInput');
+          const selectedFile = fileInput.files[0];
+
+          const formData = new FormData();
+          formData.append('usersNickname', usersNickname);
+          formData.append('usersPw', usersPw);
+          if (selectedFile) {
+            formData.append('profileImage', selectedFile);
+          }
 
           axios({
             method: 'post',
             url: '/mypage/mypage/update',
-            data: { usersNickname, usersPw },
+            data: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data', // 이 헤더가 설정되어야 합니다.
+            },
           })
             .then((res) => {
               alert('회원정보 수정 완료');
-              window.location.href = '/mypage';
+              window.location.href = '/mypage/myinfo';
             })
             .catch((error) => {
               console.error('에러:', error);
