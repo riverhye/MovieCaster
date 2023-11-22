@@ -1,8 +1,18 @@
-@import url('./index.css');
+@import url("./index.css");
 
 .footer {
-    margin: 40px 0 50px;
-    text-align: center;
-    font-size: 12px;
-    opacity: 0.7;
+  margin: 40px 0 50px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.7;
+}
+.footerBox {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+@media (max-height: 1013px) {
+  .footerBox {
+    position: static; /* 화면 높이가 854px 이하일 때 스크롤 형식으로 표시 */
+  }
 }

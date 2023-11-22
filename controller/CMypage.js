@@ -1,4 +1,4 @@
-const { User, Comment, Movie_like, Movie_info, Fav_movie, Comment_like } = require('../model');
+const { User, Comment, Movie_like, Movie_info, Fav_movie, Comment_like } = require("../model");
 
 //마이페이지 메인 이동
 exports.mypage = async (req, res) => {
@@ -18,22 +18,22 @@ exports.mypage = async (req, res) => {
       where: { useridx: targetUserIdx },
     });
 
-    res.render('mypage/mypage', {
-      root: 'views',
+    res.render("mypage/mypage", {
+      root: "views",
       data: movies,
       user: user,
       nickname: req.session.nickname,
       email: req.session.email,
     });
   } catch (error) {
-    console.error('Error fetching fav movies:', error);
-    res.status(500).send('Internal Server Error');
+    console.error("Error fetching fav movies:", error);
+    res.status(500).send("Internal Server Error");
   }
 };
 
 //인생영화 설정 페이지 이동
 exports.myfav = (req, res) => {
-  res.render('mypage/mypageFav', { root: 'views' });
+  res.render("mypage/mypageFav", { root: "views" });
 };
 
 //인생영화 검색 기능
@@ -55,7 +55,7 @@ exports.search_movie_result = (req, res) => {
           count: result.length,
         }));
       } else {
-        movieInfo = [{ msg: '검색 결과가 없습니다.' }];
+        movieInfo = [{ msg: "검색 결과가 없습니다." }];
       }
 
       res.json({ movie: movieInfo, searchInput: req.query.input });
@@ -77,8 +77,8 @@ exports.addFavMovie = async (req, res) => {
 
     res.json({ success: true, result });
   } catch (error) {
-    console.error('Error adding fav movie:', error);
-    res.status(500).json({ success: false, error: 'Internal Server Error' });
+    console.error("Error adding fav movie:", error);
+    res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 };
 
@@ -90,14 +90,14 @@ exports.myinfo = async (req, res) => {
     const user = await User.findOne({
       where: { useridx: targetUserIdx },
     });
-    res.render('mypage/mypageInfo', {
-      root: 'views',
+    res.render("mypage/mypageInfo", {
+      root: "views",
       user: user,
       nickname: req.session.nickname,
       email: req.session.email,
     });
   } catch (error) {
-    res.status(500).send('서버 에러');
+    res.status(500).send("서버 에러");
   }
 };
 
@@ -120,15 +120,15 @@ exports.mymovielike = async (req, res) => {
     const img = await User.findOne({
       where: { useridx: targetUserIdx },
     });
-    res.render('mypage/mypageMovieLike', {
-      root: 'views',
+    res.render("mypage/mypageMovieLike", {
+      root: "views",
       data: userLikedMovies,
       nickname: req.session.nickname,
       img: img,
     });
   } catch (error) {
-    console.error('Error fetching liked movies:', error);
-    res.status(500).send('Internal Server Error');
+    console.error("Error fetching liked movies:", error);
+    res.status(500).send("Internal Server Error");
   }
 };
 
@@ -151,24 +151,24 @@ exports.mycommentlike = async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['useridx', 'nickname', 'email'],
+          attributes: ["useridx", "nickname", "email"],
         },
         {
           model: Movie_info,
-          attributes: ['title', 'poster_path'],
-          as: 'CommentMovie', // 에일리어스 추가
+          attributes: ["title", "poster_path"],
+          as: "CommentMovie", // 에일리어스 추가
         },
       ],
     });
 
-    res.render('mypage/mypageCommentLike', {
-      root: 'views',
+    res.render("mypage/mypageCommentLike", {
+      root: "views",
       data: userLikedComments,
       user: req.session.nickname,
     });
   } catch (error) {
-    console.error('Error fetching liked comments:', error);
-    res.status(500).send('Internal Server Error');
+    console.error("Error fetching liked comments:", error);
+    res.status(500).send("Internal Server Error");
   }
 };
 
@@ -176,32 +176,31 @@ exports.mycommentlike = async (req, res) => {
 exports.mycomment = async (req, res) => {
   try {
     const targetUserIdx = req.session.useridx;
-    
+
     // Comment 테이블에서 해당 사용자가 작성한 코멘트 목록을 조회합니다.
     const userComments = await Comment.findAll({
       where: { useridx: targetUserIdx },
       include: [
         {
           model: Movie_info,
-          attributes: ['poster_path'],
-          as: 'CommentMovie', // Comment 모델과 Movie_info 모델 간의 에일리어스 일치
+          attributes: ["poster_path"],
+          as: "CommentMovie", // Comment 모델과 Movie_info 모델 간의 에일리어스 일치
         },
       ],
     });
 
     const user = await User.findOne({
       where: { useridx: targetUserIdx },
-
     });
 
-    res.render('mypage/mypageComment', {
-      root: 'views',
+    res.render("mypage/mypageComment", {
+      root: "views",
       data: userComments,
       nickname: req.session.nickname,
       user: user,
     });
   } catch (error) {
-    res.status(500).send('서버 에러');
+    res.status(500).send("서버 에러");
   }
 };
 
@@ -219,7 +218,7 @@ exports.update_profile = async (req, res) => {
     res.status(200).send({ user: user });
   } catch (error) {
     console.log(error);
-    res.status(500).send('서버 에러');
+    res.status(500).send("서버 에러");
   }
 };
 
@@ -227,39 +226,39 @@ exports.update_profile = async (req, res) => {
 exports.delete_user = async (req, res) => {
   try {
     const result = await User.update(
-      { del_user_ch: 'y' }, // deleted user check(yes / no)
+      { del_user_ch: "y" }, // deleted user check(yes / no)
       { where: { useridx: req.session.useridx } }
     );
     req.session.destroy(function (err) {
       // 탈퇴한 회원의 session 삭제
       if (err) console.log(err);
     });
-    res.status(200).send('회원탈퇴성공!');
+    res.status(200).send("회원탈퇴성공!");
   } catch (error) {
-    res.status(500).send('서버 에러');
+    res.status(500).send("서버 에러");
   }
 };
 
 //내가 좋아요 누른 영화 삭제하기
 exports.delete_movie_like = async (req, res) => {
   try {
-      const targetUserIdx = req.session.useridx;
-      const movieLikeIdx = req.params.id;
+    const targetUserIdx = req.session.useridx;
+    const movieLikeIdx = req.params.id;
 
-      console.log('Target User Index:', targetUserIdx);
-      console.log('Movie Like Index:', movieLikeIdx);
+    console.log("Target User Index:", targetUserIdx);
+    console.log("Movie Like Index:", movieLikeIdx);
 
-      await Movie_like.destroy({
-          where: {
-              movielikeidx: movieLikeIdx,
-              useridx: targetUserIdx,
-          },
-      });
+    await Movie_like.destroy({
+      where: {
+        movielikeidx: movieLikeIdx,
+        useridx: targetUserIdx,
+      },
+    });
 
-      res.send({ result: true });
+    res.send({ result: true });
   } catch (error) {
-      console.error('Error deleting movie like:', error);
-      res.status(500).send({ error: 'Internal Server Error' });
+    console.error("Error deleting movie like:", error);
+    res.status(500).send({ error: "Internal Server Error" });
   }
 };
 
@@ -285,13 +284,13 @@ exports.delete_comment_like = async (req, res) => {
     });
 
     if (result === 0) {
-      return res.status(404).send({ error: 'Comment not found' });
+      return res.status(404).send({ error: "Comment not found" });
     }
 
     // 바로 삭제가 반영되도록 클라이언트에게 응답을 보냅니다.
     res.send({ result: true });
   } catch (error) {
-    res.status(500).send({ error: 'Internal Server Error' });
+    res.status(500).send({ error: "Internal Server Error" });
   }
 };
 
@@ -318,13 +317,13 @@ exports.delete_comment = async (req, res) => {
     });
 
     if (result === 0) {
-      return res.status(404).send({ error: 'Comment not found' });
+      return res.status(404).send({ error: "Comment not found" });
     }
 
     res.send({ result: true });
   } catch (error) {
-    console.error('Error deleting comment:', error);
-    res.status(500).send({ error: 'Internal Server Error' });
+    console.error("Error deleting comment:", error);
+    res.status(500).send({ error: "Internal Server Error" });
   }
 };
 
@@ -335,15 +334,15 @@ exports.maintomycommentlike = async (req, res) => {
     const commentid = req.body.commentid;
 
     if (!useridx) {
-      return res.send({ result: false, error: '로그인 후 이용가능한 기능입니다.' });
+      return res.send({ result: false, error: "로그인 후 이용가능한 기능입니다." });
     }
 
     // 해당 유저와 코멘트에 대한 레코드 조회
     const userLikeComment = await Comment_like.findOne({
       where: {
         useridx: useridx,
-        commentid: commentid
-      }
+        commentid: commentid,
+      },
     });
 
     if (userLikeComment) {
@@ -351,8 +350,8 @@ exports.maintomycommentlike = async (req, res) => {
       await Comment_like.destroy({
         where: {
           useridx: useridx,
-          commentid: commentid
-        }
+          commentid: commentid,
+        },
       });
 
       res.send({ result: true, likedCommentIds: [] });
@@ -360,36 +359,36 @@ exports.maintomycommentlike = async (req, res) => {
       // 좋아요를 누르지 않은 상태인 경우, 레코드 추가
       await Comment_like.create({
         useridx: useridx,
-        commentid: commentid
+        commentid: commentid,
       });
 
       res.send({ result: true, likedCommentIds: [commentid] });
     }
   } catch (error) {
-    console.error('Error in handleCommentLike:', error);
-    res.status(500).send({ result: false, error: '서버 오류가 발생했습니다.' });
-    
+    console.error("Error in handleCommentLike:", error);
+    res.status(500).send({ result: false, error: "서버 오류가 발생했습니다." });
 
-// 서버 컨트롤러
-exports.getMyCommentLikeStatus = async (req, res) => {
-  const useridx = req.session.useridx;
+    // 서버 컨트롤러
+    exports.getMyCommentLikeStatus = async (req, res) => {
+      const useridx = req.session.useridx;
 
-  if (useridx) {
-    try {
-      const likedComments = await Comment_like.findAll({
-        attributes: ['commentid'],
-        where: { useridx },
-        raw: true,
-      });
+      if (useridx) {
+        try {
+          const likedComments = await Comment_like.findAll({
+            attributes: ["commentid"],
+            where: { useridx },
+            raw: true,
+          });
 
-      const likedCommentIds = likedComments.map(comment => comment.commentid);
-      res.send({ result: true, likedCommentIds });
-    } catch (error) {
-      console.error('좋아요 상태 가져오기 중 오류:', error);
-      res.send({ result: false, error: '좋아요 상태를 가져오는 중 오류가 발생했습니다.' });
-    }
-  } else {
-    res.send({ result: false, error: '로그인 후 이용가능한 기능입니다.' });
-
+          const likedCommentIds = likedComments.map((comment) => comment.commentid);
+          res.send({ result: true, likedCommentIds });
+        } catch (error) {
+          console.error("좋아요 상태 가져오기 중 오류:", error);
+          res.send({ result: false, error: "좋아요 상태를 가져오는 중 오류가 발생했습니다." });
+        }
+      } else {
+        res.send({ result: false, error: "로그인 후 이용가능한 기능입니다." });
+      }
+    };
   }
 };

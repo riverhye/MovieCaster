@@ -10,7 +10,7 @@
   <body>
     <div class="body">
       <div class="containerMain">
-        <div class="logoBox">Movie Caster</div>
+        <div class="logoBox"><img class="logoImg" src="../static/img/logo.png" onclick="goToMain()"></div>
         <div class="findidMsgBox">
           <h2>아이디 찾기</h2>
           <h4>회원가입에 사용한 이메일을 입력해 주세요.</h4>
@@ -32,29 +32,21 @@
         </button>
         <div class="findPw" onclick="location.href='/findPw'">비밀번호 찾기</div>
         <div class="logInBox">
-          <input
-            type="button"
-            value="로그인"
-            class="buttonLogin Btn"
-            onclick="location.href='/signin'"
-          />
-          <input
-            type="button"
-            value="회원가입"
-            class="buttonSubmit Btn"
-            onclick="location.href='/signup'"
-          />
+          <input type="button" value="로그인" class="buttonLogin Btn" onclick="location.href='/signin'" />
+          <input type="button" value="회원가입" class="buttonSubmit Btn" onclick="location.href='/signup'" />
         </div>
       </div>
     </div>
-    <footer>
-      <div class="footer">
-        <strong>주식회사</strong> 무비캐스터 <strong>대표</strong> 4FLEX 서울특별시 용산구 청파로
-        109(나진전자월드상가) 3층 <br />
-        <strong>사업자 등록 번호</strong> 595-95-0099 <br />
-        © 2023 by MovieCaster, Inc. All rights reserved. <br />
-      </div>
-    </footer>
+    <div class="footerBox">
+      <footer>
+        <div class="footer">
+          <strong>주식회사</strong> 무비캐스터 <strong>대표</strong> 4FLEX 서울특별시 용산구 청파로
+          109(나진전자월드상가) 3층 <br />
+          <strong>사업자 등록 번호</strong> 595-95-0099 <br />
+          © 2023 by MovieCaster, Inc. All rights reserved. <br />
+        </div>
+      </footer>
+    </div>
     <script>
       function FindId() {
         const form = document.forms['form_findId'];
@@ -77,6 +69,10 @@
             document.querySelector('.foundId').innerHTML = `등록되지 않은 이메일 입니다.`;
           }
         });
+      }
+
+      function goToMain() {
+        location.href = '/';
       }
     </script>
   </body>
