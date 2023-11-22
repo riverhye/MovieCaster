@@ -49,14 +49,12 @@
     <!--------------------------------- grid row1 end / row2 start ------------------------------------------->
     <div class="gridRow2 container">
       <div class="poster" id="poster_path"></div>
-      <div class="movieDetail">
-        <div class="MDsection1">
-          <div class="movieName MD" id="title"></div>
-          <div class="movieGenre MD" id="genre"></div>
-        </div>
-        <div class="MDsection2">
-          <div class="movieRelease_date MD" id="release_date"></div>
-        </div>
+      <div class="movieDetail1">
+        <div class="movieName MD" id="title"></div>
+        <div class="movieGenre MD" id="genre"></div>
+      </div>
+      <div class="movieDetail2">
+        <div class="movieRelease_date MD" id="release_date"></div>
       </div>
       <div class="summaries">
         <div class="movieOverview" id="overview"></div>
@@ -65,15 +63,12 @@
     <!--------------------------------- grid row2 end / row3 start ------------------------------------------->
     <div class="gridRow3 container">
       <div class="alikeMovies">
-        <div class="alikeMovie1"></div>
-        <div class="alikeMovie2"></div>
-        <div class="alikeMovie3"></div>
+        <div class="alikeMovieMsg">이 영화와 비슷한 영화</div>
         <% if (similarMovies.length > 0) { %>
-        <% console.log(similarMovies) %>
         <% for (let i = 0; i < Math.min(similarMovies.length, 3); i++) { %>
-        <div class="alikeMovie">
-          <img src="https://image.tmdb.org/t/p/w154<%= similarMovies[i].poster_path %>" alt="<%= similarMovies[i].title %> Poster">
-          <p><%= similarMovies[i].title %></p>
+        <div class="alikeMovie alikeMovie<%= i + 1 %>">
+          <img src="https://image.tmdb.org/t/p/w154<%= similarMovies[i].poster_path %>" onclick="move('<%= similarMovies[i].movieidx %>')" alt="<%= similarMovies[i].title %> Poster">
+          <div class="alikeMovieTitle"><%= similarMovies[i].title %></div>
         </div>
         <% } %>
         <% } else { %>
@@ -116,6 +111,7 @@
           rating: rating,
           description: reviewText,
         };
+        console.log(reviewData)
 
         axios({
             method: 'post',
@@ -124,6 +120,32 @@
           })
           .then((response) => {
             console.log('리뷰가 성공적으로 제출되었습니다:', response.data);
+
+            const newReview = response.data;
+            const newReviewData = response.data.newReview;
+            const rate = newReviewData.rate;
+            const description = newReviewData.description;
+            console.log('axios rate: ', rate)
+            console.log('axios desc: ', description)
+
+
+            const userReviewsContainer = document.querySelector('.userReviews');
+            const userReviews = document.querySelectorAll('.userReview');
+
+            const newReviewHTML = `
+              <div class="userReview new-review">
+              <span class="description">${description}</span>
+              <span class="rate">평점: ${rate}/5</span>
+              </div>
+              `;
+
+            userReviewsContainer.insertAdjacentHTML('afterbegin', newReviewHTML);
+
+            if (userReviews.length >= 5) {
+              const lastReview = userReviews[userReviews.length - 1];
+              lastReview.classList.add('old-review');
+              lastReview.remove();
+            }
           })
           .catch((error) => {
             console.error('리뷰 제출 중 오류 발생:', error);
@@ -131,7 +153,7 @@
       }
 
       document.addEventListener('DOMContentLoaded', () => {
-        const movieInfo = <%- JSON.stringify(movieInfo) %>; // 서버에서 전달한 movieInfo 데이터
+        const movieInfo = <%- JSON.stringify(movieInfo) %>;
 
         updateMovieInfo(movieInfo);
       });
@@ -143,6 +165,34 @@
         document.getElementById('release_date').innerHTML = `<strong>개봉일: </strong> ${movieInfo.release_date}`;
         document.getElementById('overview').innerHTML = `<strong>줄거리: </strong> ${movieInfo.overview}`;
       }
+    </script>
+    <!-- 새로운 상세페이지 이동 -->
+    <script>
+      function move(movieIdx) {
+        const detailPageURL = `/detail/${movieIdx}`;
+        console.log('selectedMovieIdx: ', movieIdx)
+        window.location.href = detailPageURL;
+      }
+    </script>
+    <script>
+      const alikeMovieImgs = document.querySelectorAll('.alikeMovie img');
+      const alikeMovieTitles = document.querySelectorAll('.alikeMovieTitle');
+
+      alikeMovieImgs.forEach(img => {
+        img.addEventListener('mouseenter', () => {
+          img.style.transform = 'scale(1.2)';
+          img.style.zIndex = '999';
+          img.nextElementSibling.style.fontWeight = '600';
+          img.nextElementSibling.style.transform = 'translateY(30px)';
+        });
+
+        img.addEventListener('mouseleave', () => {
+          img.style.transform = 'none';
+          img.style.zIndex = '1';
+          img.nextElementSibling.style.fontWeight = '400';
+          img.nextElementSibling.style.transform = 'none';
+        });
+      });
     </script>
   </body>
 </html>
