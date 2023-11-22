@@ -56,5 +56,13 @@ Comment.associate = (model) => {
     foreignKey: 'useridx',
     as: 'CommentUser',
   });
+
+
+  Comment.belongsTo(Movie_info, {
+    foreignKey: 'movieidx',
+    targetKey: 'movieidx',
+    as: 'CommentMovie', // 에일리어스 추가
+  });
+    
 };
 module.exports = Comment;

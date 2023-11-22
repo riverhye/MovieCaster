@@ -102,18 +102,19 @@
         <%- include('../footer') %>
         </div>
         <script>
-            function deleteMovie(movielikeidx) {
-                axios.delete(`/mypage/mymovielike/${movielikeidx}`)
-                    .then(response => {
-                        console.log(response.data);
-                        location.reload(); 
-                    })
-                    .catch(error => {
-                        console.error('Error deleting movie:', error.response);
-                    });
-            }
-
-        </script>
+        function deleteMovie(movielikeidx) {
+            // 수정: movieidx를 movielikeidx로 변경
+            axios.delete(`/mypage/mymovielike/${movielikeidx}`)
+                .then(response => {
+                    console.log(response.data);
+                    location.reload(); 
+                })
+                .catch(error => {
+                    console.error('Error deleting movie:', error);
+                    // Handle error
+                });
+        }
+    </script>
     </div>
 </body>
 </html>
