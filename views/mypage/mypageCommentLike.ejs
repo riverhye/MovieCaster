@@ -30,7 +30,11 @@
           <div class="col-3">
             <div class="p-3">
               <!-- 사용자 이미지 표시 부분 -->
-              <img src="/images/mypage/user.png" id="userImg" style="border-radius: 5px" />
+              <% if (user.img) { %>
+                <img src="../../<%= user.img %>" id="userImg" style="border-radius: 5px;"/>
+                <% } else { %>
+                <img src="/images/mypage/" id="userImg" style="border-radius: 5px;"/>
+                <% } %>
 
               <!-- 사용자 이름 표시 부분 -->
               <h5 id="userName"><%=user%> 님</h5>
@@ -64,7 +68,8 @@
               </div>
             </div>
             
-            <!-- 위시리스트 코멘트 정보 부분 -->
+            <!-- 코멘트 정보 부분 -->
+            
             <div class="col-9">
                 <div class="p-4">
                     <div style="display: flex; align-items: flex-start; margin-left: 10px; column-gap: 10px;">
@@ -76,8 +81,10 @@
                         </a>
                     </div> 
                     <div class="container text-center">
-                        <div class="row row-cols-3 row row-gap-3">
-                            <!-- 위시리스트 항목을 나타내는 부분 (동적 부분) -->
+                        <div class="row row-cols-2 row row-gap-5">
+                            <% if (data.length === 0) { %>
+                                <p>좋아요 누른 코멘트가 없어요❤️</p>
+                            <% } else { %>
                             <% for (let i = 0; i < data.length; i++) { %>
                             <!--card1-->
                             <div class="col" style="width: 900px;">
@@ -118,7 +125,9 @@
                                             <div class="row align-items-center g-1">
                                                 <div class="col-4">
                                                     <% if (data[i] && data[i].CommentMovie && data[i].CommentMovie.poster_path) { %>
-                                                        <img src="https://image.tmdb.org/t/p/w154<%= data[i].CommentMovie.poster_path %>" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
+                                                        <a href="/detail/<%= data[i].CommentMovie.movieidx %>">
+                                                            <img src="https://image.tmdb.org/t/p/w154<%= data[i].CommentMovie.poster_path %>" class="img-thumbnail rounded" style="max-width: 100px; max-height: 180px" alt="<%= data[i].CommentMovie.title %> Poster"/>
+                                                        </a>
                                                     <% } else { %>
                                                         <img src="/path/to/default/poster.jpg" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
                                                     <% } %>
@@ -135,19 +144,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-8" style="text-align: left">
-                              <% if (data[i] && data[i].description) { %>
-                              <p class="card-text"><%= data[i].description %></p>
-                              <% } else { %>
-                              <p class="card-text">좋아요 누른 코멘트가 없습니다.</p>
-                              <% } %>
-                            </div>
-                          </div>
+                            <% } %>
+                        <% } %>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <% } %>
+                  
                   <!-- Add more cards as needed -->
                 </div>
               </div>

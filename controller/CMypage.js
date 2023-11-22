@@ -344,3 +344,26 @@ exports.maintomycommentlike = (req, res) => {
     res.send({ result: false, error: '로그인 후 이용가능한 기능입니다.' });
   }
 };
+
+// 서버 컨트롤러
+exports.getMyCommentLikeStatus = async (req, res) => {
+  const useridx = req.session.useridx;
+
+  if (useridx) {
+    try {
+      const likedComments = await Comment_like.findAll({
+        attributes: ['commentid'],
+        where: { useridx },
+        raw: true,
+      });
+
+      const likedCommentIds = likedComments.map(comment => comment.commentid);
+      res.send({ result: true, likedCommentIds });
+    } catch (error) {
+      console.error('좋아요 상태 가져오기 중 오류:', error);
+      res.send({ result: false, error: '좋아요 상태를 가져오는 중 오류가 발생했습니다.' });
+    }
+  } else {
+    res.send({ result: false, error: '로그인 후 이용가능한 기능입니다.' });
+  }
+};
