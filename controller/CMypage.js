@@ -124,18 +124,27 @@ exports.mymovielike = async (req, res) => {
 exports.mycommentlike = async (req, res) => {
   try {
     const targetUserIdx = req.session.useridx;
+
+    // Comment_like 테이블에서 해당 사용자가 좋아요를 누른 코멘트 목록을 조회합니다.
     const likedComments = await Comment_like.findAll({
       where: { useridx: targetUserIdx },
     });
 
+    // 좋아요를 누른 코멘트들의 commentid를 추출하여 배열을 생성합니다.
     const commentIndices = likedComments.map((like) => like.commentid);
 
+    // Comment 테이블에서 commentIndices에 속하는 코멘트들을 조회하고, 작성자 정보와 영화 정보를 가져옵니다.
     const userLikedComments = await Comment.findAll({
       where: { commentid: commentIndices },
       include: [
         {
           model: User,
           attributes: ['useridx', 'nickname', 'email'],
+        },
+        {
+          model: Movie_info,
+          attributes: ['title', 'poster_path'],
+          as: 'CommentMovie', // 에일리어스 추가
         },
       ],
     });
@@ -150,10 +159,18 @@ exports.mycommentlike = async (req, res) => {
 //내가 작성한 코멘트 이동
 exports.mycomment = async (req, res) => {
   try {
-    // const targetUserIdx = 1;
     const targetUserIdx = req.session.useridx;
+    
+    // Comment 테이블에서 해당 사용자가 작성한 코멘트 목록을 조회합니다.
     const userComments = await Comment.findAll({
       where: { useridx: targetUserIdx },
+      include: [
+        {
+          model: Movie_info,
+          attributes: ['poster_path'],
+          as: 'CommentMovie', // Comment 모델과 Movie_info 모델 간의 에일리어스 일치
+        },
+      ],
     });
 
     res.render('mypage/mypageComment', { root: 'views', data: userComments });
@@ -197,22 +214,23 @@ exports.delete_user = async (req, res) => {
 //내가 좋아요 누른 영화 삭제하기
 exports.delete_movie_like = async (req, res) => {
   try {
-    // const targetUserIdx = 1; // 원하는 사용자의 ID로 수정
-    const targetUserIdx = req.session.useridx;
-    const movieLikeId = req.params.id; // 사용자가 좋아요 누른 영화의 ID
+      const targetUserIdx = req.session.useridx;
+      const movieLikeIdx = req.params.id;
 
-    // 먼저 Movie_like 테이블에서 해당 movieLikeId에 대한 레코드를 삭제합니다.
-    await Movie_like.destroy({
-      where: {
-        movieLikeIdx: movieLikeId,
-        useridx: targetUserIdx,
-      },
-    });
+      console.log('Target User Index:', targetUserIdx);
+      console.log('Movie Like Index:', movieLikeIdx);
 
-    res.send({ result: true });
+      await Movie_like.destroy({
+          where: {
+              movielikeidx: movieLikeIdx,
+              useridx: targetUserIdx,
+          },
+      });
+
+      res.send({ result: true });
   } catch (error) {
-    console.error('Error deleting movie like:', error);
-    res.status(500).send({ error: 'Internal Server Error' });
+      console.error('Error deleting movie like:', error);
+      res.status(500).send({ error: 'Internal Server Error' });
   }
 };
 

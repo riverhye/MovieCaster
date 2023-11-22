@@ -27,7 +27,8 @@
         <!--left-->
         <div class="col-3">
           <div class="p-3">
-            <img src="/images/mypage/user.png" id="userImg" style="border-radius: 5px" />
+            <!--디폴트 유저사진 넣고 싶은데 안 되네요,,-->
+            <img src="../img/mypage/default_user.jpg" id="userImg" style="border-radius: 5px" />
             <h5 id="userName"><%= nickname %> 님</h5>
             <div class="row" id="profileLeft">
               <div class="col mb-2">
@@ -97,7 +98,9 @@
                 <% for (let i = 0; i < data.length; i++) { %>
                   <input type="hidden" name="movieidx" id="movieidxInput" value="<%= data[i].movieidx %>" />
                   <img src="https://image.tmdb.org/t/p/w154<%= data[i].poster_path %>"
-                    alt="<%= data[i].title %> 포스터 이미지" id="movieImage" style="height: 200px; width: 150px" />
+                      alt="<%= data[i].title %> 포스터 이미지"
+                      id="movieImage"
+                      style="height: 200px; width: 150px; border-radius: 10px;" />
                   <input type="file" id="fileInput" name="movieImage" style="display: none" />
                 <% } %>
               </div>
