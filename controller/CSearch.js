@@ -141,7 +141,7 @@ exports.search_movie_result = (req, res) => {
                 movieInfo = [{ msg: '검색 결과가 없습니다.' }];
             }
 
-            res.json({movie: movieInfo, searchInput: req.query.input});
+            res.json({data: movieInfo, searchInput: req.query.input});
         
         })
     }

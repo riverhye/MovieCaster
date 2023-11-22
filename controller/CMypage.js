@@ -329,21 +329,46 @@ exports.delete_comment = async (req, res) => {
 };
 
 // 메인에서 전달한 데이터
-exports.maintomycommentlike = (req, res) => {
-  const { commentid } = req.body;
-  const useridx = req.session.useridx;
+exports.maintomycommentlike = async (req, res) => {
+  try {
+    const useridx = req.session.useridx;
+    const commentid = req.body.commentid;
 
-  if (useridx) {
-    Comment_like.create({
-      commentid,
-      useridx,
-    }).then(() => {
-      res.send({ result: true });
+    if (!useridx) {
+      return res.send({ result: false, error: '로그인 후 이용가능한 기능입니다.' });
+    }
+
+    // 해당 유저와 코멘트에 대한 레코드 조회
+    const userLikeComment = await Comment_like.findOne({
+      where: {
+        useridx: useridx,
+        commentid: commentid
+      }
     });
-  } else {
-    res.send({ result: false, error: '로그인 후 이용가능한 기능입니다.' });
-  }
-};
+
+    if (userLikeComment) {
+      // 이미 좋아요를 누른 상태인 경우, 레코드 삭제
+      await Comment_like.destroy({
+        where: {
+          useridx: useridx,
+          commentid: commentid
+        }
+      });
+
+      res.send({ result: true, likedCommentIds: [] });
+    } else {
+      // 좋아요를 누르지 않은 상태인 경우, 레코드 추가
+      await Comment_like.create({
+        useridx: useridx,
+        commentid: commentid
+      });
+
+      res.send({ result: true, likedCommentIds: [commentid] });
+    }
+  } catch (error) {
+    console.error('Error in handleCommentLike:', error);
+    res.status(500).send({ result: false, error: '서버 오류가 발생했습니다.' });
+    
 
 // 서버 컨트롤러
 exports.getMyCommentLikeStatus = async (req, res) => {
@@ -365,5 +390,6 @@ exports.getMyCommentLikeStatus = async (req, res) => {
     }
   } else {
     res.send({ result: false, error: '로그인 후 이용가능한 기능입니다.' });
+
   }
 };
