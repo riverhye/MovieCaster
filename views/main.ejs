@@ -67,10 +67,10 @@
                   <li class="comment-sm text-sm">
                     <span><%= data.sec2[i].description %></span>
                   </li>
-                  <span style="display: none;"><%= data.sec2[i].timestamp %></span>
                 </ul>
               </div>
             </div>
+            <input type="hidden" id="commentid" value="<%= data.sec2[i].commentid %>"/>
             <% } %>
           </div>
         </div>
@@ -127,6 +127,35 @@
     <%- include('./footer') %>
 
     <script>
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // 모든 하트 아이콘 선택
+  const heartIcons = document.querySelectorAll('.heart-icon');
+  const commentid = document.getElementById('commentid').value;
+
+  // 각각의 하트 아이콘에 대해 동작 정의
+  heartIcons.forEach(async (heartIcon, index) => {
+    
+    // 서버로부터 받은 정보를 확인
+    const response = await axios({
+      method: 'post',
+      url: '/mypage/mycommentlike',
+      data: {
+        commentid: commentid
+      }
+    });
+
+    // 서버로부터 받은 정보에 따라 클래스 조작
+    if (response.data.result) {
+      // 좋아요를 클릭한 상태일 때
+      // heartIcon.classList.add('heart-active');
+    } else {
+      // 좋아요를 클릭하지 않은 상태일 때
+      // heartIcon.classList.remove('heart-active');
+    }
+  });
+});
+
       // section 1 : 슬라이드 3초 주기 무한 반복
       document.addEventListener('DOMContentLoaded', () => {
         const boxOfficePosters = document.querySelectorAll('.box-office-poster img');
@@ -150,9 +179,30 @@
          }, 3000);
         });
 
-
-
         // section 2 : 코멘트 한 좋아요 - 마이페이지
+        // function clickLike(heart, commentid) {
+        //   axios({
+        //     method: 'post',
+        //     url: '/mypage/mycommentlike',
+        //     data: {
+        //       commentid: commentid
+        //     }
+        //   })
+        //   .then((res) => {
+        //     if(res.data.result) {
+        //       if (res.data.userLiked) {
+        //         heart.classList.add('heart-active');
+        //       }
+        //     else {
+        //       heart.classList.remove('heart-active');
+        //     }
+        //   } else {
+        //     alert(res.data.error)
+        //   }})
+        //   .catch(error => {
+        //     console.error(error);
+        //   });
+        // }
         function clickLike(heart, commentid) {
           axios({
             method: 'post',
@@ -162,20 +212,21 @@
             }
           })
           .then((res) => {
-            if(res.data.result) {
-              // console.log("마이페이지 전달 완료");
-              heart.classList.toggle('heart-active');
-              // heart-active 유지
+            if (res.data.result) {
+              if (res.data.likedCommentIds.includes(commentid)) {
+                heart.classList.add('heart-active');
+              } else {
+                heart.classList.remove('heart-active');
+              }
             } else {
-              alert(res.data.error)
+              alert(res.data.error);
             }
           })
           .catch(error => {
             console.error(error);
           });
-
         }
-    
+
         // section 3 : 평점 날씨 아이콘
         const rateIcons = document.querySelectorAll('.md-movie__rating');
         const dataSec3 = <%- JSON.stringify(data.sec3) %>;

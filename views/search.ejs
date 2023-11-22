@@ -17,43 +17,70 @@
                 <i class="fa-solid fa-magnifying-glass regular-icon search-icon" onclick="searchResult()"></i>
             </div>
                 <a href="/"><i class="fa-solid fa-xmark regular-icon close-icon"></i></a>
-            <div class="search__tag-group">
-                <button type="button" class="search__tag-btn" onclick="tag2000()"># 2000년대 대표 영화</button>
-                <button type="button" class="search__tag-btn" onclick="tagComedy()"># 배꼽 빠지게 웃긴 </button>
-                <button type="button" class="search__tag-btn" onclick="tagHorror()"># 카페인급 각성효과 </button>
-                <button type="button" class="search__tag-btn" onclick="tagDrama()"># 나만 아는 숨겨진 영화 </button>
-                <button type="button" class="search__tag-btn" onclick="tagThriller()"># 몰입 100% 스릴러!</button>
-            </div>
+
         </section>
     
         <section class="search-result__section hidden">
-            <h2 class="search-result__count"></h2>
+            <h2 class="search-result__count">
+                <span style="color: var(--blue-point-color);">검색 결과</span>
+                <span id="result__count">0</span>
+                <span style="color: var(--blue-point-color);">개</span>
+            </h2>
 
             <div class="search-result__list">
-                <div class="search-result"></div>
-                <% for (let i = 0; i<10; i++) { %>
-                    <div class="search-result__body">
-                        <div class="search-result__info">
-                            <div class="search-result__poster">
-                                <img src="" alt="" />
-                            </div>
-                            <h3 class="search-result__title"></h3>
-                        </div>
-                    </div>
-                <% } %>
+
+            </div>
+            <div class="search-result"></div>
+
         </section>
     </div>
     <%- include('./footer') %>
 
     <script>
-        const posterUrl = `https://image.tmdb.org/t/p/w200`;
+        const posterUrl = `https://image.tmdb.org/t/p/w184`;
         
         const searchInput = document.querySelector('.search-body__input');
         const searchCount = document.querySelector('.search-result__count');
-        const resultTitle = document.querySelectorAll('.search-result__title');
         const resultPosterBody = document.querySelectorAll('.search-result__poster');
         const resultPoster = document.querySelectorAll('.search-result__poster img');
         const failResult = document.querySelector('.search-result');
+
+        function searchResult() {
+            const resultSection =  document.querySelector('.search-result__list')
+
+            document.querySelector('.search-result__section').classList.remove("hidden")
+
+            axios({
+                method: 'get',
+                url: '/search/result',
+                params: {input: searchInput.value}
+            }).then((res) => {
+                const result = res.data;
+                console.log(result.data);
+                document.querySelector("#result__count").innerHTML = result.data[0].msg ? 0 : result.data.length;
+                
+                let html = "";
+                for(let i=0; i<result.data.length; i++) {
+                    if (result.data[0].msg) {
+                        failResult.textContent = result.data[0].msg;
+                    } else {
+                        const movie = result.data[i]
+                        html += `<div class="search-result__box">
+                            <div class="search-result__body" onclick="moveDetail(${movie.movieidx})">
+                                <div class="search-result__info">
+                                    <div class="search-result__poster">
+                                        <img src="https://image.tmdb.org/t/p/w154${movie.poster}" alt="${movie.title} 포스터 이미지" />
+                                    </div>
+                                    <h3 class="search-result__title">${movie.title}</h3>
+                                    </div>
+                                    </div>
+                        </div>`
+                    }
+                }
+
+                resultSection.innerHTML = html;
+            })
+        }
 
         // 초기화 설정
         function onSearch() {
@@ -71,110 +98,11 @@
                 poster.src = '';
         }}
 
-        // 검색 결과
-        function searchResult() {
-            // 결과 초기화
-            onSearch();
-            resetBgColor();
-
-            document.querySelector('.search-result__section').classList.remove('hidden');
-
-            axios({
-                method: 'get',
-                url: '/search/result',
-                params: {input: searchInput.value}
-            }).then((res) => {
-                const result = res.data;
-
-                for(let i=0; i<result.movie.length; i++) {
-                    if (result.movie.length > 0 && result.movie[i].count) {
-                        // 결과 초기화
-                        failResult.textContent = '';
-
-                        // 결과 개수
-                        const movie = result.movie[i];
-                        searchCount.innerHTML = 
-                            `<span style="color: var(--blue-point-color);">검색 결과</span>
-                            ${movie.count}<span style="color: var(--blue-point-color);">개</span>`;
-
-                        // 결과 title
-                        resultTitle[i].textContent = `${movie.title}`;
-
-                        // 결과 img(poster)
-                        const url = movie.poster;
-                        if (url) {
-                            resultPoster[i].src = `${posterUrl}${url}`;
-                        } else {
-                            resultPosterBody[i].style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
-                        }
-                        
-                    } else {
-                        failResult.textContent = result.movie[i].msg;
-                    }
-                }
-            })
+        function moveDetail (movieidx) {
+            const detailPageURL = `/detail/${movieidx}`;
+            console.log('selectedMovieIdx: ', movieidx)
+            window.location.href = detailPageURL;
         }
-
-
-        // 태그별 영화
-        function tag2000() {
-            handleTagSearch('/search/tag2000');
-        }
-
-        function tagComedy() {
-            handleTagSearch('/search/tagcomedy');
-        }
-
-        function tagHorror() {
-            handleTagSearch('/search/taghorror');
-        }
-
-        function tagDrama() {
-            handleTagSearch('/search/tagdrama');
-        }
-
-        function tagThriller() {
-            handleTagSearch('/search/tagthriller');
-        }
-
-        // 태그 공통 부분
-        function handleTagSearch(url) {
-            // 결과 초기화
-            onSearch();
-            failResult.textContent = '';
-
-            document.querySelector('.search-result__section').classList.remove('hidden');
-
-            // 배경색 초기화
-            resetBgColor();
-
-            axios({
-                method: 'get',
-                url: url,
-            }).then(result => {
-                const res = result.data;
-
-                if (res.data) {
-                    for (let i = 0; i < res.data.length; i++) {
-                        // 결과 title
-                        resultTitle[i].textContent = res.data[i].title;
-
-                        // 결과 img(poster)
-                        const url = res.data[i].poster_path
-                        const resultPoster = document.querySelectorAll('.search-result__poster img');
-                        resultPoster[i].src = `${posterUrl}${url}`;
-                    }
-                }
-            });
-        }
-
-        // 배경색 초기화 : 검색 결과 있음 -> 태그 클릭 영향 상쇄
-        function resetBgColor() {
-            for (const poster of resultPosterBody) {
-                poster.style.backgroundColor = '';
-            }
-        }
-
     </script>
 </body>
 </html>

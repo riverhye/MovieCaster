@@ -1,6 +1,7 @@
-const { Movie_info, User, Comment, Sequelize } = require('../model');
+const { Movie_info, User, Comment, Comment_like, Sequelize } = require('../model');
 const { Op } = require('sequelize');
 
+let useridx;
 // Main
 exports.main = async (req, res) => {
   try {
@@ -12,6 +13,8 @@ exports.main = async (req, res) => {
       order: [['release_date', 'DESC']],
       limit: 10,
     });
+
+    useridx = req.session.useridx;
 
     // section 2: 평점 높은 영화
     const topRatedMovies = await getTopRatedMovies();
@@ -98,7 +101,7 @@ async function getTopRatedMovies() {
     raw: true,
   });
 
-  const topRatedMovies = getMovieInfo.map((movie) => {
+  const tRatedMovies = getMovieInfo.map(async (movie) => {
     const movieDetails = additionalDetails.filter((detail) => detail.movieidx === movie.movieidx);
     const topDetail = movieDetails.reduce(
       (prev, current) => (prev.maxRate > current.maxRate ? prev : current),
@@ -110,15 +113,31 @@ async function getTopRatedMovies() {
     const commentids = descriptionDetails.filter((desc) => topDetail.commentIds.includes(desc.commentid));
     const commentid = commentids.length > 0 ? commentids[0].commentid : '';
 
+    let likedComment;
+
+    if (useridx) {
+      likedComment = await Comment_like.findOne({
+        where: {
+          useridx: useridx,
+          commentid: commentid
+        }
+      });
+    }
+
+    console.log("like C", likedComment == true)
+
     return {
       ...movie,
       CommentUser: {
         nickname: topDetail?.nicknames,
       },
       description: description,
-      commentid: commentid
+      commentid: commentid,
+      result: likedComment == true ? true : false
     };
   });
+
+  const topRatedMovies = await Promise.all(tRatedMovies);
 
   return topRatedMovies;
 }
