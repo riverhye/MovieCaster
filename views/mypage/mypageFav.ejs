@@ -45,7 +45,7 @@
             <h2 class="search-result__count">
                 <span style="color: var(--blue-point-color);">검색 결과</span>
                 <span id="result__count">0</span>
-                <span style="color: var(--blue-point-color);">개</span>;
+                <span style="color: var(--blue-point-color);">개</span>
             </h2>
 
             <div id="search_result_container">
@@ -83,12 +83,13 @@
                 let html = "";
                 for(let i=0; i<result.movie.length; i++) {
                     const movie = result.movie[i]
-                    console.log(movie)
                     html += `<div class="search-result__list">
                         <div class="search-result__body">
                             <div class="search-result__info">
                                 <div class="search-result__poster">
-                                    <img src="https://image.tmdb.org/t/p/w154${movie.poster}" alt="${movie.title} 포스터 이미지" />
+                                    <a href="/detail/${movie.movieidx}">
+                                        <img src="https://image.tmdb.org/t/p/w154${movie.poster}" alt="${movie.title} 포스터 이미지" />
+                                    </a>    
                                 </div>
                                 <h3 class="search-result__title"></h3>
                                 <a href="#" class="confirm-button" onclick="saveMovie(${movie.movieidx})">확인</a>

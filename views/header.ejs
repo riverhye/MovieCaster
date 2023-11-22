@@ -24,7 +24,11 @@
           <% } else { %>
           <a href="/signin"><div class="user-status">LogIn</div></a>
           <% } %>
-          <a href="/mypage"><i class="fa-solid fa-user user-icon"></i></a>
+          <% if (user) { %>
+            <a href="/mypage"><i class="fa-solid fa-user user-icon"></i></a>
+          <% } else { %>
+            <a href="/signin"><i class="fa-solid fa-user user-icon"></i></a>
+          <% } %>
         </div>
       </section>
     </header>

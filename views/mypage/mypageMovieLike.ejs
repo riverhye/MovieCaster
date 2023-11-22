@@ -66,9 +66,12 @@
                     </div> 
                     <div class="container text-center">
                         <div class="md-movie__list section__list">
+                            <% if (data.length === 0) { %>
+                                <p>좋아요 누른 영화가 없어요 🤩</p>
+                            <% } else { %>
                             <% for (let i = 0; i < data.length; i++) { %>
                             <div class="md-movie__body section__body">
-                                <div class="md-movie__poster" style="position: relative;">
+                                <div class="md-movie__poster" onclick="moveToMovieDetail('<%= data[i].movieidx %>')" style="cursor: pointer;">
                                     <div style="position: absolute; top: 0; right: 0; display: flex; justify-content: flex-end;">
                                         <button onclick="deleteMovie('<%= data[i].movielikeidx %>')" style="color: transparent; background-color: transparent; border: none;">
                                             <i class="fa-solid fa-times" style="color: red;"></i>
@@ -92,7 +95,8 @@
                                     </ul>
                                 </div>
                             </div>
-                                 <% } %>
+                            <% } %>
+                             <% } %>
                         </div>
                     </div>
                 </div>
@@ -108,6 +112,22 @@
                 .then(response => {
                     console.log(response.data);
                     location.reload(); 
+                })
+                .catch(error => {
+                    console.error('Error deleting movie:', error);
+                    // Handle error
+                });
+        }
+
+        function moveToMovieDetail(movieIdx) {
+            window.location.href = `/detail/${movieIdx}`;
+        }
+
+        function deleteMovie(movielikeidx) {
+            axios.delete(`/mypage/mymovielike/${movielikeidx}`)
+                .then(response => {
+                    console.log(response.data);
+                    location.reload();
                 })
                 .catch(error => {
                     console.error('Error deleting movie:', error);

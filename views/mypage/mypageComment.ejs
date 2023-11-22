@@ -56,8 +56,11 @@
             </div>
 
             <!-- right -->
-            <div class="col-6">
-                <div class="p-1">
+            <div class="col-9">
+                <div class="p-4">
+                    <% if (data.length === 0) { %>
+                        <p>작성한 코멘트가 없습니다😎</p>
+                    <% } else { %>
                     <% for (let i = 0; i < data.length; i++) { %>
                         <div class="row d-grid gap-3">
                             <div class="col-xl-12" id="cards">
@@ -77,7 +80,10 @@
                                             <div class="row align-items-center g-1">
                                                 <div class="col-3">
                                                     <% if (data[i].CommentMovie && data[i].CommentMovie.poster_path) { %>
-                                                        <img src="https://image.tmdb.org/t/p/w154<%= data[i].CommentMovie.poster_path %>" alt="영화 포스터" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
+                                                        <a href="/detail/<%= data[i].CommentMovie.movieidx %>">
+                                                            <img src="https://image.tmdb.org/t/p/w154<%= data[i].CommentMovie.poster_path %>" alt="영화 포스터" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
+                                                        </a>
+                                               
                                                     <% } else { %>
                                                         <img src="/path/to/default/poster.jpg" alt="기본 포스터" class="img-thumbnail rounded" style="max-width: 120px; max-height: 120px"/>
                                                     <% } %>
@@ -101,6 +107,7 @@
                                 </div>
                             </div>
                         </div>
+                        <% } %>
                     <% } %>
                 </div>
             </div>

@@ -96,12 +96,14 @@
               </div>
               <div id="imageContainer">
                 <% for (let i = 0; i < data.length; i++) { %>
-                  <input type="hidden" name="movieidx" id="movieidxInput" value="<%= data[i].movieidx %>" />
-                  <img src="https://image.tmdb.org/t/p/w154<%= data[i].poster_path %>"
-                      alt="<%= data[i].title %> 포스터 이미지"
-                      id="movieImage"
-                      style="height: 200px; width: 150px; border-radius: 10px;" />
-                  <input type="file" id="fileInput" name="movieImage" style="display: none" />
+                  <a href="/detail/<%= data[i].movieidx %>">
+                    <input type="hidden" name="movieidx" id="movieidxInput" value="<%= data[i].movieidx %>" />
+                    <img src="https://image.tmdb.org/t/p/w154<%= data[i].poster_path %>"
+                        alt="<%= data[i].title %> 포스터 이미지"
+                        id="movieImage"
+                        style="height: 200px; width: 150px; border-radius: 10px;" />
+                    <input type="file" id="fileInput" name="movieImage" style="display: none" />
+                  </a>
                 <% } %>
               </div>
               <div class="profileBtn" style="margin-bottom: 20px"></div>
