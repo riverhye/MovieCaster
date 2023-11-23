@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
@@ -10,80 +10,83 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>인생영화 등록</title>
     <style>
-        /* 버튼 스타일 */
-        .confirm-button {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            text-align: center;
-            text-decoration: none;
-            cursor: pointer;
-            color: #fff;
-            background-color: #007bff;
-            border: 1px solid #007bff;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
+      /* 버튼 스타일 */
+      .confirm-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        color: #fff;
+        background-color: #007bff;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
 
-        .confirm-button:hover {
-            background-color: #0056b3;
-        }
+      .confirm-button:hover {
+        background-color: #0056b3;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="search-container">
-        <section class="search__section">
-            <div class="search__body">
-                <input type="text" name="search" class="search-body__input" id="search" placeholder="검색할 영화를 입력하세요." />
-                <i class="fa-solid fa-magnifying-glass regular-icon search-icon" onclick="searchResult()"></i>
-            </div>
-                <a href="/mypage"><i class="fa-solid fa-xmark regular-icon close-icon"></i></a>
-        </section>
-    
-        <section class="search-result__section hidden">
-            <h2 class="search-result__count">
-                <span style="color: var(--blue-point-color);">검색 결과</span>
-                <span id="result__count">0</span>
-                <span style="color: var(--blue-point-color);">개</span>
-            </h2>
+      <section class="search__section">
+        <div class="search__body">
+          <input type="text" name="search" class="search-body__input" id="search" placeholder="검색할 영화를 입력하세요." />
+          <i class="fa-solid fa-magnifying-glass regular-icon search-icon" onclick="searchResult()"></i>
+        </div>
+        <a href="/mypage"><i class="fa-solid fa-xmark regular-icon close-icon"></i></a>
+      </section>
 
-            <div id="search_result_container">
+      <section class="search-result__section hidden">
+        <h2 class="search-result__count">
+          <span style="color: var(--blue-point-color);">검색 결과</span>
+          <span id="result__count">0</span>
+          <span style="color: var(--blue-point-color);">개</span>
+        </h2>
 
-            </div>
+        <div id="search_result_container">
 
-        </section>
+        </div>
+
+      </section>
     </div>
 
     <script>
-        const posterUrl = `https://image.tmdb.org/t/p/w200`;
-        
-        const searchInput = document.querySelector('.search-body__input');
-        const searchCount = document.querySelector('.search-result__count');
-        const resultTitle = document.querySelectorAll('.search-result__title');
-        const resultPosterBody = document.querySelectorAll('.search-result__poster');
-        const resultPoster = document.querySelectorAll('.search-result__poster img');
-        const failResult = document.querySelector('.search-result');
+      const posterUrl = `https://image.tmdb.org/t/p/w200`;
 
-        function searchResult() {
-            const resultSection =  document.querySelector('#search_result_container')
+      const searchInput = document.querySelector('.search-body__input');
+      const searchCount = document.querySelector('.search-result__count');
+      const resultTitle = document.querySelectorAll('.search-result__title');
+      const resultPosterBody = document.querySelectorAll('.search-result__poster');
+      const resultPoster = document.querySelectorAll('.search-result__poster img');
+      const failResult = document.querySelector('.search-result');
 
-            document.querySelector('.search-result__section').classList.remove("hidden")
+      function searchResult() {
+        const resultSection = document.querySelector('#search_result_container')
 
-            axios({
-                method: 'get',
-                url: '/search/result',
-                params: {input: searchInput.value}
-            }).then((res) => {
-                const result = res.data;
-                console.log(result);
-                console.log(document.querySelector("#result__count"))
-                document.querySelector("#result__count").innerHTML = result.movie[0].count
-                
-                let html = "";
-                for(let i=0; i<result.movie.length; i++) {
-                    const movie = result.movie[i]
-                    html += `<div class="search-result__list">
+        document.querySelector('.search-result__section').classList.remove("hidden")
+
+        axios({
+          method: 'get',
+          url: '/search/result',
+          params: {
+            input: searchInput.value
+          }
+        }).then((res) => {
+          const result = res.data;
+          console.log(result);
+          console.log(document.querySelector("#result__count"))
+          console.log('result', result.movie)
+          document.querySelector("#result__count").innerHTML = result.data[0].count
+
+          let html = "";
+          for (let i = 0; i < result.data.length; i++) {
+            const movie = result.data[i]
+            html += `<div class="search-result__list">
                         <div class="search-result__body">
                             <div class="search-result__info">
                                 <div class="search-result__poster">
@@ -96,69 +99,70 @@
                             </div>
                         </div>
                     </div>`
-                }
+          }
 
-                resultSection.innerHTML = html;
-            })
-        }
+          resultSection.innerHTML = html;
+        })
+      }
 
-        // 태그 공통 부분
-        function handleTagSearch(url) {
-            // 결과 초기화
-            onSearch();
-            failResult.textContent = '';
+      // 태그 공통 부분
+      function handleTagSearch(url) {
+        // 결과 초기화
+        onSearch();
+        failResult.textContent = '';
 
-            document.querySelector('.search-result__section').classList.remove('hidden');
+        document.querySelector('.search-result__section').classList.remove('hidden');
 
-            // 배경색 초기화
-            resetBgColor();
+        // 배경색 초기화
+        resetBgColor();
 
-            axios({
-                method: 'get',
-                url: url,
-            }).then(result => {
-                const res = result.data;
+        axios({
+          method: 'get',
+          url: url,
+        }).then(result => {
+          const res = result.data;
 
-                if (res.data) {
-                    for (let i = 0; i < res.data.length; i++) {
-                        // 결과 title
-                        resultTitle[i].textContent = res.data[i].title;
+          if (res.data) {
+            for (let i = 0; i < res.data.length; i++) {
+              // 결과 title
+              resultTitle[i].textContent = res.data[i].title;
 
-                        // 결과 img(poster)
-                        const url = res.data[i].poster_path
-                        const resultPoster = document.querySelectorAll('.search-result__poster img');
-                        resultPoster[i].src = `${posterUrl}${url}`;
-                    }
-                }
-            });
-        }
-
-        // 배경색 초기화 : 검색 결과 있음 -> 태그 클릭 영향 상쇄
-        function resetBgColor() {
-            for (const poster of resultPosterBody) {
-                poster.style.backgroundColor = '';
+              // 결과 img(poster)
+              const url = res.data[i].poster_path
+              const resultPoster = document.querySelectorAll('.search-result__poster img');
+              resultPoster[i].src = `${posterUrl}${url}`;
             }
+          }
+        });
+      }
+
+      // 배경색 초기화 : 검색 결과 있음 -> 태그 클릭 영향 상쇄
+      function resetBgColor() {
+        for (const poster of resultPosterBody) {
+          poster.style.backgroundColor = '';
         }
+      }
 
 
-        // 확인 버튼을 눌렀을 때 호출되는 함수
-        function saveMovie(movieidx) {
-            // Axios를 사용하여 서버에 POST 요청을 보냄
-            axios({
-                method: 'post',
-                url: '/mypage/myfav/add',
-                data: { movieidx: movieidx }  // 저장할 영화의 제목을 서버에 전달
-            })
-            .then((response) => {
-                console.log('영화가 성공적으로 저장되었습니다:', response.data);
-                // 저장 성공 시 사용자에게 메시지 또는 다른 동작 수행
-            })
-            .catch((error) => {
-                console.error('영화 저장 중 오류 발생:', error);
-                // 오류 처리
-            });
-        }
-
+      // 확인 버튼을 눌렀을 때 호출되는 함수
+      function saveMovie(movieidx) {
+        // Axios를 사용하여 서버에 POST 요청을 보냄
+        axios({
+            method: 'post',
+            url: '/mypage/myfav/add',
+            data: {
+              movieidx: movieidx
+            } // 저장할 영화의 제목을 서버에 전달
+          })
+          .then((response) => {
+            console.log('영화가 성공적으로 저장되었습니다:', response.data);
+            // 저장 성공 시 사용자에게 메시지 또는 다른 동작 수행
+          })
+          .catch((error) => {
+            console.error('영화 저장 중 오류 발생:', error);
+            // 오류 처리
+          });
+      }
     </script>
-</body>
+  </body>
 </html>
