@@ -113,18 +113,6 @@ async function getTopRatedMovies() {
     const commentids = descriptionDetails.filter((desc) => topDetail.commentIds.includes(desc.commentid));
     const commentid = commentids.length > 0 ? commentids[0].commentid : '';
 
-    let likedComment;
-
-    if (useridx) {
-      likedComment = await Comment_like.findOne({
-        where: {
-          useridx: useridx,
-          commentid: commentid
-        }
-      });
-    }
-
-    console.log("like C", likedComment == true)
 
     return {
       ...movie,
@@ -133,7 +121,6 @@ async function getTopRatedMovies() {
       },
       description: description,
       commentid: commentid,
-      result: likedComment == true ? true : false
     };
   });
 
