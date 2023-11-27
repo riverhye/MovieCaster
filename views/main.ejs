@@ -13,12 +13,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <link rel="stylesheet" href="../static/css/main.css" />
-    <link rel="stylesheet" href="../static/css/header.css" />
-    <link rel="stylesheet" href="../static/css/footer.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
-
     <%- include('./header') %>
 
       <section class="box-office-section">
@@ -57,7 +54,7 @@
                 <ul>
                   <li class="text-sm">
                     <span class="nickname-sm"><%= data.sec2[i].CommentUser.nickname %></span>
-                    <i class="fa-solid fa-heart heart-icon" 
+                    <i class="fa-solid fa-heart heart-icon"
                       onclick="clickLike(this, '<%=data.sec2[i].commentid%>')">
                     </i>
                   </li>
@@ -70,7 +67,7 @@
                 </ul>
               </div>
             </div>
-            <input type="hidden" id="commentid" value="<%= data.sec2[i].commentid %>"/>
+            <input type="hidden" class="commentid" value="<%=data.sec2[i].commentid%>" />
             <% } %>
           </div>
         </div>
@@ -127,143 +124,121 @@
     <%- include('./footer') %>
 
     <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+        // // 좋아요 초기 로직
+        // const heartIcons = document.querySelectorAll('.heart-icon');
+        // const commentIds = document.querySelectorAll('.commentid');
 
-document.addEventListener('DOMContentLoaded', async () => {
-  // 모든 하트 아이콘 선택
-  const heartIcons = document.querySelectorAll('.heart-icon');
-  const commentid = document.getElementById('commentid').value;
+        // const likedCommentIdsGroups = await Promise.all(
+        //   Array.from(commentIds).map(async (el) => {
+        //     const response = await axios({
+        //       method: 'post',
+        //       url: '/mypage/mycommentlike',
+        //       data: {
+        //         commentid: el.value,
+        //         reClick: false,
+        //       },
+        //     });
 
-  // 각각의 하트 아이콘에 대해 동작 정의
-  heartIcons.forEach(async (heartIcon, index) => {
-    
-    // 서버로부터 받은 정보를 확인
-    const response = await axios({
-      method: 'post',
-      url: '/mypage/mycommentlike',
-      data: {
-        commentid: commentid
-      }
-    });
+        //     const data = response.data;
+        //     return data.result ? data.likedCommentIds : null;
+        //   })
+        // );
 
-    // 서버로부터 받은 정보에 따라 클래스 조작
-    if (response.data.result) {
-      // 좋아요를 클릭한 상태일 때
-      // heartIcon.classList.add('heart-active');
-    } else {
-      // 좋아요를 클릭하지 않은 상태일 때
-      // heartIcon.classList.remove('heart-active');
-    }
-  });
-});
+        // // 유저가 좋아요를 누른 코멘트에 대해 heart-active 클래스 추가
+        // likedCommentIdsGroups.forEach((likedCommentIds, groupIndex) => {
+        //   if (likedCommentIds !== null) {
+        //     likedCommentIds.forEach((likedId) => {
+        //       const iconIndex = Array.from(commentIds).findIndex(
+        //         (idElement) => idElement.value == likedId
+        //       );
 
-      // section 1 : 슬라이드 3초 주기 무한 반복
-      document.addEventListener('DOMContentLoaded', () => {
+        //       if (iconIndex !== -1) {
+        //         heartIcons[iconIndex].classList.add('heart-active');
+        //       }
+        //     });
+        //   }
+        // });
+
+      
+        // section 1 : 슬라이드 3초 주기 무한 반복
         const boxOfficePosters = document.querySelectorAll('.box-office-poster img');
         const ranking = document.querySelectorAll('.box-office-rank');
         
         const data = <%- JSON.stringify(data.sec1) %>;
         let currentIdx = 0;
-    
+
         setInterval(() => {
           if (data && data.length > 0) {
             currentIdx = currentIdx % data.length;
-    
+
             for (let i = 0; i < boxOfficePosters.length; i++) {
               const posterPath = data[currentIdx].poster_path;
-    
+
               boxOfficePosters[i].src = `https://image.tmdb.org/t/p/w154/${posterPath}`;
               ranking[i].innerHTML = `${(currentIdx % data.length) + 1}`;
               currentIdx++;
             }
           }
-         }, 3000);
-        });
+      }, 3000);
 
-        // section 2 : 코멘트 한 좋아요 - 마이페이지
-        // function clickLike(heart, commentid) {
-        //   axios({
-        //     method: 'post',
-        //     url: '/mypage/mycommentlike',
-        //     data: {
-        //       commentid: commentid
-        //     }
-        //   })
-        //   .then((res) => {
-        //     if(res.data.result) {
-        //       if (res.data.userLiked) {
-        //         heart.classList.add('heart-active');
-        //       }
-        //     else {
-        //       heart.classList.remove('heart-active');
-        //     }
-        //   } else {
-        //     alert(res.data.error)
-        //   }})
-        //   .catch(error => {
-        //     console.error(error);
-        //   });
-        // }
+        // section 3 : 평점 날씨 아이콘
+        const rateIcons = document.querySelectorAll('.md-movie__rating');
+        const dataSec3 = <%- JSON.stringify(data.sec3) %>;
+        for (let i = 0; i < 10; i++) {
+          const movieData = dataSec3[i].averageRate;
+      
+          const iconElement = document.createElement('i');
+      
+          if (movieData >= 2.5 && movieData < 4) {
+            iconElement.className = 'bi bi-cloud-sun weather-icon';
+            iconElement.setAttribute('data-index', i);
+          } else if (movieData < 2.5) {
+            iconElement.className = 'bi bi-cloud-rain rain-icon weather-icon';
+            iconElement.setAttribute('data-index', i);
+          }
+      
+          iconElement.setAttribute('data-index', i);
+      
+          // 아이콘 적용
+          if (rateIcons[i]) {
+            // 제대로 선택했나 확인
+            if (rateIcons[i].hasChildNodes()) {
+              rateIcons[i].insertBefore(iconElement, rateIcons[i].firstChild);
+            } else {
+              rateIcons[i].appendChild(iconElement);
+            }
+      
+          } else {
+            console.error(`rateIcons[${i}] is undefined.`);
+          }
+        }
+    });
+
+        // 좋아요 클릭 시
         function clickLike(heart, commentid) {
+          const isLiked = heart.classList.contains('heart-active');
+          const heartIcons = document.querySelectorAll('.heart-icon'); // twice
+
           axios({
             method: 'post',
             url: '/mypage/mycommentlike',
             data: {
-              commentid: commentid
+              commentid: commentid,
+              reClick: isLiked
             }
           })
           .then((res) => {
             if (res.data.result) {
-              if (res.data.likedCommentIds.includes(commentid)) {
-                heart.classList.add('heart-active');
-              } else {
-                heart.classList.remove('heart-active');
-              }
+              heart.classList.toggle('heart-active');
             } else {
               alert(res.data.error);
             }
           })
           .catch(error => {
-            console.error(error);
+            console.error('좋아요 클릭 err : ', error);
           });
         }
-
-        // section 3 : 평점 날씨 아이콘
-        const rateIcons = document.querySelectorAll('.md-movie__rating');
-        const dataSec3 = <%- JSON.stringify(data.sec3) %>;
-        
-        document.addEventListener('DOMContentLoaded', () => {
-          for (let i = 0; i < 10; i++) {
-            const movieData = dataSec3[i].averageRate;
-        
-            const iconElement = document.createElement('i');
-        
-            if (movieData >= 4.0) {
-              iconElement.className = 'bi bi-brightness-high sun-icon weather-icon';
-              iconElement.setAttribute('data-index', i);
-            } else if (movieData >= 3.0) {
-              iconElement.className = 'bi bi-cloud-sun weather-icon';
-              iconElement.setAttribute('data-index', i);
-            } else {
-              iconElement.className = 'bi bi-cloud-rain rain-icon weather-icon';
-              iconElement.setAttribute('data-index', i);
-            }
-        
-            iconElement.setAttribute('data-index', i);
-        
-            // 아이콘 적용
-            if (rateIcons[i]) {
-              // 제대로 선택했나 확인
-              if (rateIcons[i].hasChildNodes()) {
-                rateIcons[i].insertBefore(iconElement, rateIcons[i].firstChild);
-              } else {
-                rateIcons[i].appendChild(iconElement);
-              }
-        
-            } else {
-              console.error(`rateIcons[${i}] is undefined.`);
-            }
-          }
-        });
     </script>
 
     <!-- swiper.js CDN -->
@@ -278,15 +253,43 @@ document.addEventListener('DOMContentLoaded', async () => {
           prevEl: '.swiper-button-prev',
           nextEl: '.swiper-button-next',
         },
+        breakpoints: {
+          640: {
+          slidesPerView: 2,
+          spaceBetween: 2,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 3,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 5,
+        },
+        }
       });
 
       const mdSwiper = new Swiper('.md-section-swiper', {
         slidesPerView: 5,
-        spaceBetween: 20,
+        spaceBetween: 3,
         navigation: {
           prevEl: '.swiper-button-prev__bt',
           nextEl: '.swiper-button-next__bt',
         },
+        breakpoints: {
+          640: {
+          slidesPerView: 2,
+          spaceBetween: 2,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 3,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 5,
+        },
+        }
       });
     </script>
 
