@@ -5,8 +5,8 @@ const api = require("../controller/CGetMovies");
 
 router.get("/", controller.main);
 
-router.get("/header", controller.header);
-router.get("/footer", controller.footer);
+// router.get("/header", controller.header);
+// router.get("/footer", controller.footer);
 
 router.get("/saveMovies", api.get_api_movies);
 

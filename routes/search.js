@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require('express');
 const searchRouter = express.Router();
-const controller = require("../controller/CSearch");
+const controller = require('../controller/CSearch');
 
 searchRouter.get('/', controller.search_movie);
 

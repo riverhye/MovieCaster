@@ -1,9 +1,8 @@
 const { User } = require('./User');
 
-
 function Comment(Sequelize, DataTypes) {
   return Sequelize.define(
-    "Comment",
+    'Comment',
 
     {
       commentid: {
@@ -33,11 +32,11 @@ function Comment(Sequelize, DataTypes) {
       },
       timestamp: {
         type: DataTypes.DATE,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
     },
     {
-      tableName: "Comment",
+      tableName: 'Comment',
       freezeTableName: true,
       timestamps: false,
     }
@@ -47,7 +46,6 @@ Comment.associate = (model) => {
   Comment.hasMany(model.Comment_like, {
     foreignKey: 'commentid',
     onDelete: 'CASCADE', // 이 부분이 cascade deletion을 활성화합니다
-
   });
 };
 
@@ -57,12 +55,10 @@ Comment.associate = (model) => {
     as: 'CommentUser',
   });
 
-
   Comment.belongsTo(Movie_info, {
     foreignKey: 'movieidx',
     targetKey: 'movieidx',
     as: 'CommentMovie', // 에일리어스 추가
   });
-    
 };
 module.exports = Comment;

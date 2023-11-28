@@ -1,104 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MovieCaster - Search</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="stylesheet" href="../static/css/search.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/search.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="search-container">
-        <section class="search__section">
-            <div class="search__body">
-                <input type="text" name="search" class="search-body__input" id="search" placeholder="검색할 영화를 입력하세요." />
-                <i class="fa-solid fa-magnifying-glass regular-icon search-icon" onclick="searchResult()"></i>
-            </div>
-                <a href="/"><i class="fa-solid fa-xmark regular-icon close-icon"></i></a>
-        </section>
-    
-        <section class="search-result__section hidden">
-            <h2 class="search-result__count">
-                <span style="color: var(--blue-point-color);">검색 결과</span>
-                <span id="result__count">0</span>
-                <span style="color: var(--blue-point-color);">개</span>
-            </h2>
+      <section class="search__section">
+        <div class="search__body">
+          <input
+            type="text"
+            name="search"
+            class="search-body__input"
+            id="search"
+            placeholder="검색할 영화를 입력하세요."
+          />
+          <i
+            class="fa-solid fa-magnifying-glass regular-icon search-icon"
+            onclick="searchResult()"
+          ></i>
+        </div>
+        <a href="/"
+          ><i class="fa-solid fa-xmark regular-icon close-icon"></i
+        ></a>
+      </section>
 
-            <div class="search-result__list">
+      <section class="search-result__section hidden">
+        <h2 class="search-result__count">
+          <span style="color: var(--blue-point-color)">검색 결과</span>
+          <span id="result__count">0</span>
+          <span style="color: var(--blue-point-color)">개</span>
+        </h2>
 
-            </div>
-            <div class="search-result"></div>
-
-        </section>
+        <div class="search-result"></div>
+        <div class="search-result__list"></div>
+      </section>
     </div>
     <%- include('./footer') %>
 
     <script>
-        const posterUrl = `https://image.tmdb.org/t/p/w184`;
-        
-        const searchInput = document.querySelector('.search-body__input');
-        const searchCount = document.querySelector('.search-result__count');
-        const resultPosterBody = document.querySelectorAll('.search-result__poster');
-        const resultPoster = document.querySelectorAll('.search-result__poster img');
-        const failResult = document.querySelector('.search-result');
+      const posterUrl = `https://image.tmdb.org/t/p/w184`;
 
-        function searchResult() {
-            const resultSection =  document.querySelector('.search-result__list')
+      const searchInput = document.querySelector('.search-body__input');
+      const searchCount = document.querySelector('.search-result__count');
+      const resultPosterBody = document.querySelectorAll(
+        '.search-result__poster'
+      );
+      const resultPoster = document.querySelectorAll(
+        '.search-result__poster img'
+      );
+      const failResult = document.querySelector('.search-result');
 
-            document.querySelector('.search-result__section').classList.remove("hidden")
+      function searchResult() {
+        failResult.innerHTML = '';
+        const resultSection = document.querySelector('.search-result__list');
 
-            axios({
-                method: 'get',
-                url: '/search/result',
-                params: {input: searchInput.value}
-            }).then((res) => {
-                const result = res.data;
-                console.log(result.data);
-                document.querySelector("#result__count").innerHTML = result.data[0].msg ? 0 : result.data.length;
-                
-                let html = "";
-                for(let i=0; i<result.data.length; i++) {
-                    if (result.data[0].msg) {
-                        failResult.textContent = result.data[0].msg;
-                    } else {
-                        const movie = result.data[i]
-                        html += `<div class="search-result__body" onclick="moveDetail(${movie.movieidx})">
+        document
+          .querySelector('.search-result__section')
+          .classList.remove('hidden');
+
+        axios({
+          method: 'get',
+          url: '/search/result',
+          params: { input: searchInput.value },
+        }).then((res) => {
+          const result = res.data;
+          document.querySelector('#result__count').innerHTML = result.data[0]
+            .msg
+            ? 0
+            : result.data.length;
+
+          let html = '';
+          for (let i = 0; i < result.data.length; i++) {
+            if (result.data[0].msg) {
+              failResult.textContent = result.data[0].msg;
+            } else {
+              const movie = result.data[i];
+              html += `<div class="search-result__body" onclick="moveDetail(${movie.movieidx})">
                                 <div class="search-result__info">
                                     <div class="search-result__poster">
                                         <img src="https://image.tmdb.org/t/p/w154${movie.poster}" alt="${movie.title} 포스터 이미지" />
                                     </div>
                                     <h3 class="search-result__title">${movie.title}</h3>
                                     </div>
-                                    </div>`
-                    }
-                }
-
-                resultSection.innerHTML = html;
-            })
-        }
-
-        // 초기화 설정
-        function onSearch() {
-            // 카운트 초기화
-            searchCount.innerHTML = '';
-
-            // 타이틀 초기화
-            const resultTitleArr = Array.from(resultTitle);
-            for (const title of resultTitleArr) {
-                title.innerHTML = '';
+                                    </div>`;
             }
+          }
 
-            // 포스터 초기화
-            for (const poster of resultPoster) {
-                poster.src = '';
-        }}
-
-        function moveDetail (movieidx) {
-            const detailPageURL = `/detail/${movieidx}`;
-            console.log('selectedMovieIdx: ', movieidx)
-            window.location.href = detailPageURL;
-        }
+          resultSection.innerHTML = html;
+        });
+      }
     </script>
-</body>
+  </body>
 </html>
