@@ -2,58 +2,58 @@
 
 /* 전체 */
 body {
-    width: 100vw;
+  width: 100vw;
 }
 
 /* 로고 section */
 .logo-section {
-    width: 100%;
-    height: 130px;
-    padding-left: 200px;
-    background-color: white;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    position: fixed;
-    max-width: 2500px;
-    z-index: 9;
-    transition: all 0.3s linear;
-    overflow: hidden;
+  width: 100%;
+  height: 130px;
+  padding-left: 200px;
+  background-color: white;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  position: fixed;
+  max-width: 2500px;
+  z-index: 9;
+  transition: all 0.3s linear;
+  overflow: hidden;
 }
 
 .logo {
-    margin-left: 300px;
-    width: 100px;
-    height: 100px;
-    cursor: pointer;
-    transition: all 0.3s linear;
+  margin-left: 300px;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  transition: all 0.3s linear;
 }
 
 .icon-group {
-    display: flex;
-    align-items: center;
-    margin-right: 500px;
-    padding: 0 50px;
-    justify-content: space-around;
-    position: relative;
-    transition: all 0.3s linear;
+  display: flex;
+  align-items: center;
+  margin-right: 500px;
+  padding: 0 50px;
+  justify-content: space-around;
+  position: relative;
+  transition: all 0.3s linear;
 }
 
 .logo > img {
-    width: 150px;
-    height: 100px;
-    transition: all 0.3s linear;
+  width: 150px;
+  height: 100px;
+  transition: all 0.3s linear;
 }
 
 /* 아이콘 */
 .search-icon,
 .user-icon {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .user-status {
-    margin: 0 40px;
-    font-size: 23px;
+  margin: 0 40px;
+  font-size: 23px;
 }
 
 /* @media screen and (max-width: 785px) {
@@ -62,53 +62,51 @@ body {
 } */
 
 @media screen and (max-width: 785px) {
-    .logo-section {
-        height: 80px;
-        padding-left: 0px;
-        max-width: 785px;
-    }
-    
-    .logo {
-        margin-left: -100px;
-        width: 100px;
-        height: 80px;
-    }
+  .logo-section {
+    height: 80px;
+    padding-left: 0px;
+    max-width: 785px;
+  }
 
-    .logo > img {
-        width: 100px;
-        height: 80px;
-    }
-    
-    .icon-group {
-        padding: 0 20px;
-        margin-right: -100px;
-        justify-content: flex-start;
+  .logo {
+    margin-left: -100px;
+    width: 100px;
+    height: 80px;
+  }
 
-    }
+  .logo > img {
+    width: 100px;
+    height: 80px;
+  }
 
-    .user-icon,
-    .user-status,
-    .search-icon {
-        font-size: 25px;
-    }
+  .icon-group {
+    padding: 0 20px;
+    margin-right: -100px;
+    justify-content: flex-start;
+  }
+
+  .user-icon,
+  .user-status,
+  .search-icon {
+    font-size: 25px;
+  }
 }
 
 @media screen and (min-width: 785px) and (max-width: 1440px) {
-    .logo-section {
-        padding-bottom: 10px;
-        height: 100px;
-        padding-left: 500px;
-        max-width: 1440px;
-    }
+  .logo-section {
+    padding-bottom: 10px;
+    height: 100px;
+    padding-left: 500px;
+    max-width: 1440px;
+  }
 
-    .logo {
-        margin-left: 0px;
-        width: 90px;
-        height: 90px;
-    }
+  .logo {
+    margin-left: 0px;
+    width: 90px;
+    height: 90px;
+  }
 
-    .icon-group {
-        margin-left: 300px;
-    }
+  .icon-group {
+    margin-left: 300px;
+  }
 }
-

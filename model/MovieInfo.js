@@ -1,6 +1,6 @@
 function Movie_info(Sequelize, DataTypes) {
   return Sequelize.define(
-    "Movie_info",
+    'Movie_info',
     {
       movieidx: {
         type: DataTypes.INTEGER,
@@ -14,7 +14,7 @@ function Movie_info(Sequelize, DataTypes) {
       },
       overview: {
         type: DataTypes.STRING(4000),
-        defaultValue: "정보 없음",
+        defaultValue: '정보 없음',
       },
       release_date: {
         type: DataTypes.STRING(50),
@@ -22,19 +22,19 @@ function Movie_info(Sequelize, DataTypes) {
       },
       poster_path: {
         type: DataTypes.STRING(255),
-        defaultValue: "url 없음",
+        defaultValue: 'url 없음',
       },
       genre_ids: {
         type: DataTypes.STRING(50),
-        default: "정보 없음",
+        default: '정보 없음',
       },
       genre: {
         type: DataTypes.STRING(50),
-        defaultValue: "정보 없음",
+        defaultValue: '정보 없음',
       },
     },
     {
-      tableName: "Movie_info",
+      tableName: 'Movie_info',
       freezeTableName: true,
       timestamps: false,
     }
