@@ -17,8 +17,8 @@
 
   <body>
     <%- include('../header') %>
-   <!-- Mypage_Profile -->
-   <div style="padding-top: 20px;"> 
+    
+   <div style="padding-top: 80px;"> 
     <div class="container overflow-hidden text-center" id="MyPage_Profile" style="margin-top: 70px;">
       <div class="title">
         <p>My Page</p>
@@ -122,13 +122,12 @@
               </div>
               <!-- 톱니바퀴 누르면 버튼 뜨게 구현!-->
               <div class="exit">
-                <!-- <a href="/mypage/mypageProfile/delete" style="color: #a7d4f9">회원탈퇴</a> -->
                 <button type="button" id="deleteUser" style="color: #000000">회원탈퇴</button>
               </div>
             </form>
           </div>
           
-      <!-- footer.html -->
+
       <%- include('../footer') %>
 </div>
       <script>
@@ -172,7 +171,7 @@
             url: '/mypage/mypage/update',
             data: formData,
             headers: {
-              'Content-Type': 'multipart/form-data', // 이 헤더가 설정되어야 합니다.
+              'Content-Type': 'multipart/form-data', 
             },
           })
             .then((res) => {
