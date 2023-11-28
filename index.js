@@ -58,11 +58,9 @@ app.use('/findid', findidRouter);
 const findpwRouter = require('./routes/findpw');
 app.use('/findpw', findpwRouter);
 
-/*
 app.get("*", function(req, res){
     res.render("404");
 })
-*/
 
 app.listen(PORT, function () {
   console.log(`Server Open! 서버 주소: http://localhost:${PORT}`);
