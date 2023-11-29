@@ -57,7 +57,7 @@ header {
   height: 30px;
   width: 100%;
 }
-input[type="text"] {
+input[type='text'] {
   height: 40px;
   width: 900px;
   font-size: 18px;
@@ -93,7 +93,7 @@ input[type="text"] {
 #myform fieldset legend {
   text-align: right;
 }
-#myform input[type="radio"] {
+#myform input[type='radio'] {
   display: none;
 }
 #myform label {
@@ -108,7 +108,7 @@ input[type="text"] {
 #myform label:hover ~ label {
   text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
-#myform input[type="radio"]:checked ~ label {
+#myform input[type='radio']:checked ~ label {
   text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
 span.text-bold {
@@ -235,3 +235,43 @@ span.text-bold {
   width: 980px;
   transition: transform 0.5s ease;
 }
+
+.bi-heart-fill {
+  color: white;
+  position: relative;
+  left: 150px;
+  bottom: 230px;
+  width: 1.8em;
+  height: 1.8em;
+  animation: heartColorChange 3s infinite alternate;
+}
+@keyframes heartColorChange {
+  0% {
+    color: white;
+  }
+  50% {
+    color: pink;
+  }
+  100% {
+    color: white;
+  }
+}
+.bi-heart-fill_like {
+  color: rgb(214, 14, 14);
+  position: relative;
+  left: 150px;
+  bottom: 230px;
+  width: 1.8em;
+  height: 1.8em;
+}
+
+/* .bi-heart-fill_01 {
+  position: relative;
+  color: black;
+  left: 150px;
+  bottom: 230px;
+  width: 1.4em;
+  height: 1.4em;
+  top: -1px;
+  left: 980px;
+} */
