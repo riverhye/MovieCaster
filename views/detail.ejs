@@ -15,14 +15,21 @@
     <!------------------------------------------------- grid row1 start ------------------------------------------->
     <div class="gridRow1 container">
       <h1>이 영화 한줄평</h1>
+
       <div class="userReviews">
         <% for (let i = 0; i < Math.min(comments.length, 5); i++) { %>
         <div class="userReview">
+          <span class="heart-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill_01" viewBox="0 0 16 16" onclick="commentLike()">
+              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+            </svg>
+          </span>
           <span class="description"><%= comments[i].description %></span>
           <span class="rate">평점: <%= comments[i].rate %>/5</span>
         </div>
         <% } %>
       </div>
+
 
 
       <!-- 리뷰 작성 폼 -->
@@ -40,15 +47,17 @@
         </form>
       </div>
       <form class="myReview">
-        <input type="text" class="writeReview" id="userReview" placeholder="리뷰를 작성해보세요" />
+        <input type="text" class="writeReview" id="userReview" placeholder="리뷰를 작성해보세요" onkeypress="handleKeyPress(event)" />
         <button type="button" class="submitReview" onclick="submitReview(movieIdx)">리뷰작성</button>
-
       </form>
     </div>
     </div>
     <!--------------------------------- grid row1 end / row2 start ------------------------------------------->
     <div class="gridRow2 container">
       <div class="poster" id="poster_path"></div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16" onclick="movieLike()">
+        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+      </svg>
       <div class="movieDetail1">
         <div class="movieName MD" id="title"></div>
         <div class="movieGenre MD" id="genre"></div>
@@ -104,6 +113,13 @@
       }
 
       function submitReview(movieIdx) {
+        const isLoggedIn = <%= isLoggedIn %>;
+
+        if (!isLoggedIn) {
+          alert('로그인을 먼저 해주세요.');
+          return; // 로그인이 안 되어있으면 함수를 여기서 종료
+        }
+
         const reviewText = document.getElementById('userReview').value;
         const rating = window.rating;
 
@@ -184,6 +200,7 @@
           img.style.zIndex = '999';
           img.nextElementSibling.style.fontWeight = '600';
           img.nextElementSibling.style.transform = 'translateY(30px)';
+          img.style.cursor = 'grab';
         });
 
         img.addEventListener('mouseleave', () => {
@@ -191,8 +208,55 @@
           img.style.zIndex = '1';
           img.nextElementSibling.style.fontWeight = '400';
           img.nextElementSibling.style.transform = 'none';
+          img.style.cursor = 'default';
         });
       });
     </script>
+    <script>
+      function movieLike() {
+        const isLoggedIn = <%= isLoggedIn %>;
+
+        if (!isLoggedIn) {
+          alert('로그인을 먼저 해주세요.');
+          return; // 로그인이 안 되어있으면 함수를 여기서 종료
+        }
+        axios.post(`/detail/${movieIdx}/movieLike`, {
+            movieIdx: movieIdx,
+            useridx: "<%= useridx %>"
+          })
+          .then((response) => {
+            // 성공적으로 저장됐을 때 처리할 코드
+            console.log('데이터 저장 성공:', response.data);
+
+            // 서버 응답에 따라 하트 아이콘 클래스 변경
+            const heartIcon = document.querySelector('.bi-heart-fill');
+            const likeIcon = document.querySelector('.bi-heart-fill_like');
+            if (response.data.message.includes('추가')) {
+              // 좋아요 추가된 경우
+              heartIcon.classList.remove('bi-heart-fill');
+              heartIcon.classList.add('bi-heart-fill_like');
+            } else if (response.data.message.includes('삭제')) {
+              // 좋아요 삭제된 경우
+              likeIcon.classList.remove('bi-heart-fill_like');
+              likeIcon.classList.add('bi-heart-fill');
+            }
+          })
+          .catch((error) => {
+            // 오류 발생 시 처리할 코드
+            console.error('데이터 저장 오류:', error);
+          });
+      }
+    </script>
+    <script>
+      function handleKeyPress(event) {
+        const keycode = event.keyCode ? event.keyCode : event.which;
+        if (keycode === 13) {
+          event.preventDefault(); // 엔터키의 기본 동작(새 줄 추가)을 막음
+          submitReview(movieIdx);
+        }
+      }
+    </script>
+
+
   </body>
 </html>
