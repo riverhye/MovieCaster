@@ -25,7 +25,7 @@
 |Full-stack(조장)|[박윤혜](https://github.com/riverhye)|메인페이지 / API DB저장, 와이어프레임 작성(figma), notion관리|[회고록](https://velog.io/@riverhye/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%B0%9C%ED%91%9C-%ED%94%BC%EB%93%9C%EB%B0%B1)
 |Fullstack|[구은현](https://github.com/EunnyKoo)|마이페이지 / 와이어프레임 작성(figma), canva제작 |[회고록](https://velog.io/@eunkoo/2%EC%A3%BC-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%A3%BC%EC%A0%9C-%EC%84%A0%EC%A0%95-%EB%B0%8F-%EC%B4%88%EC%95%88-%EC%9E%91%EC%97%85)|
 |Full-stack|[이병진](https://github.com/blee94)|상세페이지 / 와이어프레임 작성(figma)||
-|Back-end|[허윤우]()|마이페이지 + 회원가입 로그인 기능 보조, ID 찾기, 발표||
+|Back-end|[허윤우]()|마이페이지 + 회원가입 로그인 기능 보조, ID 찾기, 발표|[회고록](https://velog.io/@hyoon516/1%EC%B0%A8-%ED%8C%80-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0)| 
 
 <br />
 
@@ -145,6 +145,11 @@
 
 ## 📃 API 명세서
 <img width="648" alt="image" src="https://github.com/riverhye/MovieCaster/assets/77149171/9e84ad09-d68e-4540-9306-2cb493c12074">
+
+<br />
+
+## 📋 ERD 다이어그램
+<img width="648" alt="image" src="https://github.com/riverhye/MovieCaster/assets/97770736/9a526e45-4c65-4a70-a107-b56cf804e590">
 
 <br />
 
