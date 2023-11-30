@@ -125,43 +125,8 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', async () => {
-        // // 좋아요 초기 로직
-        // const heartIcons = document.querySelectorAll('.heart-icon');
-        // const commentIds = document.querySelectorAll('.commentid');
 
-        // const likedCommentIdsGroups = await Promise.all(
-        //   Array.from(commentIds).map(async (el) => {
-        //     const response = await axios({
-        //       method: 'post',
-        //       url: '/mypage/mycommentlike',
-        //       data: {
-        //         commentid: el.value,
-        //         reClick: false,
-        //       },
-        //     });
-
-        //     const data = response.data;
-        //     return data.result ? data.likedCommentIds : null;
-        //   })
-        // );
-
-        // // 유저가 좋아요를 누른 코멘트에 대해 heart-active 클래스 추가
-        // likedCommentIdsGroups.forEach((likedCommentIds, groupIndex) => {
-        //   if (likedCommentIds !== null) {
-        //     likedCommentIds.forEach((likedId) => {
-        //       const iconIndex = Array.from(commentIds).findIndex(
-        //         (idElement) => idElement.value == likedId
-        //       );
-
-        //       if (iconIndex !== -1) {
-        //         heartIcons[iconIndex].classList.add('heart-active');
-        //       }
-        //     });
-        //   }
-        // });
-
-      
-        // section 1 : 슬라이드 3초 주기 무한 반복
+        // 슬라이드 3초 주기 무한 반복
         const boxOfficePosters = document.querySelectorAll('.box-office-poster img');
         const ranking = document.querySelectorAll('.box-office-rank');
         
@@ -182,7 +147,7 @@
           }
       }, 3000);
 
-        // section 3 : 평점 날씨 아이콘
+        // 평점 날씨 아이콘
         const rateIcons = document.querySelectorAll('.md-movie__rating');
         const dataSec3 = <%- JSON.stringify(data.sec3) %>;
         for (let i = 0; i < 10; i++) {
@@ -244,7 +209,7 @@
     <!-- swiper.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <!-- section 2, 3 : 슬라이드 -->
+    <!-- 슬라이드 -->
     <script>
       const bestSwiper = new Swiper('.best-section-swiper', {
         slidesPerView: 5, 
