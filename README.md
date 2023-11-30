@@ -2,18 +2,25 @@
 
 영화를 사랑하는 이들을 위한 영화 정보 제공 & 한줄평 작성 웹사이트
 
-- 추천 영화 및 검색한 영화의 상세 내용과 해당 영화에 남긴 다른 회원들의 리뷰를 읽어볼수 있습니다.  
-- 회원가입 시 직접 리뷰를 작성하고 다른 회원이 작성한 리뷰 및 자신이 마음에 드는 영화에 좋아요를 눌러 마이페이지에서 관리할 수 있습니다.  
-- TMDB API를 받아와 MySql 데이터 베이스에 저장했습니다.
+✅ **[header]** 유저 상태에 따른 로그인/로그아웃 문구, 홈/로그인 기능
+
+✅ **[메인페이지]** 영화 포스터 클릭 시 상세 페이지로 이동, 코멘트 좋아요 기능, 평점별 날씨 아이콘
+
+✅ **[마이페이지]** 영화/코멘트 좋아요 관리, 내 코멘트 관리
+
+✅ **[상세 페이지]** 영화 정보 조회, 코멘트 작성, 다른 유저의 코멘트 조회 & 비슷한 영화 추천 기능
+
+✅ **[회원가입/로그인]** 유효성검사, ID 찾기
+
+✅ **TMDB API**를 받아와 MySql 데이터 베이스에 저장
 
 - **개발 기간** : 2023-11-07 ~ 2023-11-23(2주)
 - **배포 주소** : http://101.101.218.151:8000/
-
 <br />
 
 ## 👨‍👩‍👧‍👦 팀 구성
 
-|역할|이름|담당||
+|역할|이름|담당|✍️|
 |------|---|---|---|
 |Full-stack(조장)|[박윤혜](https://github.com/riverhye)|메인페이지 / API DB저장, 와이어프레임 작성(figma), notion관리|[회고록](https://velog.io/@riverhye/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%B0%9C%ED%91%9C-%ED%94%BC%EB%93%9C%EB%B0%B1)
 |Fullstack|[구은현](https://github.com/EunnyKoo)|마이페이지 / 와이어프레임 작성(figma), canva제작 |[회고록](https://velog.io/@eunkoo/2%EC%A3%BC-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%A3%BC%EC%A0%9C-%EC%84%A0%EC%A0%95-%EB%B0%8F-%EC%B4%88%EC%95%88-%EC%9E%91%EC%97%85)|
@@ -22,7 +29,7 @@
 
 <br />
 
-# 🖥️ 개발환경
+# 🔧 개발환경
 ## Front
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 
@@ -43,11 +50,11 @@
 ![Canva](https://img.shields.io/badge/Canva-%2300C4CC.svg?style=for-the-badge&logo=Canva&logoColor=white)
 ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
 
+### 그외 사용한 패키지
+- swiper.js, axios, ejs, express-session, multer, dotenv
+
 ## API
 **[TMDB](https://developer.themoviedb.org/reference/intro/getting-started)**(The Movie Database)
-
-## 그외 사용한 패키지
-- swiper.js, axios, ejs, express-session, multer, dotenv
 
 <br />
 
@@ -141,19 +148,27 @@
 
 <br />
 
-# 화면 구성 및 주요 기능
+# 🖥️ 화면 구성 및 주요 기능
 ## 메인 페이지
+
 ![좋아요+main gif](https://github.com/riverhye/MovieCaster/assets/77149171/888a30a6-e008-4ef5-9b5c-15f55d6221b9)
-- [header] 유저 상태에 따른 로그인/로그아웃 문구, 홈/로그인 기능
+
+- 헤더 : 유저 상태에 따른 로그인/로그아웃 문구, 홈/로그인 기능
 - 최신 영화 : 3초 주기 순위 변경 (1-5위 / 6-10위 반복)
 - 평점 높은 영화 : 코멘트 하트 아이콘 클릭 시 좋아요 한 코멘트 추가, 다시 클릭 시 좋아요 삭제 / 슬라이드 기능(swiper.js)
 - 평점 2.5~3.5 사이 영화 : 평점별 날씨 아이콘 / 슬라이드 기능(swiper.js)
 
+<br />
+
 ## 검색 페이지
+
 ![검색 gif](https://github.com/riverhye/MovieCaster/assets/77149171/2f162f54-08e2-494a-8ef5-f3b0e373486d)
+
 - 영화 title 검색 시 결과 개수, 영화 포스터와 title
 - 각 영화 포스터 클릭 시 상세 페이지 이동
 - 검색 결과 없을 때 검색 결과가 없다는 메시지 화면에 구현
+  
+<br />
 
 ## 상세 페이지
 Section1. 한줄평  
@@ -169,14 +184,22 @@ Section3. 비슷한 영화 추천
 여기에서는 해당 영화의 장르를 세분화 해 비슷한 장르의 영화를 총 세개 추천하여 표시합니다.
 영화의 고유키를 이용하여 각 영화 클릭 시 해당 영화의 상세페이지로 이동이 가능합니다.
 
+<br />
+
 ## 마이 페이지(프로필 관리)
 ![마이페이지1](https://github.com/riverhye/MovieCaster/assets/139302489/418a0309-34ab-49d7-9ba4-8627a6205b1a)
+
+<br />
 
 ## 마이 페이지(인생작품 등록)
 ![마이페이지2](https://github.com/riverhye/MovieCaster/assets/139302489/d8533bda-bc16-466d-99d2-243211f56058)
 
+<br />
+
 ## 마이 페이지(영화/코멘트 좋아요)
 ![마이페이지3](https://github.com/riverhye/MovieCaster/assets/139302489/b3cdc0ba-d334-407e-bbec-3ccc94a4e5fb)
+
+<br />
 
 ## 마이 페이지(내코멘트)
 ![마이페이지4](https://github.com/riverhye/MovieCaster/assets/139302489/c415247d-a4f2-448a-83e5-f65e824c0c81)
