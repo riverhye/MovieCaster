@@ -193,19 +193,26 @@ Section3. 비슷한 영화 추천
 
 ## 마이 페이지(프로필 관리)
 ![마이페이지1](https://github.com/riverhye/MovieCaster/assets/139302489/418a0309-34ab-49d7-9ba4-8627a6205b1a)
+- 회원정보 수정: 프로필 사진, 닉네임, 비밀번호
+- 회원정보 탈퇴
 
 <br />
 
 ## 마이 페이지(인생작품 등록)
 ![마이페이지2](https://github.com/riverhye/MovieCaster/assets/139302489/d8533bda-bc16-466d-99d2-243211f56058)
-
+- 영화 제목 검색 시 영화 포스터와 등록 버튼 생성
+- 등록 버튼 클릭 시 마이페이지 인생작품 부분에 포스터 등록
+- 각 영화 포스터 클릭 시 상세 페이지 이동
 <br />
 
 ## 마이 페이지(영화/코멘트 좋아요)
 ![마이페이지3](https://github.com/riverhye/MovieCaster/assets/139302489/b3cdc0ba-d334-407e-bbec-3ccc94a4e5fb)
-
+- 내가 좋아요 누른 영화 확인
+- 내가 좋아요 누른 코멘트 작성자와 코멘트 확인
+- 좋아요 삭제 가능
 <br />
 
 ## 마이 페이지(내코멘트)
 ![마이페이지4](https://github.com/riverhye/MovieCaster/assets/139302489/c415247d-a4f2-448a-83e5-f65e824c0c81)
-
+- 내가 작성한 코멘트, 작성한 시간 확인
+- 내가 작성한 코멘트 삭제 
