@@ -32,7 +32,6 @@
           </div>
         </div>
       </section>
-
     <div class="main-section">
       <section class="best-section">
         <div class="best-section__title section__title">
@@ -55,6 +54,7 @@
                   <li class="text-sm">
                     <span class="nickname-sm"><%= data.sec2[i].CommentUser.nickname %></span>
                     <i class="fa-solid fa-heart heart-icon"
+                      data-commentid="<%=data.sec2[i].commentid%>"
                       onclick="clickLike(this, '<%=data.sec2[i].commentid%>')">
                     </i>
                   </li>
@@ -67,7 +67,7 @@
                 </ul>
               </div>
             </div>
-            <input type="hidden" class="commentid" value="<%=data.sec2[i].commentid%>" />
+            <input class="commentids" type="hidden" class="commentid" value="<%=data.sec2[i].commentid%>" />
             <% } %>
           </div>
         </div>
@@ -78,7 +78,6 @@
           <i class="fa-solid fa-chevron-right arrow-icon right-arrow"></i>
         </div>
       </section>
-
       <section class="md-section">
         <div class="md-section__title section__title">
           <i class="bi bi-brightness-high sun-icon"></i>
@@ -125,11 +124,27 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', async () => {
+        // 새로 고침 시 좋아요 유지
+        let commentids = [];
+        for(let i=0; i<10; i++) {
+        commentids.push(document.getElementsByClassName('commentids')[i].value);
+        }
+        
+        axios({
+          method: 'get',
+          url: '/',
+          params: commentids,
+        }).then(res=>console.log('res', res));
+
+        // 서버에는 데이터가 담겼고, 같이 보낸 다른 데이터들은 잘만 동작 어라? 배열이라서?
+        const likedCmt = <%- JSON.stringify(likedCmt) %>
+        console.log('Liked Comments:', likedCmt);
+        
 
         // 슬라이드 3초 주기 무한 반복
         const boxOfficePosters = document.querySelectorAll('.box-office-poster img');
         const ranking = document.querySelectorAll('.box-office-rank');
-        
+
         const data = <%- JSON.stringify(data.sec1) %>;
         let currentIdx = 0;
 
@@ -178,7 +193,7 @@
             console.error(`rateIcons[${i}] is undefined.`);
           }
         }
-    });
+      });
 
         // 좋아요 클릭 시
         function clickLike(heart, commentid) {

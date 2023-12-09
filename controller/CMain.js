@@ -8,6 +8,30 @@ const {
 const { Op } = require('sequelize');
 
 let useridx;
+
+// 좋아요 한 코멘트 찾기
+async function getLikedComments(useridx, valueArr) {
+  try {
+    const likedComments = await Comment_like.findAll({
+      attributes: ['commentid'],
+      where: {
+        useridx: useridx,
+        commentid: {
+          [Op.in]: valueArr,
+        },
+      },
+    });
+
+    return likedComments.map((comment) => comment.commentid);
+  } catch (err) {
+    console.log('새로고침 err:', err);
+    return [];
+  }
+}
+
+// 아래 데이터를 여기로 옮겨서 res.send로 전달 & ejs에서 동적 생성으로 바꾸기...
+exports.post_main = (req, res) => {};
+
 // Main
 exports.main = async (req, res) => {
   try {
@@ -27,26 +51,41 @@ exports.main = async (req, res) => {
     // section 3: 평균 평점이 2.0~3.5 미만인 영화
     const lowerRatedMovies = await getLowerRatedMovies();
 
+    // 좋아요 유지
+    let valueArr = [];
+    for (const key in req.query) {
+      if (req.query.hasOwnProperty(key)) {
+        const value = req.query[key];
+        valueArr.push(Number(value));
+      }
+    }
+
+    // 좋아요 한 코멘트 데이터 가져오기
+    const likedCmt = useridx ? await getLikedComments(useridx, valueArr) : [];
+
+    // 메인 페이지 렌더링
     res.render('main', {
       data: {
         sec1: latestMovies,
         sec2: topRatedMovies,
         sec3: lowerRatedMovies,
       },
+      likedCmt: likedCmt,
     });
   } catch (err) {
     console.error('section err: ', err);
+    res.status(500).send('Internal Server Error');
   }
 };
 
 // header, footer
-exports.header = (req, res) => {
-  res.send('header', { user: req.session.isAuthenticated });
-};
+// exports.header = (req, res) => {
+//   res.send('header', { user: req.session.isAuthenticated });
+// };
 
-exports.footer = (req, res) => {
-  res.render('footer');
-};
+// exports.footer = (req, res) => {
+//   res.render('footer');
+// };
 
 async function getTopRatedMovies() {
   const getMovieInfo = await Comment.findAll({
