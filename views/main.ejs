@@ -126,21 +126,33 @@
       document.addEventListener('DOMContentLoaded', async () => {
         // 새로 고침 시 좋아요 유지
         let commentids = [];
+
         for(let i=0; i<10; i++) {
         commentids.push(document.getElementsByClassName('commentids')[i].value);
         }
-        
+
         axios({
-          method: 'get',
+          method: 'post',
           url: '/',
           params: commentids,
-        }).then(res=>console.log('res', res));
+        }).then(res=>{
+          const likedCmt = res.data.likedCmt;
 
-        // 서버에는 데이터가 담겼고, 같이 보낸 다른 데이터들은 잘만 동작 어라? 배열이라서?
-        const likedCmt = <%- JSON.stringify(likedCmt) %>
-        console.log('Liked Comments:', likedCmt);
-        
+          const heartIcon = document.querySelectorAll('.heart-icon');
 
+          heartIcon.forEach(element=> { 
+            const dataCommentId = element.getAttribute('data-commentid');
+            // dataCommentId는 하나씩, likedCmt는 배열
+            console.log("메인 코멘트", dataCommentId);
+            console.log("백 코멘트", likedCmt)
+
+            // 왜 다 false일까
+            if (likedCmt.includes(Number(dataCommentId))) {
+              element.classList.add('heart-active');
+            }
+          })
+        });
+      
         // 슬라이드 3초 주기 무한 반복
         const boxOfficePosters = document.querySelectorAll('.box-office-poster img');
         const ranking = document.querySelectorAll('.box-office-rank');
